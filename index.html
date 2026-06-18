@@ -3,685 +3,186 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-
-<!-- Primary Meta -->
-<title>CREO//ONE — Beat Battle Platform</title>
 <meta name="description" content="Ein Thema, ein Beat, ein Sieger. Produzenten battlen wöchentlich gegeneinander — die Community entscheidet."/>
 <meta name="keywords" content="beat battle, hip hop, producer, beats, soundcloud, musik, community"/>
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://creo-one.github.io/"/>
-
-<!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://creo-one.github.io/"/>
 <meta property="og:title" content="CREO//ONE — Beat Battle Platform"/>
-<meta property="og:description" content="Ein Thema, ein Beat, ein Sieger. Produzenten battlen wöchentlich — die Community entscheidet."/>
+<meta property="og:description" content="Ein Thema, ein Beat, ein Sieger. Produzenten battlen — die Community entscheidet."/>
 <meta property="og:site_name" content="CREO//ONE"/>
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary"/>
+<meta property="og:image" content="https://creo-one.github.io/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="CREO//ONE — Beat Battle Platform"/>
 <meta name="twitter:description" content="Ein Thema, ein Beat, ein Sieger. Die Community entscheidet."/>
-
-<!-- JSON-LD -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "CREO//ONE",
-  "url": "https://creo-one.github.io/",
-  "description": "Beat Battle Platform — Ein Thema, ein Beat, ein Sieger.",
-  "inLanguage": ["de", "en", "fr"]
-}
-</script>
+<meta name="twitter:image" content="https://creo-one.github.io/og-image.png"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"CREO//ONE","url":"https://creo-one.github.io/","description":"Beat Battle Platform","inLanguage":["de","en","fr"]}</script>
+<title>CREO//ONE — Beat Battle Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-
-:root{
-  --black:#0a0a0a;
-  --dark:#141414;
-  --mid:#2a2a2a;
-  --gray:#888;
-  --light:#ccc;
-  --white:#f5f5f5;
-  --rule:rgba(255,255,255,0.07);
-}
-
-body{
-  background:var(--black);
-  color:var(--white);
-  font-family:'Barlow',sans-serif;
-  font-weight:300;
-  font-size:15px;
-  line-height:1.6;
-  min-height:100vh;
-}
-
-/* condensed utility */
-.cond{font-family:'Barlow Condensed',sans-serif}
-
-/* ── NAV ── */
-nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:1.25rem 3rem;
-  border-bottom:1px solid var(--rule);
-  position:sticky;top:0;
-  background:var(--black);
-  z-index:100;
-}
-
-.logo{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:1.5rem;
-  letter-spacing:0.06em;
-  color:var(--white);
-  text-decoration:none;
-  text-transform:uppercase;
-}
-
+:root{--black:#0a0a0a;--dark:#141414;--mid:#2a2a2a;--gray:#888;--light:#ccc;--white:#f5f5f5;--rule:rgba(255,255,255,0.07)}
+body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;font-weight:300;font-size:15px;line-height:1.6;min-height:100vh}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 3rem;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--black);z-index:100}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.06em;color:var(--white);text-decoration:none;text-transform:uppercase}
+.logo img{height:32px;width:auto;display:block}
 .nav-r{display:flex;gap:2rem;align-items:center}
-
-.nav-r a{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:500;
-  font-size:0.8rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--gray);
-  text-decoration:none;
-  transition:color .15s;
-}
+.nav-r a{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .15s}
 .nav-r a:hover{color:var(--white)}
-
-#navAuthBtn{
-  border:1px solid var(--rule);
-  padding:.35rem .9rem;
-  color:var(--light)!important;
-  cursor:pointer;
-  transition:border-color .15s,color .15s!important;
-}
+#navAuthBtn{border:1px solid var(--rule);padding:.35rem .9rem;color:var(--light)!important;cursor:pointer;transition:border-color .15s,color .15s!important}
 #navAuthBtn:hover{border-color:var(--gray);color:var(--white)!important}
-
-/* ── HERO ── */
-.hero{
-  padding:7rem 3rem 5rem;
-  border-bottom:1px solid var(--rule);
-}
-
-.hero-eye{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:500;
-  font-size:0.72rem;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-bottom:1.5rem;
-}
-
-.hero h1{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:clamp(5rem,12vw,11rem);
-  line-height:.92;
-  letter-spacing:-0.01em;
-  text-transform:uppercase;
-  color:var(--white);
-  margin-bottom:2rem;
-}
-
-.hero h1 .dim{color:var(--mid);-webkit-text-stroke:1px var(--gray)}
-
-.hero-sub{
-  color:var(--gray);
-  font-size:.9rem;
-  max-width:380px;
-  font-weight:300;
-  line-height:1.7;
-}
-
-.stats-row{
-  display:flex;
-  gap:4rem;
-  margin-top:4rem;
-  padding-top:2.5rem;
-  border-top:1px solid var(--rule);
-}
-
-.stat-n{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:3rem;
-  line-height:1;
-  color:var(--white);
-}
-
-.stat-l{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:400;
-  font-size:.72rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-top:.2rem;
-}
-
-/* ── SECTION BASE ── */
-.sec{
-  padding:5rem 3rem;
-  border-bottom:1px solid var(--rule);
-}
-
-.sec-eye{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;
-  font-size:.68rem;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-bottom:2.5rem;
-}
-
-/* ── BATTLE ── */
-.battle-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  margin-bottom:2.5rem;
-  flex-wrap:wrap;
-  gap:1rem;
-}
-
-.battle-h{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:clamp(2.5rem,6vw,5rem);
-  text-transform:uppercase;
-  letter-spacing:-.01em;
-  line-height:.95;
-}
-
-.battle-theme-tag{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:500;
-  font-size:.68rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--gray);
-  border:1px solid var(--rule);
-  padding:.3rem .8rem;
-  white-space:nowrap;
-}
-
-#countdown{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:500;
-  font-size:.75rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--gray);
-}
-
-/* ── ENTRIES ── */
-.entries{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:1px;
-  background:var(--rule);
-  border:1px solid var(--rule);
-  margin-bottom:2.5rem;
-}
-
-.entry{
-  background:var(--black);
-  padding:1.75rem;
-  transition:background .15s;
-}
-.entry:hover{background:var(--dark)}
-
-.entry-prod{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;
-  font-size:.65rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-bottom:.4rem;
-}
-
-.entry-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:1.6rem;
-  text-transform:uppercase;
-  letter-spacing:.02em;
-  margin-bottom:.2rem;
-  line-height:1.1;
-}
-
-.entry-meta{
-  font-size:.78rem;
-  color:var(--gray);
-  margin-bottom:1rem;
-  font-family:'Barlow Condensed',sans-serif;
-  letter-spacing:.06em;
-}
-
-.sc-box{
-  width:100%;
-  height:80px;
-  border:none;
-  margin-bottom:1rem;
-  background:var(--dark);
-}
-
-.sc-placeholder{
-  width:100%;
-  height:80px;
-  background:var(--dark);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--mid);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.7rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  margin-bottom:1rem;
-}
-
-.vote-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.vote-btn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
-  font-size:.78rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  padding:.4rem 1rem;
-  border:1px solid var(--rule);
-  background:none;
-  color:var(--gray);
-  cursor:pointer;
-  transition:all .15s;
-}
-.vote-btn:hover,.vote-btn.voted{
-  background:var(--white);
-  color:var(--black);
-  border-color:var(--white);
-}
-
-.vote-c{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:500;
-  font-size:.78rem;
-  letter-spacing:.1em;
-  color:var(--gray);
-}
-
-/* empty state */
-.empty{
-  padding:4rem 2rem;
-  text-align:center;
-  color:var(--gray);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.78rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  background:var(--dark);
-  border:1px solid var(--rule);
-}
-
-/* ── SUBMIT ── */
-.submit-box{
-  border:1px solid var(--rule);
-  padding:2.5rem;
-  max-width:520px;
-  background:var(--dark);
-}
-
-.submit-box h3{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:1.6rem;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  margin-bottom:.4rem;
-}
-
-.submit-box p{
-  color:var(--gray);
-  font-size:.85rem;
-  margin-bottom:1.5rem;
-}
-
-.field{margin-bottom:1rem}
-
-.field label{
-  display:block;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;
-  font-size:.65rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-bottom:.4rem;
-}
-
-.field input{
-  width:100%;
-  padding:.65rem .85rem;
-  background:var(--black);
-  border:1px solid var(--rule);
-  color:var(--white);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.95rem;
-  letter-spacing:.04em;
-  outline:none;
-  transition:border-color .15s;
-}
-.field input:focus{border-color:var(--gray)}
-.field input::placeholder{color:var(--mid)}
-
-.btn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:.82rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  padding:.6rem 1.5rem;
-  background:var(--white);
-  color:var(--black);
-  border:none;
-  cursor:pointer;
-  transition:opacity .15s;
-  margin-top:.5rem;
-}
-.btn:hover{opacity:.85}
-.btn-ghost{
-  background:none;
-  color:var(--gray);
-  border:1px solid var(--rule);
-}
-.btn-ghost:hover{border-color:var(--gray);color:var(--white);opacity:1}
-
-/* ── HOF ── */
-.hof-list{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:1px;
-  background:var(--rule);
-  border:1px solid var(--rule);
-}
-
-.hof-card{
-  background:var(--black);
-  padding:1.5rem 1.75rem;
-}
-
-.hof-rank{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:300;
-  font-size:.65rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--gray);
-  margin-bottom:.4rem;
-}
-
-.hof-name{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:1.5rem;
-  text-transform:uppercase;
-  letter-spacing:.02em;
-  margin-bottom:.2rem;
-}
-
-.hof-wins{
-  font-size:.78rem;
-  color:var(--gray);
-}
-
-.champ-tag{
-  display:inline-block;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
-  font-size:.6rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  border:1px solid var(--light);
-  color:var(--light);
-  padding:.15rem .55rem;
-  margin-top:.5rem;
-}
-
-/* ── HOW ── */
-.steps{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:0;
-  border:1px solid var(--rule);
-}
-
-.step{
-  padding:2rem;
-  border-right:1px solid var(--rule);
-}
-.step:last-child{border-right:none}
-
-.step-n{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:300;
-  font-size:3rem;
-  color:var(--mid);
-  line-height:1;
-  margin-bottom:.75rem;
-}
-
-.step-t{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;
-  font-size:1rem;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  margin-bottom:.5rem;
-}
-
-.step-d{
-  font-size:.82rem;
-  color:var(--gray);
-  line-height:1.6;
-}
-
-/* ── MODAL ── */
-.overlay{
-  display:none;
-  position:fixed;inset:0;
-  background:rgba(10,10,10,.93);
-  z-index:200;
-  align-items:center;
-  justify-content:center;
-}
-.overlay.open{display:flex}
-
-.modal{
-  background:var(--dark);
-  border:1px solid var(--rule);
-  padding:2.5rem;
-  width:100%;max-width:380px;
-}
-
-.modal-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  margin-bottom:1.5rem;
-}
-
-.modal h2{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-size:2rem;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-}
-
-.modal-x{
-  background:none;border:none;
-  color:var(--gray);font-size:1.1rem;
-  cursor:pointer;padding:0;
-}
-
-.tabs{
-  display:flex;gap:0;
-  border-bottom:1px solid var(--rule);
-  margin-bottom:1.5rem;
-}
-
-.tab-btn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
-  font-size:.72rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  padding:.5rem 1rem;
-  background:none;border:none;
-  color:var(--gray);
-  cursor:pointer;
-  border-bottom:2px solid transparent;
-  margin-bottom:-1px;
-  transition:color .15s;
-}
-.tab-btn.active{color:var(--white);border-bottom-color:var(--white)}
-
-.msg{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.78rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  padding:.6rem;
-  margin-bottom:1rem;
-  text-align:center;
-}
-.msg.err{background:#2a0000;color:#ff6b6b;border:1px solid #500}
-.msg.ok{background:#002a00;color:#6bff6b;border:1px solid #050}
-.msg.hidden{display:none}
-
-/* ── FOOTER ── */
-footer{
-  padding:2rem 3rem;
-  border-top:1px solid var(--rule);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;gap:1rem;
-}
-
-footer p{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:400;
-  font-size:.7rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--gray);
-}
-
-/* ── BURGER ── */
-.burger{
-  display:none;
-  flex-direction:column;
-  gap:5px;
-  background:none;border:none;
-  cursor:pointer;padding:.4rem;
-}
-.burger span{
-  display:block;width:22px;height:1.5px;
-  background:var(--white);
-  transition:all .2s;
-}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem}
+.burger span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .2s}
 .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
-.mobile-menu{
-  display:none;
-  position:fixed;inset:0;top:58px;
-  background:var(--black);
-  z-index:99;
-  padding:2rem 1.5rem;
-  border-top:1px solid var(--rule);
-  flex-direction:column;
-  gap:0;
-}
+.mobile-menu{display:none;position:fixed;inset:0;top:58px;background:var(--black);z-index:99;padding:2rem 1.5rem;border-top:1px solid var(--rule);flex-direction:column;gap:0}
 .mobile-menu.open{display:flex}
-.mobile-menu a{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:2rem;
-  letter-spacing:.06em;text-transform:uppercase;
-  color:var(--gray);text-decoration:none;
-  padding:1rem 0;
-  border-bottom:1px solid var(--rule);
-  transition:color .15s;
-}
+.mobile-menu a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:2rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);text-decoration:none;padding:1rem 0;border-bottom:1px solid var(--rule);transition:color .15s}
 .mobile-menu a:hover{color:var(--white)}
-.mobile-menu .lang-sw{margin-top:1.5rem;margin-left:0}
-
-/* ── LANG SWITCHER ── */
 .lang-sw{display:flex;gap:0;margin-left:1rem}
-.lang-btn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;font-size:.68rem;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:.3rem .55rem;
-  background:none;border:1px solid var(--rule);
-  color:var(--gray);cursor:pointer;
-  margin-left:-1px;transition:all .15s;
-}
+.lang-btn{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .55rem;background:none;border:1px solid var(--rule);color:var(--gray);cursor:pointer;margin-left:-1px;transition:all .15s}
 .lang-btn:hover{color:var(--white);border-color:var(--gray)}
 .lang-btn.active{background:var(--white);color:var(--black);border-color:var(--white)}
-
-/* ── SKELETON ── */
-.skeleton{
-  background:linear-gradient(90deg,var(--dark) 25%,var(--mid) 50%,var(--dark) 75%);
-  background-size:200% 100%;
-  animation:shimmer 1.4s infinite;
-  border-radius:2px;
-}
+.hero{padding:7rem 3rem 5rem;border-bottom:1px solid var(--rule)}
+.hero-eye{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gray);margin-bottom:1.5rem}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(5rem,12vw,11rem);line-height:.92;letter-spacing:-0.01em;text-transform:uppercase;color:var(--white);margin-bottom:2rem}
+.hero h1 .dim{color:var(--mid);-webkit-text-stroke:1px var(--gray)}
+.hero-sub{color:var(--gray);font-size:1.05rem;max-width:480px;margin-bottom:.5rem;font-weight:300}
+.stats-row{display:flex;gap:4rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--rule)}
+.stat-n{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--white)}
+.stat-l{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-top:.2rem}
+.sec{padding:5rem 3rem;border-bottom:1px solid var(--rule)}
+.sec-eye{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:2.5rem}
+.battle-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.battle-h{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;letter-spacing:-.01em;line-height:.95}
+.battle-theme-tag{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);border:1px solid var(--rule);padding:.3rem .8rem;white-space:nowrap;margin-bottom:.75rem;display:inline-block}
+#countdown{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.entries{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:2rem}
+.entry{background:var(--black);padding:1.75rem;transition:background .15s}
+.entry:hover{background:var(--dark)}
+.entry-prod{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.4rem;cursor:pointer}
+.entry-prod:hover{color:var(--white)}
+.entry-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.2rem;line-height:1.1}
+.entry-meta{font-size:.78rem;color:var(--gray);margin-bottom:1rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em}
+.sc-box{width:100%;height:80px;border:none;margin-bottom:1rem;background:var(--dark)}
+.sc-placeholder{width:100%;height:80px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--mid);font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1rem}
+.vote-row{display:flex;align-items:center;justify-content:space-between}
+.vote-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;padding:.4rem 1rem;border:1px solid var(--rule);background:none;color:var(--gray);cursor:pointer;transition:all .15s}
+.vote-btn:hover,.vote-btn.voted{background:var(--white);color:var(--black);border-color:var(--white)}
+.vote-c{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.78rem;letter-spacing:.1em;color:var(--gray)}
+.empty{padding:4rem 2rem;text-align:center;color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;background:var(--dark);border:1px solid var(--rule)}
+.submit-box{border:1px solid var(--rule);padding:2.5rem;max-width:520px;background:var(--dark)}
+.submit-box h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.6rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem}
+.submit-box p{color:var(--gray);font-size:.85rem;margin-bottom:1.5rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.4rem}
+.field input,.field textarea{width:100%;padding:.65rem .85rem;background:var(--black);border:1px solid var(--rule);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;letter-spacing:.04em;outline:none;transition:border-color .15s}
+.field input:focus,.field textarea:focus{border-color:var(--gray)}
+.field input::placeholder,.field textarea::placeholder{color:var(--mid)}
+.btn{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;padding:.6rem 1.5rem;background:var(--white);color:var(--black);border:none;cursor:pointer;transition:opacity .15s;margin-top:.5rem}
+.btn:hover{opacity:.85}
+.btn-ghost{background:none;color:var(--gray);border:1px solid var(--rule)}
+.btn-ghost:hover{border-color:var(--gray);color:var(--white);opacity:1}
+.hof-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.hof-card{background:var(--black);padding:1.5rem 1.75rem}
+.hof-rank{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:.4rem}
+.hof-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.2rem;cursor:pointer}
+.hof-name:hover{color:var(--gray)}
+.hof-wins{font-size:.78rem;color:var(--gray)}
+.champ-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--light);color:var(--light);padding:.15rem .55rem;margin-top:.5rem}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;border:1px solid var(--rule)}
+.step{padding:2rem;border-right:1px solid var(--rule)}
+.step:last-child{border-right:none}
+.step-n{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:3rem;color:var(--mid);line-height:1;margin-bottom:.75rem}
+.step-t{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.step-d{font-size:.82rem;color:var(--gray);line-height:1.6}
+.leaderboard{border:1px solid var(--rule);margin-bottom:2.5rem}
+.lb-row{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;border-bottom:1px solid var(--rule);transition:background .15s}
+.lb-row:last-child{border-bottom:none}
+.lb-row:hover{background:var(--dark)}
+.lb-rank{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:.75rem;letter-spacing:.14em;color:var(--gray);width:24px;flex-shrink:0}
+.lb-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;text-transform:uppercase;flex:1;cursor:pointer}
+.lb-name:hover{color:var(--gray)}
+.lb-bar-wrap{width:120px;height:3px;background:var(--mid);flex-shrink:0}
+.lb-bar{height:3px;background:var(--white);transition:width .4s}
+.lb-votes{font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.75rem;letter-spacing:.1em;color:var(--gray);width:60px;text-align:right;flex-shrink:0}
+.overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.93);z-index:200;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--dark);border:1px solid var(--rule);padding:2.5rem;width:100%;max-width:380px}
+.modal-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem}
+.modal h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:.04em}
+.modal-x{background:none;border:none;color:var(--gray);font-size:1.1rem;cursor:pointer;padding:0}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--rule);margin-bottom:1.5rem}
+.tab-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;padding:.5rem 1rem;background:none;border:none;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--white)}
+.msg{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:.6rem;margin-bottom:1rem;text-align:center}
+.msg.err{background:#2a0000;color:#ff6b6b;border:1px solid #500}
+.msg.ok{background:#002a00;color:#6bff6b;border:1px solid #050}
+.msg.hidden{display:none}
+#toast{position:fixed;bottom:2rem;right:2rem;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1.25rem;z-index:400;transform:translateY(120%);transition:transform .3s;pointer-events:none}
+#toast.show{transform:translateY(0)}
+#toast.ok{background:var(--white);color:var(--black)}
+#toast.err{background:#ff6b6b;color:#0a0a0a}
+.skeleton{background:linear-gradient(90deg,var(--dark) 25%,var(--mid) 50%,var(--dark) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:2px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .sk-entry{background:var(--dark);padding:1.75rem;border:1px solid var(--rule)}
 .sk-line{height:12px;margin-bottom:10px}
 .sk-line.short{width:40%}
 .sk-line.med{width:65%}
-.sk-line.full{width:100%}
 .sk-player{height:80px;margin-bottom:1rem}
-
-/* ── TOAST ── */
-#toast{
-  position:fixed;bottom:2rem;right:2rem;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;font-size:.82rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:.75rem 1.25rem;
-  z-index:300;
-  transform:translateY(120%);
-  transition:transform .3s;
-  pointer-events:none;
-}
-#toast.show{transform:translateY(0)}
-#toast.ok{background:var(--white);color:var(--black)}
-#toast.err{background:#ff6b6b;color:#0a0a0a}
-
-/* ── RESPONSIVE ── */
+.profile-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.96);z-index:250;overflow-y:auto}
+.profile-overlay.open{display:block}
+.profile-inner{max-width:700px;margin:0 auto;padding:3rem 2rem}
+.profile-close{background:none;border:none;color:var(--gray);cursor:pointer;float:right;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem}
+.profile-close:hover{color:var(--white)}
+.profile-header{display:flex;gap:2rem;align-items:flex-start;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.avatar-wrap{position:relative;flex-shrink:0}
+.avatar{width:90px;height:90px;border-radius:50%;background:var(--mid);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--white);text-transform:uppercase;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-upload{position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:50%;background:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--black)}
+.profile-info{flex:1;min-width:0}
+.profile-alias{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.2rem;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin-bottom:.5rem}
+.profile-bio{color:var(--gray);font-size:.88rem;line-height:1.7;margin-bottom:1rem;max-width:400px}
+.profile-bio-edit{width:100%;background:var(--dark);border:1px solid var(--rule);color:var(--white);padding:.6rem .8rem;font-family:'Barlow',sans-serif;font-size:.88rem;resize:vertical;min-height:70px;outline:none;display:none}
+.profile-bio-edit:focus{border-color:var(--gray)}
+.profile-stats{display:flex;gap:2rem;font-family:'Barlow Condensed',sans-serif}
+.ps-num{font-weight:800;font-size:1.4rem;color:var(--white)}
+.ps-lbl{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
+.profile-edit-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid var(--rule);background:none;color:var(--gray);cursor:pointer;margin-top:.75rem;transition:all .15s}
+.profile-edit-btn:hover{border-color:var(--gray);color:var(--white)}
+.profile-beats-eye{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gray);margin-bottom:1.5rem}
+.profile-beats{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.pb-card{background:var(--black);padding:1.5rem;transition:background .15s}
+.pb-card:hover{background:var(--dark)}
+.pb-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.2rem;text-transform:uppercase;margin-bottom:.2rem}
+.pb-meta{font-size:.75rem;color:var(--gray);margin-bottom:.75rem}
+.pb-votes{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+#avatarInput{display:none}
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.97);z-index:300;overflow-y:auto}
+.admin-overlay.open{display:block}
+.admin-inner{max-width:680px;margin:0 auto;padding:3rem 2rem}
+.admin-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;margin-bottom:2rem;display:flex;justify-content:space-between;align-items:center}
+.admin-section{border:1px solid var(--rule);padding:1.5rem;margin-bottom:1.5rem;background:var(--dark)}
+.admin-section h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:1rem}
+.admin-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.75rem}
+.admin-row input,.admin-row textarea{flex:1;min-width:140px;background:var(--black);border:1px solid var(--rule);color:var(--white);padding:.6rem .8rem;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;outline:none}
+.admin-row input:focus,.admin-row textarea:focus{border-color:var(--gray)}
+.admin-list{display:flex;flex-direction:column;gap:1px}
+.admin-item{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:.85rem}
+.admin-item-name{font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.admin-item-meta{font-size:.72rem;color:var(--gray);letter-spacing:.08em}
+.btn-danger{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid #500;background:none;color:#ff6b6b;cursor:pointer;transition:all .15s}
+.btn-danger:hover{background:#2a0000}
+.btn-sm{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid var(--rule);background:none;color:var(--gray);cursor:pointer;transition:all .15s}
+.btn-sm:hover{border-color:var(--gray);color:var(--white)}
+footer{padding:2rem 3rem;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
 @media(max-width:768px){
   nav{padding:1rem 1.25rem}
   .nav-r>a,.nav-r>.lang-sw{display:none}
@@ -698,16 +199,13 @@ footer p{
   .entries{grid-template-columns:1fr}
   .hof-list{grid-template-columns:1fr 1fr}
 }
-@media(max-width:480px){
-  .hof-list{grid-template-columns:1fr}
-  .hero h1{font-size:clamp(3rem,18vw,5rem)}
-}
+@media(max-width:480px){.hof-list{grid-template-columns:1fr}.hero h1{font-size:clamp(3rem,18vw,5rem)}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
-<!-- MODAL -->
+<!-- AUTH MODAL -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="modal-top">
@@ -715,44 +213,84 @@ footer p{
       <button class="modal-x" onclick="closeModal()">✕</button>
     </div>
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('login',this)">Login</button>
-      <button class="tab-btn" onclick="switchTab('register',this)">Registrieren</button>
-      <button class="tab-btn" onclick="switchTab('reset',this)">Passwort vergessen</button>
+      <button class="tab-btn active" id="tabLogin" onclick="switchTab('login',this)">Login</button>
+      <button class="tab-btn" id="tabRegister" onclick="switchTab('register',this)">Registrieren</button>
+      <button class="tab-btn" id="tabReset" onclick="switchTab('reset',this)">Passwort vergessen</button>
     </div>
     <div id="authMsg" class="msg hidden"></div>
-
-    <!-- LOGIN -->
     <div id="loginForm">
-      <div class="field"><label data-i18n="modal.label.email">E-Mail</label><input type="email" id="loginEmail" placeholder="deine@mail.com"/></div>
-      <div class="field"><label data-i18n="modal.label.pw">Passwort</label><input type="password" id="loginPw" placeholder="••••••••"/></div>
-      <button class="btn" onclick="doLogin()" data-i18n="modal.login.btn">Anmelden</button>
+      <div class="field"><label id="lbEmail1">E-Mail</label><input type="email" id="loginEmail" placeholder="deine@mail.com"/></div>
+      <div class="field"><label id="lbPw1">Passwort</label><input type="password" id="loginPw" placeholder="••••••••"/></div>
+      <button class="btn" id="btnLogin" onclick="doLogin()">Anmelden</button>
     </div>
-
-    <!-- REGISTER -->
     <div id="registerForm" style="display:none">
-      <div class="field"><label data-i18n="modal.label.alias">Producer-Alias</label><input type="text" id="regAlias" placeholder="dein_alias"/></div>
-      <div class="field"><label data-i18n="modal.label.email">E-Mail</label><input type="email" id="regEmail" placeholder="deine@mail.com"/></div>
-      <div class="field"><label data-i18n="modal.label.pw">Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
-      <button class="btn" onclick="doRegister()" data-i18n="modal.register.btn">Account erstellen</button>
+      <div class="field"><label id="lbAlias">Producer-Alias</label><input type="text" id="regAlias" placeholder="dein_alias"/></div>
+      <div class="field"><label id="lbEmail2">E-Mail</label><input type="email" id="regEmail" placeholder="deine@mail.com"/></div>
+      <div class="field"><label id="lbPw2">Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
+      <button class="btn" id="btnRegister" onclick="doRegister()">Account erstellen</button>
     </div>
-
-    <!-- RESET -->
     <div id="resetForm" style="display:none">
-      <p style="color:var(--gray);font-size:.82rem;margin-bottom:1rem;line-height:1.6;">Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.</p>
-      <div class="field"><label data-i18n="modal.label.email">E-Mail</label><input type="email" id="resetEmail" placeholder="deine@mail.com"/></div>
-      <button class="btn" onclick="doReset()" data-i18n="modal.reset.btn">Link senden</button>
+      <p id="resetDesc" style="color:var(--gray);font-size:.82rem;margin-bottom:1rem;line-height:1.6;">Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.</p>
+      <div class="field"><label id="lbEmail3">E-Mail</label><input type="email" id="resetEmail" placeholder="deine@mail.com"/></div>
+      <button class="btn" id="btnReset" onclick="doReset()">Link senden</button>
     </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-inner">
+    <div class="admin-title">ADMIN <button class="profile-close" onclick="closeAdmin()">✕ Schließen</button></div>
+    <div class="admin-section">
+      <h3>Neues Battle anlegen</h3>
+      <div class="admin-row"><input type="text" id="aTitle" placeholder="BATTLE TITEL"/></div>
+      <div class="admin-row"><input type="text" id="aTheme" placeholder="Thema"/></div>
+      <div class="admin-row"><textarea id="aDesc" placeholder="Beschreibung…" style="height:70px;width:100%"></textarea></div>
+      <div class="admin-row"><input type="datetime-local" id="aEnds"/></div>
+      <button class="btn" onclick="adminCreateBattle()">Battle erstellen</button>
+      <div id="adminBattleMsg" class="msg hidden" style="margin-top:.75rem"></div>
+    </div>
+    <div class="admin-section">
+      <h3>Aktuelle Entries</h3>
+      <div id="adminEntries"><div style="color:var(--gray);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase">Wird geladen…</div></div>
+    </div>
+    <div class="admin-section">
+      <h3>Winner manuell setzen</h3>
+      <div class="admin-row">
+        <input type="text" id="aWinnerAlias" placeholder="Producer-Alias"/>
+        <button class="btn" onclick="adminSetWinner()">Als Winner eintragen</button>
+      </div>
+      <div id="adminWinnerMsg" class="msg hidden" style="margin-top:.75rem"></div>
+    </div>
+    <div class="admin-section">
+      <h3>User bannen</h3>
+      <div class="admin-row">
+        <input type="text" id="aBanAlias" placeholder="Producer-Alias"/>
+        <button class="btn-danger" style="align-self:center" onclick="adminBanUser()">Bannen</button>
+      </div>
+      <div id="adminBanMsg" class="msg hidden" style="margin-top:.75rem"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-inner">
+    <button class="profile-close" onclick="closeProfile()">✕ Schließen</button>
+    <div style="clear:both;padding-top:1rem" id="profileContent"></div>
   </div>
 </div>
 
 <!-- NAV -->
 <nav>
-  <a class="logo" href="#">CREO//ONE</a>
+  <a class="logo" href="#">
+    <img src="logo.png" alt="CREO//ONE" onerror="this.outerHTML='CREO//ONE'"/>
+  </a>
   <div class="nav-r">
     <a href="#battle" data-i18n="nav.battle">Battle</a>
     <a href="#hof">Hall of Fame</a>
-    <a href="#" id="adminLink" style="display:none" onclick="openAdmin();return false;">Admin</a>
     <a href="#how" data-i18n="nav.rules">Regeln</a>
+    <a href="#" id="adminLink" style="display:none" onclick="openAdmin();return false;">Admin</a>
     <a href="#" id="navAuthBtn" onclick="handleNavAuth(event)" data-i18n="nav.login">Anmelden</a>
     <div class="lang-sw">
       <button class="lang-btn active" id="langDE" aria-label="Deutsch">DE</button>
@@ -760,19 +298,17 @@ footer p{
       <button class="lang-btn" id="langFR" aria-label="Français">FR</button>
     </div>
   </div>
-  <button class="burger" id="burgerBtn" aria-label="Menü öffnen">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="burger" id="burgerBtn" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#battle" onclick="closeMobile()" data-i18n="nav.battle">Battle</a>
   <a href="#hof" onclick="closeMobile()">Hall of Fame</a>
-  <a href="#" id="mobileAdminLink" style="display:none" onclick="openAdmin();closeMobile();return false;">Admin</a>
   <a href="#how" onclick="closeMobile()" data-i18n="nav.rules">Regeln</a>
+  <a href="#" id="mobileAdminLink" style="display:none" onclick="openAdmin();closeMobile();return false;">Admin</a>
   <a href="#" id="mobileAuthBtn" onclick="handleMobileAuth(event)">Anmelden</a>
-  <div class="lang-sw" style="margin-top:1.5rem">
+  <div class="lang-sw" style="margin-top:1.5rem;margin-left:0">
     <button class="lang-btn active" id="langDE2" aria-label="Deutsch">DE</button>
     <button class="lang-btn" id="langEN2" aria-label="English">EN</button>
     <button class="lang-btn" id="langFR2" aria-label="Français">FR</button>
@@ -784,7 +320,7 @@ footer p{
   <div class="hero-eye" data-i18n="hero.eye">Beat Battle Platform</div>
   <h1>EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
   <p class="hero-sub" data-i18n="hero.sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.</p>
-  <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem;"><span data-i18n="hero.desc">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.</span></p>
+  <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem"><span data-i18n="hero.desc">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.</span></p>
   <div class="stats-row">
     <div><div class="stat-n" id="sP">—</div><div class="stat-l" data-i18n="stats.producers">Producer</div></div>
     <div><div class="stat-n" id="sB">—</div><div class="stat-l">Battles</div></div>
@@ -801,20 +337,16 @@ footer p{
       <div class="battle-h" id="battleTitle">—</div>
       <p id="battleDesc" style="color:var(--gray);font-size:.88rem;max-width:480px;margin-top:1rem;line-height:1.7;display:none"></p>
     </div>
-    <div>
-      <div id="countdown" style="margin-bottom:.4rem">—</div>
-    </div>
+    <div><div id="countdown">—</div></div>
   </div>
-
   <div id="leaderboardWrap" style="display:none"></div>
   <div id="entriesWrap"></div>
-
-  <div class="submit-box" id="submitBox">
+  <div class="submit-box">
     <h3 data-i18n="submit.title">Beat einreichen</h3>
     <p data-i18n="submit.sub">SoundCloud-Link einfügen. Ein Beat pro Battle.</p>
     <div class="field"><label data-i18n="submit.label.title">Beat-Titel</label><input type="text" id="inTitle" placeholder="z.B. MIDNIGHT RAIN"/></div>
     <div class="field"><label data-i18n="submit.label.sc">SoundCloud-Link</label><input type="url" id="inSC" placeholder="https://soundcloud.com/…"/></div>
-    <div class="field"><label data-i18n="submit.label.desc">Kurze Beschreibung (optional)</label><input type="text" id="inMeta" placeholder="z.B. lo-fi am See, dusty samples, Sommernacht"/></div>
+    <div class="field"><label data-i18n="submit.label.desc">Kurze Beschreibung (optional)</label><input type="text" id="inMeta" placeholder="z.B. lo-fi am See, dusty samples"/></div>
     <button class="btn" onclick="submitBeat()" data-i18n="submit.btn">Beat einreichen</button>
     <div id="submitMsg" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
   </div>
@@ -823,78 +355,40 @@ footer p{
 <!-- HALL OF FAME -->
 <div class="sec" id="hof">
   <div class="sec-eye">Hall of Fame</div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,4rem);text-transform:uppercase;letter-spacing:-.01em;margin-bottom:2.5rem;line-height:.95">
-    <span data-i18n="hof.title">DIE BESTEN<br>ALLER ZEITEN.</span>
-  </div>
-  <div class="hof-list" id="hofList">
-    <div class="empty" data-i18n="hof.empty">Noch keine Gewinner</div>
-  </div>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,4rem);text-transform:uppercase;letter-spacing:-.01em;margin-bottom:2.5rem;line-height:.95"><span data-i18n="hof.title">DIE BESTEN<br>ALLER ZEITEN.</span></div>
+  <div class="hof-list" id="hofList"><div class="empty" data-i18n="hof.empty">Noch keine Gewinner</div></div>
 </div>
 
-<!-- HOW IT WORKS -->
+<!-- RULES -->
 <div class="sec" id="how">
   <div class="sec-eye" data-i18n="rules.eye">Regeln</div>
   <div class="steps">
-    <div class="step">
-      <div class="step-n">01</div>
-      <div class="step-t" data-i18n="step1.title">Registrieren</div>
-      <p class="step-d" data-i18n="step1.desc">Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.</p>
-    </div>
-    <div class="step">
-      <div class="step-n">02</div>
-      <div class="step-t" data-i18n="step2.title">Beat einreichen</div>
-      <p class="step-d" data-i18n="step2.desc">Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen. Deadline: Ende des Battles.</p>
-    </div>
-    <div class="step">
-      <div class="step-n">03</div>
-      <div class="step-t" data-i18n="step3.title">Voten</div>
-      <p class="step-d" data-i18n="step3.desc">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.</p>
-    </div>
-    <div class="step">
-      <div class="step-n">04</div>
-      <div class="step-t" data-i18n="step4.title">Champion</div>
-      <p class="step-d" data-i18n="step4.desc">Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.</p>
-    </div>
+    <div class="step"><div class="step-n">01</div><div class="step-t" data-i18n="step1.title">Registrieren</div><p class="step-d" data-i18n="step1.desc">Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.</p></div>
+    <div class="step"><div class="step-n">02</div><div class="step-t" data-i18n="step2.title">Beat einreichen</div><p class="step-d" data-i18n="step2.desc">Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen.</p></div>
+    <div class="step"><div class="step-n">03</div><div class="step-t" data-i18n="step3.title">Voten</div><p class="step-d" data-i18n="step3.desc">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.</p></div>
+    <div class="step"><div class="step-n">04</div><div class="step-t" data-i18n="step4.title">Champion</div><p class="step-d" data-i18n="step4.desc">Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.</p></div>
   </div>
-
-  <!-- Verhaltensregeln -->
-  <div style="margin-top:3rem;border-top:1px solid var(--rule);padding-top:2.5rem;">
-    <div class="sec-eye" style="margin-bottom:1.5rem;" data-i18n="rules.conduct">Verhaltensregeln</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;">
-      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct1.title">Fairplay</div>
-        <p class="step-d" data-i18n="conduct1.desc">Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.</p>
-      </div>
-      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct2.title">Respekt</div>
-        <p class="step-d" data-i18n="conduct2.desc">Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.</p>
-      </div>
-      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct3.title">Originalität</div>
-        <p class="step-d" data-i18n="conduct3.desc">Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.</p>
-      </div>
-      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct4.title">Entscheidung</div>
-        <p class="step-d" data-i18n="conduct4.desc">Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.</p>
-      </div>
+  <div style="margin-top:3rem;border-top:1px solid var(--rule);padding-top:2.5rem">
+    <div class="sec-eye" style="margin-bottom:1.5rem" data-i18n="rules.conduct">Verhaltensregeln</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem">
+      <div style="border-left:1px solid var(--rule);padding-left:1rem"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem" data-i18n="conduct1.title">Fairplay</div><p class="step-d" data-i18n="conduct1.desc">Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.</p></div>
+      <div style="border-left:1px solid var(--rule);padding-left:1rem"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem" data-i18n="conduct2.title">Respekt</div><p class="step-d" data-i18n="conduct2.desc">Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.</p></div>
+      <div style="border-left:1px solid var(--rule);padding-left:1rem"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem" data-i18n="conduct3.title">Originalität</div><p class="step-d" data-i18n="conduct3.desc">Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.</p></div>
+      <div style="border-left:1px solid var(--rule);padding-left:1rem"><div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem" data-i18n="conduct4.title">Entscheidung</div><p class="step-d" data-i18n="conduct4.desc">Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.</p></div>
     </div>
   </div>
 </div>
 
-<!-- KONTAKT -->
+<!-- CONTACT -->
 <div class="sec" id="kontakt">
   <div class="sec-eye" data-i18n="contact.eye">Kontakt</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;flex-wrap:wrap">
     <div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);text-transform:uppercase;letter-spacing:-.01em;line-height:.95;margin-bottom:1.5rem;">
-        <span data-i18n="contact.title">FRAGEN?<br>MELD DICH.</span>
-      </div>
-      <p style="color:var(--gray);font-size:.88rem;line-height:1.8;max-width:340px;">
-        <span data-i18n="contact.sub">Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.</span>
-      </p>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);text-transform:uppercase;letter-spacing:-.01em;line-height:.95;margin-bottom:1.5rem"><span data-i18n="contact.title">FRAGEN?<br>MELD DICH.</span></div>
+      <p style="color:var(--gray);font-size:.88rem;line-height:1.8;max-width:340px"><span data-i18n="contact.sub">Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.</span></p>
     </div>
     <div>
-      <div class="submit-box" style="background:var(--dark);">
+      <div class="submit-box">
         <div class="field"><label data-i18n="contact.label.alias">Dein Alias (optional)</label><input type="text" id="ctAlias" placeholder="dein_alias"/></div>
         <div class="field"><label data-i18n="contact.label.email">E-Mail</label><input type="email" id="ctEmail" placeholder="deine@mail.com"/></div>
         <div class="field"><label data-i18n="contact.label.msg">Nachricht</label><input type="text" id="ctMsg" placeholder="Deine Nachricht…"/></div>
@@ -905,18 +399,18 @@ footer p{
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <p>© CREO//ONE — Beat Battle Platform</p>
   <p>Schwarzwald · Deutschland</p>
 </footer>
 
+<div id="toast"></div>
+
 <script>
-// ── SUPABASE CONFIG ──
-// Ersetze diese beiden Werte mit deinen eigenen aus dem Supabase-Dashboard:
-// supabase.com → Projekt → Settings → API
+// ── CONFIG — ersetze mit deinen Supabase-Werten ──
 const SUPABASE_URL = 'https://jnryiqgxaetvjfqvodue.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_n7BA0YwI38odzlwRAyvq1Q_ae4P_qhc';
+const SUPABASE_KEY = 'sb_publishable_n7BA0YwI38odzlwRAyvq1Q_ae4P_qh;
+const ADMIN_EMAILS = ['CREO_ONE@proton.me']; // deine E-Mail hier
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -930,51 +424,53 @@ let myEntry = null;
 async function init() {
   const { data: { session } } = await sb.auth.getSession();
   if (session) setUser(session.user);
-
   sb.auth.onAuthStateChange((_e, session) => {
     if (session) setUser(session.user);
-    else { currentUser = null; updateNavBtn(); }
+    else { currentUser = null; updateNavBtn(); updateMobileAuthBtn(); }
   });
-
   await loadBattle();
   await loadHof();
   await loadStats();
   startCountdown();
 }
 
-// ── USER ──
+// ── AUTH ──
 function setUser(user) {
   currentUser = user;
   updateNavBtn();
   updateMobileAuthBtn();
+  checkAdmin();
 }
 
 function updateNavBtn() {
   const btn = document.getElementById('navAuthBtn');
+  if (!btn) return;
   if (currentUser) {
     const alias = currentUser.user_metadata?.alias || currentUser.email?.split('@')[0] || 'Producer';
     btn.textContent = alias.toUpperCase();
   } else {
-    btn.textContent = 'Anmelden';
+    btn.textContent = t('nav.login');
   }
 }
 
-function handleNavAuth(e) {
-  e.preventDefault();
-  if (currentUser) doLogout();
-  else openModal();
+function updateMobileAuthBtn() {
+  const mb = document.getElementById('mobileAuthBtn');
+  if (!mb) return;
+  mb.textContent = currentUser ? (currentUser.user_metadata?.alias || 'Logout').toUpperCase() : t('nav.login');
 }
+
+function handleNavAuth(e) { e.preventDefault(); if (currentUser) doLogout(); else openModal(); }
+function handleMobileAuth(e) { e.preventDefault(); closeMobile(); if (currentUser) doLogout(); else openModal(); }
 
 async function doLogout() {
   await sb.auth.signOut();
-  currentUser = null;
-  myVotes = new Set();
-  myEntry = null;
-  updateNavBtn();
+  currentUser = null; myVotes = new Set(); myEntry = null;
+  updateNavBtn(); updateMobileAuthBtn();
+  document.getElementById('adminLink').style.display = 'none';
+  document.getElementById('mobileAdminLink').style.display = 'none';
   renderEntries([]);
 }
 
-// ── MODAL ──
 function openModal() { document.getElementById('overlay').classList.add('open'); }
 function closeModal() { document.getElementById('overlay').classList.remove('open'); hideMsg('authMsg'); }
 
@@ -987,63 +483,15 @@ function switchTab(tab, el) {
   hideMsg('authMsg');
 }
 
-async function doReset() {
-  const email = document.getElementById('resetEmail').value.trim();
-  if (!email) { showMsg('authMsg', t('err.email'), 'err'); return; }
-  const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin
-  });
-  if (error) { showMsg('authMsg', error.message, 'err'); return; }
-  showMsg('authMsg', t('modal.reset.ok'), 'ok');
-}
-
-async function sendContact() {
-  const alias = document.getElementById('ctAlias').value.trim();
-  const email = document.getElementById('ctEmail').value.trim();
-  const msg = document.getElementById('ctMsg').value.trim();
-  if (!email || !msg) { showMsg('ctResult', t('contact.required'), 'err'); return; }
-  const { error } = await sb.from('contact_messages').insert({ alias, email, message: msg });
-  if (error) { showMsg('ctResult', error.message, 'err'); return; }
-  document.getElementById('ctAlias').value = '';
-  document.getElementById('ctEmail').value = '';
-  document.getElementById('ctMsg').value = '';
-  showMsg('ctResult', t('contact.ok'), 'ok');
-}
-
-function showMsg(id, text, type) {
-  const el = document.getElementById(id);
-  if (!el) { showToast(text, type); return; }
-  el.textContent = text;
-  el.className = `msg ${type}`;
-}
-function hideMsg(id) {
-  const el = document.getElementById(id);
-  if (el) el.className = 'msg hidden';
-}
-
-let toastTimer;
-function showToast(text, type) {
-  const t = document.getElementById('toast');
-  t.textContent = text;
-  t.className = `show ${type}`;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.className = ''; }, 3000);
-}
-}
-
 async function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pw = document.getElementById('loginPw').value;
   if (!email || !pw) { showMsg('authMsg', t('err.fields'), 'err'); return; }
   const { error } = await sb.auth.signInWithPassword({ email, password: pw });
   if (error) {
-    if (error.message.toLowerCase().includes('email not confirmed')) {
-      showMsg('authMsg', 'E-Mail noch nicht bestätigt — check dein Postfach.', 'err');
-    } else if (error.message.toLowerCase().includes('invalid login')) {
-      showMsg('authMsg', 'E-Mail oder Passwort falsch.', 'err');
-    } else {
-      showMsg('authMsg', error.message, 'err');
-    }
+    if (error.message.toLowerCase().includes('email not confirmed')) showMsg('authMsg','E-Mail noch nicht bestätigt — check dein Postfach.','err');
+    else if (error.message.toLowerCase().includes('invalid login')) showMsg('authMsg','E-Mail oder Passwort falsch.','err');
+    else showMsg('authMsg', error.message, 'err');
     return;
   }
   showMsg('authMsg','Willkommen zurück!','ok');
@@ -1051,17 +499,7 @@ async function doLogin() {
   await loadEntries();
 }
 
-// ── ALIAS FILTER ──
-const BLOCKED = [
-  'arsch','arschloch','scheiße','scheisse','fick','ficken','wichser','wichsen',
-  'hurensohn','hure','nutte','fotze','schwanz','penis','vagina','titten',
-  'nazi','hitler','nigger','neger','kanake','spast','idiot','vollidiot',
-  'bastard','basterd','kacke','kackstein','dumm','dummkopf','depp',
-  'bescheuert','verpissdich','verpiss','dreckig','dreck','schlampe',
-  'asshole','bitch','fuck','shit','cunt','dick','cock','pussy','whore',
-  'retard','faggot','nigga','racist'
-];
-
+const BLOCKED = ['arsch','arschloch','scheiße','scheisse','fick','ficken','wichser','hure','nutte','fotze','nazi','hitler','nigger','neger','kanake','spast','idiot','bastard','kacke','schlampe','asshole','bitch','fuck','shit','cunt','dick','cock','pussy','whore','retard','faggot','nigga'];
 const RESERVED = ['admin','administrator','creoone','creo','moderator','mod','support','system','owner'];
 
 function aliasOk(alias) {
@@ -1082,166 +520,88 @@ async function doRegister() {
   if (pw.length < 6) { showMsg('authMsg', t('err.pw'), 'err'); return; }
   const aliasErr = aliasOk(alias);
   if (aliasErr) { showMsg('authMsg', aliasErr, 'err'); return; }
-  const { error } = await sb.auth.signUp({
-    email, password: pw,
-    options: { data: { alias } }
-  });
+  const { error } = await sb.auth.signUp({ email, password: pw, options: { data: { alias } } });
   if (error) { showMsg('authMsg', error.message, 'err'); return; }
   showMsg('authMsg', t('modal.register.ok'), 'ok');
+}
+
+async function doReset() {
+  const email = document.getElementById('resetEmail').value.trim();
+  if (!email) { showMsg('authMsg', t('err.email'), 'err'); return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+  if (error) { showMsg('authMsg', error.message, 'err'); return; }
+  showMsg('authMsg', t('modal.reset.ok'), 'ok');
 }
 
 // ── BATTLE ──
 async function loadBattle() {
   showEntriesSkeleton();
-  const { data, error } = await sb
-    .from('battles')
-    .select('*')
-    .eq('active', true)
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .single();
-
+  const { data, error } = await sb.from('battles').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).single();
   if (error || !data) {
-    // Demo-Fallback wenn noch keine Battles in DB
     currentBattle = { id: 'demo', title: 'SOMMER 26', theme: 'Thema dieser Woche', description: 'Sommer 26. Hitze, Freiheit, lange Nächte — welcher deiner Beats fängt das ein? Egal ob lo-fi am See, Afrobeats im Park oder ein Soul-Sample das nach Urlaub klingt. Zeig was du hast. Die Community entscheidet.', ends_at: getFriday() };
-    document.getElementById('themeTag').textContent = currentBattle.theme;
-    document.getElementById('battleTitle').textContent = currentBattle.title;
-    const descEl = document.getElementById('battleDesc');
-    descEl.textContent = currentBattle.description;
-    descEl.style.display = 'block';
-    await loadEntries();
-    return;
+  } else {
+    currentBattle = data;
   }
-
-  currentBattle = data;
-  document.getElementById('themeTag').textContent = data.theme || 'Thema dieser Woche';
-  document.getElementById('battleTitle').textContent = data.title;
-  if (data.description) {
-    const descEl = document.getElementById('battleDesc');
-    descEl.textContent = data.description;
-    descEl.style.display = 'block';
+  document.getElementById('themeTag').textContent = currentBattle.theme || 'Thema dieser Woche';
+  document.getElementById('battleTitle').textContent = currentBattle.title;
+  if (currentBattle.description) {
+    const d = document.getElementById('battleDesc');
+    d.textContent = currentBattle.description;
+    d.style.display = 'block';
   }
   await loadEntries();
 }
 
 async function loadEntries() {
   if (!currentBattle) return;
-
-  const { data: entries } = await sb
-    .from('entries')
-    .select('*, profiles(alias)')
-    .eq('battle_id', currentBattle.id)
-    .order('votes', { ascending: false });
-
+  const { data: entries } = await sb.from('entries').select('*, profiles(alias)').eq('battle_id', currentBattle.id).order('votes', { ascending: false });
   if (currentUser) {
-    const { data: votes } = await sb
-      .from('votes')
-      .select('entry_id')
-      .eq('user_id', currentUser.id)
-      .eq('battle_id', currentBattle.id);
+    const { data: votes } = await sb.from('votes').select('entry_id').eq('user_id', currentUser.id).eq('battle_id', currentBattle.id);
     myVotes = new Set((votes || []).map(v => v.entry_id));
-
-    const { data: mine } = await sb
-      .from('entries')
-      .select('id')
-      .eq('battle_id', currentBattle.id)
-      .eq('user_id', currentUser.id)
-      .limit(1);
+    const { data: mine } = await sb.from('entries').select('id').eq('battle_id', currentBattle.id).eq('user_id', currentUser.id).limit(1);
     myEntry = mine?.[0]?.id || null;
   }
-
   renderEntries(entries || []);
+  await loadLeaderboard();
 }
 
 function showEntriesSkeleton() {
-  const wrap = document.getElementById('entriesWrap');
-  wrap.innerHTML = `<div class="entries">${[1,2,3,4].map(() => `
-    <div class="sk-entry">
-      <div class="skeleton sk-line short"></div>
-      <div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div>
-      <div class="skeleton sk-line short" style="width:30%"></div>
-      <div class="skeleton sk-player"></div>
-      <div class="skeleton sk-line" style="width:45%"></div>
-    </div>`).join('')}</div>`;
+  document.getElementById('entriesWrap').innerHTML = `<div class="entries">${[1,2,3,4].map(() => `<div class="sk-entry"><div class="skeleton sk-line short"></div><div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div><div class="skeleton sk-line short" style="width:30%"></div><div class="skeleton sk-player"></div><div class="skeleton sk-line" style="width:45%"></div></div>`).join('')}</div>`;
 }
 
 function renderEntries(entries) {
   window._lastEntries = entries;
   const wrap = document.getElementById('entriesWrap');
-  if (!entries.length) {
-    wrap.innerHTML = `<div class="empty">${t('hof.empty')}</div>`;
-    return;
-  }
-
+  if (!entries.length) { wrap.innerHTML = `<div class="empty">${t('hof.empty')}</div>`; return; }
   wrap.innerHTML = `<div class="entries">${entries.map(e => {
     const alias = e.profiles?.alias || 'UNKNOWN';
     const voted = myVotes.has(e.id);
     const isOwn = currentUser && e.user_id === currentUser.id;
-    const scEmbed = e.sc_url
-      ? `<iframe class="sc-box" scrolling="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-         </iframe>`
-      : `<div class="sc-placeholder">▶ Beat anhören</div>`;
-
-    return `<div class="entry">
-      <div class="entry-prod" style="cursor:pointer" onclick="openProfile('${e.user_id}')">${alias}</div>
-      <div class="entry-title">${e.title}</div>
-      <div class="entry-meta">${e.meta || ''}</div>
-      ${scEmbed}
-      <div class="vote-row">
-        <button class="vote-btn ${voted ? 'voted' : ''}"
-          onclick="vote('${e.id}','${e.user_id}')"
-          ${isOwn || voted ? 'disabled style="opacity:.4;cursor:default"' : ''}>
-          ${voted ? t('vote.voted') : t('vote.vote')}
-        </button>
-        <span class="vote-c">${e.votes || 0} ${t('vote.votes')}</span>
-      </div>
-    </div>`;
+    const sc = e.sc_url ? `<iframe class="sc-box" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>` : `<div class="sc-placeholder">▶ BEAT ANHÖREN</div>`;
+    return `<div class="entry"><div class="entry-prod" onclick="openProfile('${e.user_id}')">${alias}</div><div class="entry-title">${e.title}</div><div class="entry-meta">${e.meta || ''}</div>${sc}<div class="vote-row"><button class="vote-btn ${voted?'voted':''}" onclick="vote('${e.id}','${e.user_id}')" ${isOwn||voted?'disabled style="opacity:.4;cursor:default"':''}>${voted?t('vote.voted'):t('vote.vote')}</button><span class="vote-c">${e.votes||0} ${t('vote.votes')}</span></div></div>`;
   }).join('')}</div>`;
 }
 
 async function vote(entryId, ownerId) {
   if (!currentUser) { openModal(); return; }
-  if (currentUser.id === ownerId) return;
-  if (myVotes.has(entryId)) return;
-
-  const { error } = await sb.from('votes').insert({
-    entry_id: entryId,
-    user_id: currentUser.id,
-    battle_id: currentBattle.id
-  });
-  if (error) return;
-
+  if (currentUser.id === ownerId || myVotes.has(entryId)) return;
+  const { error } = await sb.from('votes').insert({ entry_id: entryId, user_id: currentUser.id, battle_id: currentBattle.id });
+  if (error) { showToast(error.message, 'err'); return; }
   myVotes.add(entryId);
   await loadEntries();
-  await loadLeaderboard();
 }
 
 async function submitBeat() {
   if (!currentUser) { openModal(); return; }
   if (myEntry) { showMsg('submitMsg', t('submit.already'), 'err'); return; }
-
   const title = document.getElementById('inTitle').value.trim().toUpperCase();
   const sc_url = document.getElementById('inSC').value.trim();
   const meta = document.getElementById('inMeta').value.trim();
-
   if (!title || !sc_url) { showMsg('submitMsg', t('submit.required'), 'err'); return; }
-
-  // SoundCloud URL validieren
   const scPattern = /^https?:\/\/(www\.)?soundcloud\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/;
-  if (!scPattern.test(sc_url)) {
-    showMsg('submitMsg', 'Nur SoundCloud-Links erlaubt (soundcloud.com/…)', 'err');
-    return;
-  }
-
-  const { error } = await sb.from('entries').insert({
-    battle_id: currentBattle.id,
-    user_id: currentUser.id,
-    title, sc_url, meta, votes: 0
-  });
-
+  if (!scPattern.test(sc_url)) { showMsg('submitMsg','Nur SoundCloud-Links erlaubt.','err'); return; }
+  const { error } = await sb.from('entries').insert({ battle_id: currentBattle.id, user_id: currentUser.id, title, sc_url, meta, votes: 0 });
   if (error) { showMsg('submitMsg', error.message, 'err'); return; }
-
   document.getElementById('inTitle').value = '';
   document.getElementById('inSC').value = '';
   document.getElementById('inMeta').value = '';
@@ -1249,54 +609,44 @@ async function submitBeat() {
   await loadEntries();
 }
 
-// ── HALL OF FAME ──
-async function loadHof() {
-  const { data } = await sb
-    .from('winners')
-    .select('*, profiles(alias)')
-    .order('wins', { ascending: false })
-    .limit(8);
-
+// ── LEADERBOARD ──
+async function loadLeaderboard() {
+  if (!currentBattle) return;
+  const { data } = await sb.from('entries').select('title,votes,user_id,profiles(alias)').eq('battle_id', currentBattle.id).order('votes', { ascending: false }).limit(5);
   if (!data || !data.length) return;
+  const maxV = data[0].votes || 1;
+  const wrap = document.getElementById('leaderboardWrap');
+  wrap.style.display = 'block';
+  wrap.innerHTML = `<div class="sec-eye" style="margin-bottom:1rem">Live Leaderboard</div><div class="leaderboard">${data.map((e,i) => `<div class="lb-row"><div class="lb-rank">${String(i+1).padStart(2,'0')}</div><div class="lb-name" onclick="openProfile('${e.user_id}')">${e.profiles?.alias||'UNKNOWN'}</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round((e.votes||0)/maxV*100)}%"></div></div><div class="lb-votes">${e.votes||0} Votes</div></div>`).join('')}</div>`;
+}
 
-  document.getElementById('hofList').innerHTML = data.map((w, i) => `
-    <div class="hof-card">
-      <div class="hof-rank">${String(i+1).padStart(2,'0')}</div>
-      <div class="hof-name" style="cursor:pointer" onclick="openProfile('${w.user_id}')">${w.profiles?.alias || 'UNKNOWN'}</div>
-      <div class="hof-wins">${w.wins} Battle${w.wins !== 1 ? 's' : ''} gewonnen</div>
-      ${i === 0 ? '<div class="champ-tag">Champion</div>' : ''}
-    </div>`).join('');
+// ── HOF ──
+async function loadHof() {
+  const { data } = await sb.from('winners').select('*,profiles(alias)').order('wins', { ascending: false }).limit(8);
+  if (!data || !data.length) return;
+  document.getElementById('hofList').innerHTML = data.map((w,i) => `<div class="hof-card"><div class="hof-rank">${String(i+1).padStart(2,'0')}</div><div class="hof-name" onclick="openProfile('${w.user_id}')">${w.profiles?.alias||'UNKNOWN'}</div><div class="hof-wins">${w.wins} Battle${w.wins!==1?'s':''} gewonnen</div>${i===0?'<div class="champ-tag">Champion</div>':''}</div>`).join('');
 }
 
 // ── STATS ──
 async function loadStats() {
-  const [{ count: p }, { count: b }, { count: v }] = await Promise.all([
-    sb.from('profiles').select('*', { count: 'exact', head: true }),
-    sb.from('battles').select('*', { count: 'exact', head: true }),
-    sb.from('votes').select('*', { count: 'exact', head: true }),
+  const [{ count: p },{ count: b },{ count: v }] = await Promise.all([
+    sb.from('profiles').select('*',{count:'exact',head:true}),
+    sb.from('battles').select('*',{count:'exact',head:true}),
+    sb.from('votes').select('*',{count:'exact',head:true}),
   ]);
-  animCount('sP', p || 0);
-  animCount('sB', b || 0);
-  animCount('sV', v || 0);
+  animCount('sP', p||0); animCount('sB', b||0); animCount('sV', v||0);
 }
 
 function animCount(id, target) {
-  const el = document.getElementById(id);
-  let n = 0; const step = Math.max(1, Math.ceil(target / 40));
-  const t = setInterval(() => {
-    n = Math.min(n + step, target);
-    el.textContent = n;
-    if (n >= target) clearInterval(t);
-  }, 30);
+  const el = document.getElementById(id); let n=0;
+  const step = Math.max(1, Math.ceil(target/40));
+  const timer = setInterval(() => { n=Math.min(n+step,target); el.textContent=n; if(n>=target) clearInterval(timer); }, 30);
 }
 
 // ── COUNTDOWN ──
 function getFriday() {
-  const d = new Date();
-  const day = d.getDay();
-  const diff = (5 - day + 7) % 7 || 7;
-  d.setDate(d.getDate() + diff);
-  d.setHours(23, 59, 0, 0);
+  const d = new Date(); const day = d.getDay();
+  const diff = (5-day+7)%7||7; d.setDate(d.getDate()+diff); d.setHours(23,59,0,0);
   return d.toISOString();
 }
 
@@ -1305,645 +655,129 @@ function startCountdown() {
     const end = currentBattle?.ends_at ? new Date(currentBattle.ends_at) : new Date(getFriday());
     const diff = end - new Date();
     if (diff <= 0) { document.getElementById('countdown').textContent = t('countdown.end'); return; }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
+    const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000);
     document.getElementById('countdown').textContent = `${t('countdown.in')} ${d}T ${h}H ${m}M`;
   }
-  update();
-  setInterval(update, 60000);
+  update(); setInterval(update, 60000);
 }
 
-
-
-// ── I18N ──
-const LANG = {
-  de: {
-    'nav.battle': 'Battle',
-    'nav.rules': 'Regeln',
-    'nav.login': 'Anmelden',
-    'hero.eye': 'Beat Battle Platform',
-    'hero.sub': 'Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.',
-    'hero.desc': 'Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.',
-    'stats.producers': 'Producer',
-    'stats.votes': 'Votes',
-    'battle.eye': 'Aktuelles Battle',
-    'battle.loading': 'Thema wird geladen…',
-    'submit.title': 'Beat einreichen',
-    'submit.sub': 'SoundCloud-Link einfügen. Ein Beat pro Battle.',
-    'submit.btn': 'Beat einreichen',
-    'submit.already': 'Du hast bereits einen Beat eingereicht.',
-    'submit.required': 'Titel und SoundCloud-Link pflicht.',
-    'submit.ok': 'Beat eingereicht!',
-    'hof.title': 'DIE BESTEN<br>ALLER ZEITEN.',
-    'hof.empty': 'Noch keine Gewinner',
-    'hof.wins': 'Battle',
-    'hof.wins_p': 'Battles',
-    'rules.eye': 'Regeln',
-    'rules.conduct': 'Verhaltensregeln',
-    'contact.eye': 'Kontakt',
-    'contact.title': 'FRAGEN?<br>MELD DICH.',
-    'contact.sub': 'Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.',
-    'contact.btn': 'Nachricht senden',
-    'contact.ok': 'Nachricht gesendet — wir melden uns.',
-    'contact.required': 'E-Mail und Nachricht pflicht.',
-    'modal.login': 'Anmelden',
-    'modal.tab.login': 'Login',
-    'modal.tab.register': 'Registrieren',
-    'modal.tab.reset': 'Passwort vergessen',
-    'modal.reset.sub': 'Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.',
-    'modal.reset.btn': 'Link senden',
-    'modal.reset.ok': 'Link gesendet — check deine E-Mails',
-    'modal.register.btn': 'Account erstellen',
-    'modal.register.ok': 'Account erstellt — bitte E-Mail bestätigen',
-    'modal.login.btn': 'Anmelden',
-    'countdown.end': 'BATTLE BEENDET',
-    'countdown.in': 'ENDET IN',
-    'vote.vote': '↑ VOTEN',
-    'vote.voted': '✓ GEVOTED',
-    'vote.votes': 'VOTES',
-    'err.fields': 'Alle Felder ausfüllen',
-    'err.pw': 'Passwort min. 6 Zeichen',
-    'err.email': 'E-Mail eingeben',
-    'step1.title': 'Registrieren', 'step1.desc': 'Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.',
-    'step2.title': 'Beat einreichen', 'step2.desc': 'Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen. Deadline: Ende des Battles.',
-    'step3.title': 'Voten', 'step3.desc': 'Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.',
-    'step4.title': 'Champion', 'step4.desc': 'Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.',
-    'conduct1.title': 'Fairplay', 'conduct1.desc': 'Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.',
-    'conduct2.title': 'Respekt', 'conduct2.desc': 'Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.',
-    'conduct3.title': 'Originalität', 'conduct3.desc': 'Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.',
-    'conduct4.title': 'Entscheidung', 'conduct4.desc': 'Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.',
-    'submit.label.title': 'Beat-Titel', 'submit.label.sc': 'SoundCloud-Link', 'submit.label.desc': 'Kurze Beschreibung (optional)',
-    'contact.label.alias': 'Dein Alias (optional)', 'contact.label.email': 'E-Mail', 'contact.label.msg': 'Nachricht',
-    'modal.label.email': 'E-Mail', 'modal.label.pw': 'Passwort', 'modal.label.alias': 'Producer-Alias',
-  },
-  en: {
-    'nav.battle': 'Battle',
-    'nav.rules': 'Rules',
-    'nav.login': 'Sign in',
-    'hero.eye': 'Beat Battle Platform',
-    'hero.sub': 'One theme, one beat, one winner. The community decides.',
-    'hero.desc': 'Every two weeks a new theme. Registered producers submit one beat via SoundCloud link. The community votes. Most votes wins — Hall of Fame entry and Champion badge.',
-    'stats.producers': 'Producers',
-    'stats.votes': 'Votes',
-    'battle.eye': 'Current Battle',
-    'battle.loading': 'Loading theme…',
-    'submit.title': 'Submit a beat',
-    'submit.sub': 'Paste your SoundCloud link. One beat per battle.',
-    'submit.btn': 'Submit beat',
-    'submit.already': 'You already submitted a beat for this battle.',
-    'submit.required': 'Title and SoundCloud link required.',
-    'submit.ok': 'Beat submitted!',
-    'hof.title': 'THE BEST<br>OF ALL TIME.',
-    'hof.empty': 'No winners yet',
-    'hof.wins': 'Battle won',
-    'hof.wins_p': 'Battles won',
-    'rules.eye': 'Rules',
-    'rules.conduct': 'Code of conduct',
-    'contact.eye': 'Contact',
-    'contact.title': 'QUESTIONS?<br>HIT US UP.',
-    'contact.sub': 'For questions, reports or feedback — write to us. We reply as fast as we can.',
-    'contact.btn': 'Send message',
-    'contact.ok': 'Message sent — we will get back to you.',
-    'contact.required': 'Email and message required.',
-    'modal.login': 'Sign in',
-    'modal.tab.login': 'Login',
-    'modal.tab.register': 'Register',
-    'modal.tab.reset': 'Forgot password',
-    'modal.reset.sub': 'Enter your email — you will receive a link to reset your password.',
-    'modal.reset.btn': 'Send link',
-    'modal.reset.ok': 'Link sent — check your emails',
-    'modal.register.btn': 'Create account',
-    'modal.register.ok': 'Account created — please confirm your email',
-    'modal.login.btn': 'Sign in',
-    'countdown.end': 'BATTLE ENDED',
-    'countdown.in': 'ENDS IN',
-    'vote.vote': '↑ VOTE',
-    'vote.voted': '✓ VOTED',
-    'vote.votes': 'VOTES',
-    'err.fields': 'Please fill in all fields',
-    'err.pw': 'Password min. 6 characters',
-    'err.email': 'Please enter your email',
-    'step1.title': 'Register', 'step1.desc': 'Create an account with your producer alias. No real name needed. One account per person.',
-    'step2.title': 'Submit a beat', 'step2.desc': 'One beat per battle — via SoundCloud link. The beat must fit the theme. Deadline: end of battle.',
-    'step3.title': 'Vote', 'step3.desc': 'Only registered producers can vote. Not for your own beat. One vote per person per battle.',
-    'step4.title': 'Champion', 'step4.desc': 'Most votes wins. Hall of Fame entry. Champion badge on your profile.',
-    'conduct1.title': 'Fair play', 'conduct1.desc': 'Multiple accounts, coordinated voting and manipulation lead to immediate exclusion.',
-    'conduct2.title': 'Respect', 'conduct2.desc': 'Insults, racism or discrimination are not tolerated. Accounts will be banned.',
-    'conduct3.title': 'Originality', 'conduct3.desc': 'Only your own productions. Submitting someone else's beat is fraud and leads to exclusion.',
-    'conduct4.title': 'Decisions', 'conduct4.desc': 'Admin decisions are final. For questions or reports: use the contact form.',
-    'submit.label.title': 'Beat title', 'submit.label.sc': 'SoundCloud link', 'submit.label.desc': 'Short description (optional)',
-    'contact.label.alias': 'Your alias (optional)', 'contact.label.email': 'Email', 'contact.label.msg': 'Message',
-    'modal.label.email': 'Email', 'modal.label.pw': 'Password', 'modal.label.alias': 'Producer alias',
-  },
-  fr: {
-    'nav.battle': 'Battle',
-    'nav.rules': 'Règles',
-    'nav.login': 'Connexion',
-    'hero.eye': 'Plateforme de Battle de Beats',
-    'hero.sub': 'Un thème, un beat, un gagnant. La communauté décide.',
-    'hero.desc': 'Toutes les deux semaines un nouveau thème. Les producteurs inscrits soumettent un beat via SoundCloud. La communauté vote. Celui qui a le plus de votes gagne — Hall of Fame et badge Champion.',
-    'stats.producers': 'Producteurs',
-    'stats.votes': 'Votes',
-    'battle.eye': 'Battle en cours',
-    'battle.loading': 'Chargement du thème…',
-    'submit.title': 'Soumettre un beat',
-    'submit.sub': 'Collez votre lien SoundCloud. Un beat par battle.',
-    'submit.btn': 'Soumettre',
-    'submit.already': 'Vous avez déjà soumis un beat pour cette battle.',
-    'submit.required': 'Titre et lien SoundCloud requis.',
-    'submit.ok': 'Beat soumis !',
-    'hof.title': 'LES MEILLEURS<br>DE TOUS LES TEMPS.',
-    'hof.empty': 'Pas encore de gagnants',
-    'hof.wins': 'Battle gagné',
-    'hof.wins_p': 'Battles gagnés',
-    'rules.eye': 'Règles',
-    'rules.conduct': 'Code de conduite',
-    'contact.eye': 'Contact',
-    'contact.title': 'DES QUESTIONS?<br>ÉCRIVEZ-NOUS.',
-    'contact.sub': 'Pour questions, signalements ou retours — écrivez-nous. Nous répondons dès que possible.',
-    'contact.btn': 'Envoyer le message',
-    'contact.ok': 'Message envoyé — nous vous répondrons.',
-    'contact.required': 'Email et message requis.',
-    'modal.login': 'Connexion',
-    'modal.tab.login': 'Connexion',
-    'modal.tab.register': 'Inscription',
-    'modal.tab.reset': 'Mot de passe oublié',
-    'modal.reset.sub': 'Entrez votre email — vous recevrez un lien pour réinitialiser votre mot de passe.',
-    'modal.reset.btn': 'Envoyer le lien',
-    'modal.reset.ok': 'Lien envoyé — vérifiez vos emails',
-    'modal.register.btn': 'Créer un compte',
-    'modal.register.ok': 'Compte créé — veuillez confirmer votre email',
-    'modal.login.btn': 'Se connecter',
-    'countdown.end': 'BATTLE TERMINÉ',
-    'countdown.in': 'SE TERMINE DANS',
-    'vote.vote': '↑ VOTER',
-    'vote.voted': '✓ VOTÉ',
-    'vote.votes': 'VOTES',
-    'err.fields': 'Veuillez remplir tous les champs',
-    'err.pw': 'Mot de passe min. 6 caractères',
-    'err.email': 'Veuillez entrer votre email',
-    'step1.title': 'S'inscrire', 'step1.desc': 'Créez un compte avec votre alias de producteur. Pas de vrai nom requis. Un compte par personne.',
-    'step2.title': 'Soumettre un beat', 'step2.desc': 'Un beat par battle — via lien SoundCloud. Le beat doit correspondre au thème. Deadline : fin de la battle.',
-    'step3.title': 'Voter', 'step3.desc': 'Seuls les producteurs inscrits peuvent voter. Pas pour son propre beat. Un vote par personne par battle.',
-    'step4.title': 'Champion', 'step4.desc': 'Le plus de votes gagne. Entrée au Hall of Fame. Badge Champion sur le profil.',
-    'conduct1.title': 'Fair-play', 'conduct1.desc': 'Les comptes multiples, le vote coordonné et la manipulation entraînent une exclusion immédiate.',
-    'conduct2.title': 'Respect', 'conduct2.desc': 'Les insultes, le racisme ou la discrimination ne sont pas tolérés. Les comptes seront bannis.',
-    'conduct3.title': 'Originalité', 'conduct3.desc': 'Uniquement vos propres productions. Soumettre le beat de quelqu'un d'autre est une fraude.',
-    'conduct4.title': 'Décisions', 'conduct4.desc': 'Les décisions de l'administration sont définitives. Pour questions ou signalements : utilisez le formulaire.',
-    'submit.label.title': 'Titre du beat', 'submit.label.sc': 'Lien SoundCloud', 'submit.label.desc': 'Courte description (optionnel)',
-    'contact.label.alias': 'Votre alias (optionnel)', 'contact.label.email': 'Email', 'contact.label.msg': 'Message',
-    'modal.label.email': 'Email', 'modal.label.pw': 'Mot de passe', 'modal.label.alias': 'Alias producteur',
-  }
-};
-
-let currentLang = 'de';
-
-function t(key) {
-  return LANG[currentLang][key] || LANG['de'][key] || key;
+// ── CONTACT ──
+async function sendContact() {
+  const alias = document.getElementById('ctAlias').value.trim();
+  const email = document.getElementById('ctEmail').value.trim();
+  const msg = document.getElementById('ctMsg').value.trim();
+  if (!email || !msg) { showMsg('ctResult', t('contact.required'), 'err'); return; }
+  const { error } = await sb.from('contact_messages').insert({ alias, email, message: msg });
+  if (error) { showMsg('ctResult', error.message, 'err'); return; }
+  document.getElementById('ctAlias').value = '';
+  document.getElementById('ctEmail').value = '';
+  document.getElementById('ctMsg').value = '';
+  showMsg('ctResult', t('contact.ok'), 'ok');
 }
 
-function setLang(lang, btn) {
-  currentLang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyLang();
+// ── UTILS ──
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  if (!el) { showToast(text, type); return; }
+  el.textContent = text; el.className = `msg ${type}`;
+}
+function hideMsg(id) { const el=document.getElementById(id); if(el) el.className='msg hidden'; }
+let toastTimer;
+function showToast(text, type) {
+  const t2 = document.getElementById('toast');
+  t2.textContent = text; t2.className = `show ${type}`;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t2.className=''; }, 3000);
 }
 
-function applyLang() {
-  document.documentElement.lang = currentLang;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    if (el.id === 'navAuthBtn') return; // handled separately
-    const key = el.getAttribute('data-i18n');
-    el.innerHTML = t(key);
-  });
-  // nav auth btn
-  const navBtn = document.getElementById('navAuthBtn');
-  if (navBtn && !currentUser) navBtn.textContent = t('nav.login');
-  // modal tabs
-  const tabs = document.querySelectorAll('.tab-btn');
-  if (tabs[0]) tabs[0].textContent = t('modal.tab.login');
-  if (tabs[1]) tabs[1].textContent = t('modal.tab.register');
-  if (tabs[2]) tabs[2].textContent = t('modal.tab.reset');
-  // reset form paragraph
-  const resetP = document.querySelector('#resetForm p');
-  if (resetP) resetP.textContent = t('modal.reset.sub');
-  // re-render entries
-  if (currentBattle) renderEntries(window._lastEntries || []);
-}
-
-
-// ── I18N INIT ──
-// ── BURGER ──
-const burgerBtn = document.getElementById('burgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-burgerBtn.addEventListener('click', function(){
-  this.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-});
-function closeMobile(){
-  burgerBtn.classList.remove('open');
-  mobileMenu.classList.remove('open');
-  document.body.style.overflow = '';
-}
-function handleMobileAuth(e){
-  e.preventDefault();
-  closeMobile();
-  if (currentUser) doLogout();
-  else openModal();
-}
-// Sync mobile auth btn text
-function updateMobileAuthBtn(){
-  const mb = document.getElementById('mobileAuthBtn');
-  if (!mb) return;
-  mb.textContent = currentUser ? (currentUser.user_metadata?.alias || 'Logout').toUpperCase() : (LANG[currentLang]['nav.login'] || 'Anmelden');
-}
-
-// Mobile lang buttons
-document.getElementById('langDE2').addEventListener('click', function(){
-  setLang('de', document.getElementById('langDE'));
-  syncMobileLang('de');
-});
-document.getElementById('langEN2').addEventListener('click', function(){
-  setLang('en', document.getElementById('langEN'));
-  syncMobileLang('en');
-});
-document.getElementById('langFR2').addEventListener('click', function(){
-  setLang('fr', document.getElementById('langFR'));
-  syncMobileLang('fr');
-});
-function syncMobileLang(lang){
-  ['langDE2','langEN2','langFR2'].forEach(id => document.getElementById(id).classList.remove('active'));
-  document.getElementById('lang'+lang.toUpperCase()+'2').classList.add('active');
-  updateMobileAuthBtn();
-}
-
-document.getElementById('langDE').addEventListener('click', function(){ setLang('de', this); });
-document.getElementById('langEN').addEventListener('click', function(){ setLang('en', this); });
-document.getElementById('langFR').addEventListener('click', function(){ setLang('fr', this); });
-
-
-
-/* ── LEADERBOARD ── */
-.leaderboard{
-  border:1px solid var(--rule);
-  margin-bottom:2.5rem;
-}
-.lb-row{
-  display:flex;align-items:center;
-  gap:1rem;padding:.9rem 1.25rem;
-  border-bottom:1px solid var(--rule);
-  transition:background .15s;
-}
-.lb-row:last-child{border-bottom:none}
-.lb-row:hover{background:var(--dark)}
-.lb-rank{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:300;font-size:.75rem;
-  letter-spacing:.14em;color:var(--gray);
-  width:24px;flex-shrink:0;
-}
-.lb-name{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;font-size:1rem;
-  text-transform:uppercase;flex:1;
-  cursor:pointer;
-}
-.lb-name:hover{color:var(--gray)}
-.lb-bar-wrap{width:120px;height:3px;background:var(--mid);flex-shrink:0}
-.lb-bar{height:3px;background:var(--white);transition:width .4s}
-.lb-votes{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:500;font-size:.75rem;
-  letter-spacing:.1em;color:var(--gray);
-  width:60px;text-align:right;flex-shrink:0;
-}
-
-/* ── ADMIN ── */
-.admin-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(10,10,10,.97);
-  z-index:300;overflow-y:auto;
-}
-.admin-overlay.open{display:block}
-.admin-inner{max-width:680px;margin:0 auto;padding:3rem 2rem}
-.admin-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:2rem;
-  text-transform:uppercase;margin-bottom:2rem;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.admin-section{
-  border:1px solid var(--rule);
-  padding:1.5rem;margin-bottom:1.5rem;
-  background:var(--dark);
-}
-.admin-section h3{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:.8rem;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--gray);margin-bottom:1rem;
-}
-.admin-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:.75rem}
-.admin-row input,.admin-row textarea{
-  flex:1;min-width:140px;
-  background:var(--black);border:1px solid var(--rule);
-  color:var(--white);padding:.6rem .8rem;
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.9rem;outline:none;
-}
-.admin-row input:focus,.admin-row textarea:focus{border-color:var(--gray)}
-.admin-list{display:flex;flex-direction:column;gap:1px}
-.admin-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.75rem 1rem;background:var(--black);
-  font-family:'Barlow Condensed',sans-serif;font-size:.85rem;
-}
-.admin-item-name{font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.admin-item-meta{font-size:.72rem;color:var(--gray);letter-spacing:.08em}
-.btn-danger{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:.65rem;
-  letter-spacing:.12em;text-transform:uppercase;
-  padding:.25rem .7rem;
-  border:1px solid #500;background:none;
-  color:#ff6b6b;cursor:pointer;
-  transition:all .15s;
-}
-.btn-danger:hover{background:#2a0000}
-.btn-sm{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:.65rem;
-  letter-spacing:.12em;text-transform:uppercase;
-  padding:.25rem .7rem;
-  border:1px solid var(--rule);background:none;
-  color:var(--gray);cursor:pointer;
-  transition:all .15s;
-}
-.btn-sm:hover{border-color:var(--gray);color:var(--white)}
-
-/* ── PROFILE MODAL ── */
-.profile-overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(10,10,10,.96);
-  z-index:250;overflow-y:auto;
-}
-.profile-overlay.open{display:block}
-.profile-inner{
-  max-width:700px;margin:0 auto;
-  padding:3rem 2rem;
-}
-.profile-close{
-  background:none;border:none;
-  color:var(--gray);font-size:1.1rem;
-  cursor:pointer;float:right;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;letter-spacing:.1em;
-  text-transform:uppercase;font-size:.75rem;
-}
-.profile-close:hover{color:var(--white)}
-.profile-header{
-  display:flex;gap:2rem;align-items:flex-start;
-  margin-bottom:2.5rem;
-  padding-bottom:2rem;
-  border-bottom:1px solid var(--rule);
-  flex-wrap:wrap;
-}
-.avatar-wrap{position:relative;flex-shrink:0}
-.avatar{
-  width:90px;height:90px;border-radius:50%;
-  background:var(--mid);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:2rem;
-  color:var(--white);text-transform:uppercase;
-  overflow:hidden;
-}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.avatar-upload{
-  position:absolute;bottom:0;right:0;
-  width:26px;height:26px;border-radius:50%;
-  background:var(--white);border:none;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:.7rem;color:var(--black);
-}
-.profile-info{flex:1;min-width:0}
-.profile-alias{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;font-size:2.2rem;
-  text-transform:uppercase;letter-spacing:.02em;
-  line-height:1;margin-bottom:.5rem;
-}
-.profile-bio{
-  color:var(--gray);font-size:.88rem;
-  line-height:1.7;margin-bottom:1rem;
-  max-width:400px;
-}
-.profile-bio-edit{
-  width:100%;background:var(--dark);
-  border:1px solid var(--rule);
-  color:var(--white);padding:.6rem .8rem;
-  font-family:'Barlow',sans-serif;
-  font-size:.88rem;resize:vertical;
-  min-height:70px;outline:none;
-  display:none;
-}
-.profile-bio-edit:focus{border-color:var(--gray)}
-.profile-stats{
-  display:flex;gap:2rem;
-  font-family:'Barlow Condensed',sans-serif;
-}
-.ps-num{font-weight:800;font-size:1.4rem;color:var(--white)}
-.ps-lbl{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray)}
-.profile-edit-btn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:.7rem;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:.3rem .8rem;
-  border:1px solid var(--rule);
-  background:none;color:var(--gray);
-  cursor:pointer;margin-top:.75rem;
-  transition:all .15s;
-}
-.profile-edit-btn:hover{border-color:var(--gray);color:var(--white)}
-.profile-beats-eye{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:600;font-size:.68rem;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--gray);margin-bottom:1.5rem;
-}
-.profile-beats{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:1px;background:var(--rule);
-  border:1px solid var(--rule);
-}
-.pb-card{
-  background:var(--black);padding:1.5rem;
-  transition:background .15s;
-}
-.pb-card:hover{background:var(--dark)}
-.pb-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:800;font-size:1.2rem;
-  text-transform:uppercase;margin-bottom:.2rem;
-}
-.pb-meta{font-size:.75rem;color:var(--gray);margin-bottom:.75rem}
-.pb-votes{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.7rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gray);
-}
-#avatarInput{display:none}
-
-</style>
-
-
-<!-- ADMIN PANEL -->
-<div class="admin-overlay" id="adminOverlay">
-  <div class="admin-inner">
-    <div class="admin-title">
-      ADMIN
-      <button class="profile-close" onclick="closeAdmin()">✕ Schließen</button>
+// ── PROFILE ──
+async function openProfile(userId) {
+  document.getElementById('profileOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('profileContent').innerHTML = '<div style="color:var(--gray);font-family:\'Barlow Condensed\',sans-serif;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:3rem 0">WIRD GELADEN…</div>';
+  const isOwn = currentUser && currentUser.id === userId;
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', userId).single();
+  const alias = profile?.alias || 'UNKNOWN';
+  const bio = profile?.bio || '';
+  const avatarUrl = profile?.avatar_url || '';
+  const { data: entries } = await sb.from('entries').select('*,battles(title)').eq('user_id', userId).order('created_at', { ascending: false });
+  const totalVotes = (entries||[]).reduce((s,e) => s+(e.votes||0), 0);
+  const { data: winData } = await sb.from('winners').select('wins').eq('user_id', userId).single();
+  const wins = winData?.wins || 0;
+  const initials = alias.slice(0,2).toUpperCase();
+  document.getElementById('profileContent').innerHTML = `
+    <div class="profile-header">
+      <div class="avatar-wrap">
+        <div class="avatar">${avatarUrl?`<img src="${avatarUrl}" alt="${alias}"/>`:initials}</div>
+        ${isOwn?`<button class="avatar-upload" onclick="document.getElementById('avatarInput').click()" title="Avatar ändern">✎</button><input type="file" id="avatarInput" accept="image/*" onchange="uploadAvatar(event)"/>`:``}
+      </div>
+      <div class="profile-info">
+        <div class="profile-alias">${alias}</div>
+        ${isOwn?`<textarea class="profile-bio-edit" id="bioEdit" placeholder="Kurze Bio…">${bio}</textarea><p class="profile-bio" id="bioText">${bio||'<span style="color:var(--mid)">Noch keine Bio.</span>'}</p><button class="profile-edit-btn" id="editToggleBtn" onclick="toggleBioEdit()">Bio bearbeiten</button>`:`<p class="profile-bio">${bio||''}</p>`}
+        <div class="profile-stats" style="margin-top:1rem">
+          <div><div class="ps-num">${(entries||[]).length}</div><div class="ps-lbl">Beats</div></div>
+          <div><div class="ps-num">${totalVotes}</div><div class="ps-lbl">Votes</div></div>
+          <div><div class="ps-num">${wins}</div><div class="ps-lbl">Wins</div></div>
+        </div>
+      </div>
     </div>
+    <div class="profile-beats-eye">Alle Beats</div>
+    ${!(entries||[]).length?'<div class="empty">Noch keine Beats eingereicht.</div>':`<div class="profile-beats">${(entries||[]).map(e=>`<div class="pb-card"><div class="pb-title">${e.title}</div><div class="pb-meta">${e.battles?.title||''} ${e.meta?'· '+e.meta:''}</div>${e.sc_url?`<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>`:''}<div class="pb-votes">${e.votes||0} VOTES</div></div>`).join('')}</div>`}`;
+}
 
-    <!-- Neues Battle -->
-    <div class="admin-section">
-      <h3>Neues Battle anlegen</h3>
-      <div class="admin-row">
-        <input type="text" id="aTitle" placeholder="BATTLE TITEL (z.B. SOMMER 26)"/>
-      </div>
-      <div class="admin-row">
-        <input type="text" id="aTheme" placeholder="Thema (z.B. Thema dieser Woche)"/>
-      </div>
-      <div class="admin-row">
-        <textarea id="aDesc" placeholder="Beschreibung…" style="height:70px;width:100%"></textarea>
-      </div>
-      <div class="admin-row">
-        <input type="datetime-local" id="aEnds" placeholder="Ende"/>
-      </div>
-      <button class="btn" onclick="adminCreateBattle()">Battle erstellen</button>
-      <div id="adminBattleMsg" class="msg hidden" style="margin-top:.75rem"></div>
-    </div>
+function closeProfile() { document.getElementById('profileOverlay').classList.remove('open'); document.body.style.overflow=''; }
 
-    <!-- Aktuelle Entries -->
-    <div class="admin-section">
-      <h3>Aktuelle Entries</h3>
-      <div id="adminEntries"><div style="color:var(--gray);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase">Wird geladen…</div></div>
-    </div>
+function toggleBioEdit() {
+  const ta=document.getElementById('bioEdit'), bt=document.getElementById('bioText'), btn=document.getElementById('editToggleBtn');
+  const editing = ta.style.display==='block';
+  if (editing) { saveBio(ta.value); ta.style.display='none'; bt.style.display='block'; btn.textContent='Bio bearbeiten'; }
+  else { ta.style.display='block'; bt.style.display='none'; btn.textContent='Speichern'; ta.focus(); }
+}
 
-    <!-- Winner setzen -->
-    <div class="admin-section">
-      <h3>Winner manuell setzen</h3>
-      <div class="admin-row">
-        <input type="text" id="aWinnerAlias" placeholder="Producer-Alias"/>
-        <button class="btn" onclick="adminSetWinner()">Als Winner eintragen</button>
-      </div>
-      <div id="adminWinnerMsg" class="msg hidden" style="margin-top:.75rem"></div>
-    </div>
+async function saveBio(bio) {
+  if (!currentUser) return;
+  await sb.from('profiles').update({ bio }).eq('id', currentUser.id);
+  showToast('Bio gespeichert', 'ok');
+  document.getElementById('bioText').innerHTML = bio||'<span style="color:var(--mid)">Noch keine Bio.</span>';
+}
 
-    <!-- User bannen -->
-    <div class="admin-section">
-      <h3>User bannen</h3>
-      <div class="admin-row">
-        <input type="text" id="aBanAlias" placeholder="Producer-Alias"/>
-        <button class="btn-danger" style="align-self:center" onclick="adminBanUser()">Bannen</button>
-      </div>
-      <div id="adminBanMsg" class="msg hidden" style="margin-top:.75rem"></div>
-    </div>
-  </div>
-</div>
-
-<!-- PROFILE MODAL -->
-<div class="profile-overlay" id="profileOverlay">
-  <div class="profile-inner">
-    <button class="profile-close" onclick="closeProfile()">✕ Schließen</button>
-    <div style="clear:both;padding-top:1rem" id="profileContent"></div>
-  </div>
-</div>
-
-<script>
-
-// ── LEADERBOARD (live während Battle) ──
-async function loadLeaderboard() {
-  if (!currentBattle) return;
-  const { data: entries } = await sb
-    .from('entries')
-    .select('title, votes, user_id, profiles(alias)')
-    .eq('battle_id', currentBattle.id)
-    .order('votes', { ascending: false })
-    .limit(5);
-
-  if (!entries || entries.length === 0) return;
-
-  const maxVotes = entries[0].votes || 1;
-  const wrap = document.getElementById('leaderboardWrap');
-  wrap.style.display = 'block';
-  wrap.innerHTML = `
-    <div class="sec-eye" style="margin-bottom:1rem">Live Leaderboard</div>
-    <div class="leaderboard">
-      ${entries.map((e, i) => `
-        <div class="lb-row">
-          <div class="lb-rank">${String(i+1).padStart(2,'0')}</div>
-          <div class="lb-name" onclick="openProfile('${e.user_id}')">${e.profiles?.alias || 'UNKNOWN'}</div>
-          <div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round((e.votes||0)/maxVotes*100)}%"></div></div>
-          <div class="lb-votes">${e.votes||0} Votes</div>
-        </div>`).join('')}
-    </div>`;
+async function uploadAvatar(event) {
+  if (!currentUser) return;
+  const file = event.target.files[0]; if (!file) return;
+  if (file.size > 2*1024*1024) { showToast('Max. 2MB','err'); return; }
+  const ext = file.name.split('.').pop();
+  const path = `avatars/${currentUser.id}.${ext}`;
+  const { error } = await sb.storage.from('avatars').upload(path, file, { upsert: true });
+  if (error) { showToast('Upload fehlgeschlagen','err'); return; }
+  const { data } = sb.storage.from('avatars').getPublicUrl(path);
+  await sb.from('profiles').update({ avatar_url: data.publicUrl }).eq('id', currentUser.id);
+  showToast('Avatar gespeichert','ok');
+  const av = document.querySelector('.avatar');
+  if (av) av.innerHTML = `<img src="${data.publicUrl}" alt="Avatar"/>`;
 }
 
 // ── ADMIN ──
-const ADMIN_EMAILS = ['CREO_ONE@proton.me']; // Deine E-Mail hier eintragen z.B. ['deine@protonmail.com']
-
 function checkAdmin() {
   if (!currentUser) return;
-  if (ADMIN_EMAILS.includes(currentUser.email)) {
-    document.getElementById('adminLink').style.display = 'inline';
-    document.getElementById('mobileAdminLink').style.display = 'block';
-  }
+  const show = ADMIN_EMAILS.includes(currentUser.email);
+  document.getElementById('adminLink').style.display = show ? 'inline' : 'none';
+  document.getElementById('mobileAdminLink').style.display = show ? 'block' : 'none';
 }
 
-function openAdmin() {
-  document.getElementById('adminOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  loadAdminEntries();
-}
-
-function closeAdmin() {
-  document.getElementById('adminOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
+function openAdmin() { document.getElementById('adminOverlay').classList.add('open'); document.body.style.overflow='hidden'; loadAdminEntries(); }
+function closeAdmin() { document.getElementById('adminOverlay').classList.remove('open'); document.body.style.overflow=''; }
 
 async function loadAdminEntries() {
   if (!currentBattle) return;
-  const { data } = await sb
-    .from('entries')
-    .select('*, profiles(alias)')
-    .eq('battle_id', currentBattle.id)
-    .order('votes', { ascending: false });
-
+  const { data } = await sb.from('entries').select('*,profiles(alias)').eq('battle_id', currentBattle.id).order('votes', { ascending: false });
   const wrap = document.getElementById('adminEntries');
-  if (!data || !data.length) {
-    wrap.innerHTML = '<div style="color:var(--gray);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase">Keine Entries</div>';
-    return;
-  }
-  wrap.innerHTML = `<div class="admin-list">${data.map(e => `
-    <div class="admin-item">
-      <div>
-        <div class="admin-item-name">${e.profiles?.alias || '—'} — ${e.title}</div>
-        <div class="admin-item-meta">${e.votes || 0} Votes</div>
-      </div>
-      <button class="btn-danger" onclick="adminDeleteEntry('${e.id}')">Löschen</button>
-    </div>`).join('')}</div>`;
+  if (!data||!data.length) { wrap.innerHTML='<div style="color:var(--gray);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase">Keine Entries</div>'; return; }
+  wrap.innerHTML = `<div class="admin-list">${data.map(e=>`<div class="admin-item"><div><div class="admin-item-name">${e.profiles?.alias||'—'} — ${e.title}</div><div class="admin-item-meta">${e.votes||0} Votes</div></div><button class="btn-danger" onclick="adminDeleteEntry('${e.id}')">Löschen</button></div>`).join('')}</div>`;
 }
 
 async function adminDeleteEntry(id) {
   if (!confirm('Entry wirklich löschen?')) return;
   await sb.from('entries').delete().eq('id', id);
-  showToast('Entry gelöscht', 'ok');
-  loadAdminEntries();
-  await loadEntries();
+  showToast('Entry gelöscht','ok'); loadAdminEntries(); await loadEntries();
 }
 
 async function adminCreateBattle() {
@@ -1951,18 +785,13 @@ async function adminCreateBattle() {
   const theme = document.getElementById('aTheme').value.trim();
   const description = document.getElementById('aDesc').value.trim();
   const ends_at = document.getElementById('aEnds').value;
-  if (!title || !ends_at) { showMsg('adminBattleMsg','Titel und Ende pflicht.','err'); return; }
-
-  // Aktuelles Battle deaktivieren
+  if (!title||!ends_at) { showMsg('adminBattleMsg','Titel und Ende pflicht.','err'); return; }
   if (currentBattle) await sb.from('battles').update({ active: false }).eq('id', currentBattle.id);
-
   const { error } = await sb.from('battles').insert({ title, theme, description, ends_at, active: true });
-  if (error) { showMsg('adminBattleMsg', error.message, 'err'); return; }
-  showMsg('adminBattleMsg', 'Battle erstellt!', 'ok');
-  document.getElementById('aTitle').value = '';
-  document.getElementById('aTheme').value = '';
-  document.getElementById('aDesc').value = '';
-  document.getElementById('aEnds').value = '';
+  if (error) { showMsg('adminBattleMsg', error.message,'err'); return; }
+  showMsg('adminBattleMsg','Battle erstellt!','ok');
+  document.getElementById('aTitle').value=''; document.getElementById('aTheme').value='';
+  document.getElementById('aDesc').value=''; document.getElementById('aEnds').value='';
   await loadBattle();
 }
 
@@ -1971,9 +800,8 @@ async function adminSetWinner() {
   if (!alias) { showMsg('adminWinnerMsg','Alias eingeben','err'); return; }
   const { data: profile } = await sb.from('profiles').select('id').eq('alias', alias).single();
   if (!profile) { showMsg('adminWinnerMsg','Producer nicht gefunden','err'); return; }
-  const { error } = await sb.from('winners').upsert({ user_id: profile.id, wins: 1 }, { onConflict: 'user_id', ignoreDuplicates: false });
-  if (error) { showMsg('adminWinnerMsg', error.message, 'err'); return; }
-  showMsg('adminWinnerMsg', alias + ' als Winner eingetragen!', 'ok');
+  await sb.from('winners').upsert({ user_id: profile.id, wins: 1 }, { onConflict: 'user_id' });
+  showMsg('adminWinnerMsg', alias+' als Winner eingetragen!','ok');
   await loadHof();
 }
 
@@ -1982,144 +810,171 @@ async function adminBanUser() {
   if (!alias) { showMsg('adminBanMsg','Alias eingeben','err'); return; }
   const { data: profile } = await sb.from('profiles').select('id').eq('alias', alias).single();
   if (!profile) { showMsg('adminBanMsg','Producer nicht gefunden','err'); return; }
-  // Supabase Admin API braucht Service Role Key — hier nur Entries löschen als workaround
   await sb.from('entries').delete().eq('user_id', profile.id);
   await sb.from('votes').delete().eq('user_id', profile.id);
-  showMsg('adminBanMsg', alias + ' wurde gebannt (Entries + Votes entfernt).', 'ok');
+  showMsg('adminBanMsg', alias+' wurde gebannt.','ok');
 }
 
-// ── PROFILE ──
-let viewingUserId = null;
-
-async function openProfile(userId) {
-  viewingUserId = userId;
-  document.getElementById('profileOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('profileContent').innerHTML = '<div style="color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:3rem 0">WIRD GELADEN…</div>';
-  await renderProfile(userId);
+// ── BURGER ──
+document.getElementById('burgerBtn').addEventListener('click', function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+});
+function closeMobile(){
+  document.getElementById('burgerBtn').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow='';
 }
 
-function closeProfile() {
-  document.getElementById('profileOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-  viewingUserId = null;
-}
-
-async function renderProfile(userId) {
-  const isOwn = currentUser && currentUser.id === userId;
-
-  // Fetch profile
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', userId).single();
-  const alias = profile?.alias || 'UNKNOWN';
-  const bio = profile?.bio || '';
-  const avatarUrl = profile?.avatar_url || '';
-
-  // Fetch all entries by this user
-  const { data: entries } = await sb
-    .from('entries')
-    .select('*, battles(title)')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false });
-
-  // Total votes
-  const totalVotes = (entries || []).reduce((sum, e) => sum + (e.votes || 0), 0);
-
-  // Wins from winners table
-  const { data: winData } = await sb.from('winners').select('wins').eq('user_id', userId).single();
-  const wins = winData?.wins || 0;
-
-  const initials = alias.slice(0,2).toUpperCase();
-
-  const html = `
-    <div class="profile-header">
-      <div class="avatar-wrap">
-        <div class="avatar">
-          ${avatarUrl ? `<img src="${avatarUrl}" alt="${alias}"/>` : initials}
-        </div>
-        ${isOwn ? `<button class="avatar-upload" onclick="document.getElementById('avatarInput').click()" title="Avatar ändern">✎</button>
-        <input type="file" id="avatarInput" accept="image/*" onchange="uploadAvatar(event)"/>` : ''}
-      </div>
-      <div class="profile-info">
-        <div class="profile-alias">${alias}</div>
-        ${isOwn
-          ? `<textarea class="profile-bio-edit" id="bioEdit" placeholder="Kurze Bio…">${bio}</textarea>
-             <p class="profile-bio" id="bioText">${bio || '<span style="color:var(--mid)">Noch keine Bio.</span>'}</p>
-             <button class="profile-edit-btn" id="editToggleBtn" onclick="toggleBioEdit()">Bio bearbeiten</button>`
-          : `<p class="profile-bio">${bio || ''}</p>`
-        }
-        <div class="profile-stats" style="margin-top:1rem">
-          <div><div class="ps-num">${(entries||[]).length}</div><div class="ps-lbl">Beats</div></div>
-          <div><div class="ps-num">${totalVotes}</div><div class="ps-lbl">Votes</div></div>
-          <div><div class="ps-num">${wins}</div><div class="ps-lbl">Wins</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="profile-beats-eye">Alle Beats</div>
-    ${(entries||[]).length === 0
-      ? '<div class="empty">Noch keine Beats eingereicht.</div>'
-      : `<div class="profile-beats">${(entries||[]).map(e => `
-          <div class="pb-card">
-            <div class="pb-title">${e.title}</div>
-            <div class="pb-meta">${e.battles?.title || ''} ${e.meta ? '· ' + e.meta : ''}</div>
-            ${e.sc_url ? `<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay"
-              src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-            </iframe>` : ''}
-            <div class="pb-votes">${e.votes || 0} VOTES</div>
-          </div>`).join('')}
-        </div>`
-    }
-  `;
-
-  document.getElementById('profileContent').innerHTML = html;
-}
-
-function toggleBioEdit() {
-  const textarea = document.getElementById('bioEdit');
-  const bioText = document.getElementById('bioText');
-  const btn = document.getElementById('editToggleBtn');
-  const editing = textarea.style.display === 'block';
-  if (editing) {
-    saveBio(textarea.value);
-    textarea.style.display = 'none';
-    bioText.style.display = 'block';
-    btn.textContent = 'Bio bearbeiten';
-  } else {
-    textarea.style.display = 'block';
-    bioText.style.display = 'none';
-    btn.textContent = 'Speichern';
-    textarea.focus();
+// ── LANG ──
+const LANG = {
+  de: {
+    'nav.battle':'Battle','nav.rules':'Regeln','nav.login':'Anmelden',
+    'hero.eye':'Beat Battle Platform','hero.sub':'Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.',
+    'hero.desc':'Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.',
+    'stats.producers':'Producer','stats.votes':'Votes',
+    'battle.eye':'Aktuelles Battle','battle.loading':'Thema wird geladen…',
+    'submit.title':'Beat einreichen','submit.sub':'SoundCloud-Link einfügen. Ein Beat pro Battle.',
+    'submit.btn':'Beat einreichen','submit.already':'Du hast bereits einen Beat eingereicht.',
+    'submit.required':'Titel und SoundCloud-Link pflicht.','submit.ok':'Beat eingereicht!',
+    'submit.label.title':'Beat-Titel','submit.label.sc':'SoundCloud-Link','submit.label.desc':'Kurze Beschreibung (optional)',
+    'hof.title':'DIE BESTEN<br>ALLER ZEITEN.','hof.empty':'Noch keine Gewinner',
+    'rules.eye':'Regeln','rules.conduct':'Verhaltensregeln',
+    'step1.title':'Registrieren','step1.desc':'Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.',
+    'step2.title':'Beat einreichen','step2.desc':'Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen.',
+    'step3.title':'Voten','step3.desc':'Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.',
+    'step4.title':'Champion','step4.desc':'Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.',
+    'conduct1.title':'Fairplay','conduct1.desc':'Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.',
+    'conduct2.title':'Respekt','conduct2.desc':'Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.',
+    'conduct3.title':'Originalität','conduct3.desc':'Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.',
+    'conduct4.title':'Entscheidung','conduct4.desc':'Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.',
+    'contact.eye':'Kontakt','contact.title':'FRAGEN?<br>MELD DICH.',
+    'contact.sub':'Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.',
+    'contact.btn':'Nachricht senden','contact.ok':'Nachricht gesendet — wir melden uns.',
+    'contact.required':'E-Mail und Nachricht pflicht.',
+    'contact.label.alias':'Dein Alias (optional)','contact.label.email':'E-Mail','contact.label.msg':'Nachricht',
+    'modal.label.email':'E-Mail','modal.label.pw':'Passwort','modal.label.alias':'Producer-Alias',
+    'modal.tab.login':'Login','modal.tab.register':'Registrieren','modal.tab.reset':'Passwort vergessen',
+    'modal.reset.sub':'Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.',
+    'modal.reset.btn':'Link senden','modal.reset.ok':'Link gesendet — check deine E-Mails',
+    'modal.register.btn':'Account erstellen','modal.register.ok':'Account erstellt — bitte E-Mail bestätigen',
+    'modal.login.btn':'Anmelden',
+    'countdown.end':'BATTLE BEENDET','countdown.in':'ENDET IN',
+    'vote.vote':'↑ VOTEN','vote.voted':'✓ GEVOTED','vote.votes':'VOTES',
+    'err.fields':'Alle Felder ausfüllen','err.pw':'Passwort min. 6 Zeichen','err.email':'E-Mail eingeben',
+  },
+  en: {
+    'nav.battle':'Battle','nav.rules':'Rules','nav.login':'Sign in',
+    'hero.eye':'Beat Battle Platform','hero.sub':'One theme, one beat, one winner. The community decides.',
+    'hero.desc':'Every two weeks a new theme. Registered producers submit one beat via SoundCloud link. The community votes. Most votes wins — Hall of Fame entry and Champion badge.',
+    'stats.producers':'Producers','stats.votes':'Votes',
+    'battle.eye':'Current Battle','battle.loading':'Loading theme…',
+    'submit.title':'Submit a beat','submit.sub':'Paste your SoundCloud link. One beat per battle.',
+    'submit.btn':'Submit beat','submit.already':'You already submitted a beat for this battle.',
+    'submit.required':'Title and SoundCloud link required.','submit.ok':'Beat submitted!',
+    'submit.label.title':'Beat title','submit.label.sc':'SoundCloud link','submit.label.desc':'Short description (optional)',
+    'hof.title':'THE BEST<br>OF ALL TIME.','hof.empty':'No winners yet',
+    'rules.eye':'Rules','rules.conduct':'Code of conduct',
+    'step1.title':'Register','step1.desc':'Create an account with your producer alias. No real name needed. One account per person.',
+    'step2.title':'Submit a beat','step2.desc':'One beat per battle — via SoundCloud link. The beat must fit the theme.',
+    'step3.title':'Vote','step3.desc':'Only registered producers can vote. Not for your own beat. One vote per person per battle.',
+    'step4.title':'Champion','step4.desc':'Most votes wins. Hall of Fame entry. Champion badge on your profile.',
+    'conduct1.title':'Fair play','conduct1.desc':'Multiple accounts, coordinated voting and manipulation lead to immediate exclusion.',
+    'conduct2.title':'Respect','conduct2.desc':'Insults, racism or discrimination are not tolerated. Accounts will be banned.',
+    'conduct3.title':'Originality','conduct3.desc':'Only your own productions. Submitting someone else\'s beat is fraud.',
+    'conduct4.title':'Decisions','conduct4.desc':'Admin decisions are final. For questions or reports: use the contact form.',
+    'contact.eye':'Contact','contact.title':'QUESTIONS?<br>HIT US UP.',
+    'contact.sub':'For questions, reports or feedback — write to us. We reply as fast as we can.',
+    'contact.btn':'Send message','contact.ok':'Message sent — we will get back to you.',
+    'contact.required':'Email and message required.',
+    'contact.label.alias':'Your alias (optional)','contact.label.email':'Email','contact.label.msg':'Message',
+    'modal.label.email':'Email','modal.label.pw':'Password','modal.label.alias':'Producer alias',
+    'modal.tab.login':'Login','modal.tab.register':'Register','modal.tab.reset':'Forgot password',
+    'modal.reset.sub':'Enter your email — you will receive a link to reset your password.',
+    'modal.reset.btn':'Send link','modal.reset.ok':'Link sent — check your emails',
+    'modal.register.btn':'Create account','modal.register.ok':'Account created — please confirm your email',
+    'modal.login.btn':'Sign in',
+    'countdown.end':'BATTLE ENDED','countdown.in':'ENDS IN',
+    'vote.vote':'↑ VOTE','vote.voted':'✓ VOTED','vote.votes':'VOTES',
+    'err.fields':'Please fill in all fields','err.pw':'Password min. 6 characters','err.email':'Please enter your email',
+  },
+  fr: {
+    'nav.battle':'Battle','nav.rules':'Règles','nav.login':'Connexion',
+    'hero.eye':'Plateforme de Battle de Beats','hero.sub':'Un thème, un beat, un gagnant. La communauté décide.',
+    'hero.desc':'Toutes les deux semaines un nouveau thème. Les producteurs inscrits soumettent un beat via SoundCloud. La communauté vote. Celui qui a le plus de votes gagne.',
+    'stats.producers':'Producteurs','stats.votes':'Votes',
+    'battle.eye':'Battle en cours','battle.loading':'Chargement du thème…',
+    'submit.title':'Soumettre un beat','submit.sub':'Collez votre lien SoundCloud. Un beat par battle.',
+    'submit.btn':'Soumettre','submit.already':'Vous avez déjà soumis un beat pour cette battle.',
+    'submit.required':'Titre et lien SoundCloud requis.','submit.ok':'Beat soumis !',
+    'submit.label.title':'Titre du beat','submit.label.sc':'Lien SoundCloud','submit.label.desc':'Courte description (optionnel)',
+    'hof.title':'LES MEILLEURS<br>DE TOUS LES TEMPS.','hof.empty':'Pas encore de gagnants',
+    'rules.eye':'Règles','rules.conduct':'Code de conduite',
+    'step1.title':'S\'inscrire','step1.desc':'Créez un compte avec votre alias. Pas de vrai nom requis. Un compte par personne.',
+    'step2.title':'Soumettre un beat','step2.desc':'Un beat par battle — via lien SoundCloud. Le beat doit correspondre au thème.',
+    'step3.title':'Voter','step3.desc':'Seuls les producteurs inscrits peuvent voter. Pas pour son propre beat.',
+    'step4.title':'Champion','step4.desc':'Le plus de votes gagne. Entrée au Hall of Fame. Badge Champion sur le profil.',
+    'conduct1.title':'Fair-play','conduct1.desc':'Les comptes multiples, le vote coordonné et la manipulation entraînent une exclusion immédiate.',
+    'conduct2.title':'Respect','conduct2.desc':'Les insultes, le racisme ou la discrimination ne sont pas tolérés.',
+    'conduct3.title':'Originalité','conduct3.desc':'Uniquement vos propres productions. Soumettre le beat de quelqu\'un d\'autre est une fraude.',
+    'conduct4.title':'Décisions','conduct4.desc':'Les décisions de l\'administration sont définitives.',
+    'contact.eye':'Contact','contact.title':'DES QUESTIONS?<br>ÉCRIVEZ-NOUS.',
+    'contact.sub':'Pour questions, signalements ou retours — écrivez-nous. Nous répondons dès que possible.',
+    'contact.btn':'Envoyer le message','contact.ok':'Message envoyé — nous vous répondrons.',
+    'contact.required':'Email et message requis.',
+    'contact.label.alias':'Votre alias (optionnel)','contact.label.email':'Email','contact.label.msg':'Message',
+    'modal.label.email':'Email','modal.label.pw':'Mot de passe','modal.label.alias':'Alias producteur',
+    'modal.tab.login':'Connexion','modal.tab.register':'Inscription','modal.tab.reset':'Mot de passe oublié',
+    'modal.reset.sub':'Entrez votre email — vous recevrez un lien pour réinitialiser votre mot de passe.',
+    'modal.reset.btn':'Envoyer le lien','modal.reset.ok':'Lien envoyé — vérifiez vos emails',
+    'modal.register.btn':'Créer un compte','modal.register.ok':'Compte créé — veuillez confirmer votre email',
+    'modal.login.btn':'Se connecter',
+    'countdown.end':'BATTLE TERMINÉ','countdown.in':'SE TERMINE DANS',
+    'vote.vote':'↑ VOTER','vote.voted':'✓ VOTÉ','vote.votes':'VOTES',
+    'err.fields':'Veuillez remplir tous les champs','err.pw':'Mot de passe min. 6 caractères','err.email':'Veuillez entrer votre email',
   }
+};
+
+let currentLang = 'de';
+function t(key) { return LANG[currentLang][key] || LANG['de'][key] || key; }
+
+function setLang(lang, btn) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyLang();
 }
 
-async function saveBio(bio) {
-  if (!currentUser) return;
-  await sb.from('profiles').update({ bio }).eq('id', currentUser.id);
-  showToast('Bio gespeichert', 'ok');
-  document.getElementById('bioText').innerHTML = bio || '<span style="color:var(--mid)">Noch keine Bio.</span>';
+function applyLang() {
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    if (el.id === 'navAuthBtn') return;
+    el.innerHTML = t(el.getAttribute('data-i18n'));
+  });
+  if (!currentUser) updateNavBtn();
+  updateMobileAuthBtn();
+  document.getElementById('tabLogin').textContent = t('modal.tab.login');
+  document.getElementById('tabRegister').textContent = t('modal.tab.register');
+  document.getElementById('tabReset').textContent = t('modal.tab.reset');
+  document.getElementById('resetDesc').textContent = t('modal.reset.sub');
+  if (window._lastEntries) renderEntries(window._lastEntries);
 }
 
-async function uploadAvatar(event) {
-  if (!currentUser) return;
-  const file = event.target.files[0];
-  if (!file) return;
-  if (file.size > 2 * 1024 * 1024) { showToast('Max. 2MB', 'err'); return; }
+document.getElementById('langDE').addEventListener('click', function(){ setLang('de', this); syncMobileLang('de'); });
+document.getElementById('langEN').addEventListener('click', function(){ setLang('en', this); syncMobileLang('en'); });
+document.getElementById('langFR').addEventListener('click', function(){ setLang('fr', this); syncMobileLang('fr'); });
+document.getElementById('langDE2').addEventListener('click', function(){ setLang('de', document.getElementById('langDE')); syncMobileLang('de'); });
+document.getElementById('langEN2').addEventListener('click', function(){ setLang('en', document.getElementById('langEN')); syncMobileLang('en'); });
+document.getElementById('langFR2').addEventListener('click', function(){ setLang('fr', document.getElementById('langFR')); syncMobileLang('fr'); });
 
-  const ext = file.name.split('.').pop();
-  const path = `avatars/${currentUser.id}.${ext}`;
-
-  const { error: upErr } = await sb.storage.from('avatars').upload(path, file, { upsert: true });
-  if (upErr) { showToast('Upload fehlgeschlagen', 'err'); return; }
-
-  const { data: urlData } = sb.storage.from('avatars').getPublicUrl(path);
-  const avatarUrl = urlData.publicUrl;
-
-  await sb.from('profiles').update({ avatar_url: avatarUrl }).eq('id', currentUser.id);
-  showToast('Avatar gespeichert', 'ok');
-
-  // Update avatar in modal
-  const avatarEl = document.querySelector('.avatar');
-  if (avatarEl) avatarEl.innerHTML = `<img src="${avatarUrl}" alt="Avatar"/>`;
+function syncMobileLang(lang) {
+  ['langDE2','langEN2','langFR2'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById('lang'+lang.toUpperCase()+'2').classList.add('active');
 }
 
-init().then(() => { applyLang(); checkAdmin(); loadLeaderboard(); });
+init().then(() => applyLang());
+</script>
+</body>
+</html>
