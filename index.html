@@ -4,7 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="description" content="Ein Thema, ein Beat, ein Sieger. Produzenten battlen wöchentlich gegeneinander — die Community entscheidet."/>
-<meta name="keywords" content="beat battle, hip hop, producer, beats, soundcloud, musik, community"/>
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://creo-one.github.io/"/>
 <meta property="og:type" content="website"/>
@@ -21,12 +20,15 @@
 <meta name="twitter:image" content="https://creo-one.github.io/og-image.png"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"CREO//ONE","url":"https://creo-one.github.io/","description":"Beat Battle Platform","inLanguage":["de","en","fr"]}</script>
 <title>CREO//ONE — Beat Battle Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net"/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-:root{--black:#0a0a0a;--dark:#141414;--mid:#2a2a2a;--gray:#888;--light:#ccc;--white:#f5f5f5;--rule:rgba(255,255,255,0.07)}
+:root{--black:#0a0a0a;--dark:#141414;--mid:#3a3a3a;--gray:#888;--light:#ccc;--white:#f5f5f5;--rule:rgba(255,255,255,0.07)}
 body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;font-weight:300;font-size:15px;line-height:1.6;min-height:100vh}
 nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 3rem;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--black);z-index:100}
 .logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;letter-spacing:0.06em;color:var(--white);text-decoration:none;text-transform:uppercase}
@@ -200,13 +202,16 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
   .hof-list{grid-template-columns:1fr 1fr}
 }
 @media(max-width:480px){.hof-list{grid-template-columns:1fr}.hero h1{font-size:clamp(3rem,18vw,5rem)}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+.skip-link{position:absolute;top:-100%;left:1rem;background:var(--white);color:var(--black);padding:.5rem 1rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;z-index:999;text-decoration:none}
+.skip-link:focus{top:1rem}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#battle">Zum Inhalt springen</a>
 
 <!-- AUTH MODAL -->
-<div class="overlay" id="overlay">
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalH">
   <div class="modal">
     <div class="modal-top">
       <h2 id="modalH">Anmelden</h2>
@@ -238,7 +243,7 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 </div>
 
 <!-- ADMIN PANEL -->
-<div class="admin-overlay" id="adminOverlay">
+<div class="admin-overlay" id="adminOverlay" role="dialog" aria-modal="true" aria-label="Admin Panel">
   <div class="admin-inner">
     <div class="admin-title">ADMIN <button class="profile-close" onclick="closeAdmin()">✕ Schließen</button></div>
     <div class="admin-section">
@@ -274,7 +279,7 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 </div>
 
 <!-- PROFILE MODAL -->
-<div class="profile-overlay" id="profileOverlay">
+<div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-label="Producer Profil">
   <div class="profile-inner">
     <button class="profile-close" onclick="closeProfile()">✕ Schließen</button>
     <div style="clear:both;padding-top:1rem" id="profileContent"></div>
@@ -298,11 +303,11 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
       <button class="lang-btn" id="langFR" aria-label="Français">FR</button>
     </div>
   </div>
-  <button class="burger" id="burgerBtn" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
+  <button class="burger" id="burgerBtn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile Navigation">
   <a href="#battle" onclick="closeMobile()" data-i18n="nav.battle">Battle</a>
   <a href="#hof" onclick="closeMobile()">Hall of Fame</a>
   <a href="#how" onclick="closeMobile()" data-i18n="nav.rules">Regeln</a>
@@ -318,7 +323,7 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 <!-- HERO -->
 <div class="hero">
   <div class="hero-eye" data-i18n="hero.eye">Beat Battle Platform</div>
-  <h1>EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
+  <h1 id="heroH1" data-i18n="hero.h1.1">EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
   <p class="hero-sub" data-i18n="hero.sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.</p>
   <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem"><span data-i18n="hero.desc">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.</span></p>
   <div class="stats-row">
@@ -471,8 +476,19 @@ async function doLogout() {
   renderEntries([]);
 }
 
-function openModal() { document.getElementById('overlay').classList.add('open'); }
-function closeModal() { document.getElementById('overlay').classList.remove('open'); hideMsg('authMsg'); }
+function openModal() {
+  var overlay = document.getElementById('overlay');
+  overlay.classList.add('open');
+  // Focus first input
+  setTimeout(function(){ var f = overlay.querySelector('input'); if(f) f.focus(); }, 50);
+}
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  hideMsg('authMsg');
+  // Return focus to auth button
+  var btn = document.getElementById('navAuthBtn');
+  if (btn) btn.focus();
+}
 
 function switchTab(tab, el) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -538,18 +554,22 @@ async function loadBattle() {
   showEntriesSkeleton();
   const { data, error } = await sb.from('battles').select('*').eq('active', true).order('created_at', { ascending: false }).limit(1).single();
   if (error || !data) {
-    currentBattle = { id: 'demo', title: 'SOMMER 26', theme: 'Thema dieser Woche', description: 'Sommer 26. Hitze, Freiheit, lange Nächte — welcher deiner Beats fängt das ein? Egal ob lo-fi am See, Afrobeats im Park oder ein Soul-Sample das nach Urlaub klingt. Zeig was du hast. Die Community entscheidet.', ends_at: getFriday() };
+    currentBattle = { id: 'demo', title: t('demo.title'), theme: t('demo.theme'), description: t('demo.desc'), ends_at: getFriday() };
   } else {
     currentBattle = data;
   }
-  document.getElementById('themeTag').textContent = currentBattle.theme || 'Thema dieser Woche';
-  document.getElementById('battleTitle').textContent = currentBattle.title;
+  var themeTagEl = document.getElementById('themeTag');
+  themeTagEl.textContent = currentBattle.theme || t('demo.theme');
+  if (currentBattle.id === 'demo') themeTagEl.dataset.demo = 'true';
+  document.getElementById('battleTitle').textContent = currentBattle.id === 'demo' ? t('demo.title') : currentBattle.title;
+  var descEl = document.getElementById('battleDesc');
   if (currentBattle.description) {
-    const d = document.getElementById('battleDesc');
-    d.textContent = currentBattle.description;
-    d.style.display = 'block';
+    descEl.textContent = currentBattle.id === 'demo' ? t('demo.desc') : currentBattle.description;
+    descEl.style.display = 'block';
+    if (currentBattle.id === 'demo') descEl.dataset.demo = 'true';
   }
   await loadEntries();
+  subscribeRealtime();
 }
 
 async function loadEntries() {
@@ -587,7 +607,7 @@ function renderEntries(entries) {
     var voted = myVotes.has(e.id);
     var isOwn = currentUser && e.user_id === currentUser.id;
     var sc = e.sc_url
-      ? '<iframe class="sc-box" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>'
+      ? '<iframe class="sc-box" scrolling="no" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>'
       : '<div class="sc-placeholder">▶ BEAT ANHÖREN</div>';
     var disabled = (isOwn || voted) ? 'disabled style="opacity:.4;cursor:default"' : '';
     var votedClass = voted ? 'voted' : '';
@@ -716,9 +736,11 @@ function showToast(text, type) {
 
 // ── PROFILE ──
 async function openProfile(userId) {
-  document.getElementById('profileOverlay').classList.add('open');
+  var po = document.getElementById('profileOverlay');
+  po.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('profileContent').innerHTML = '<div style="color:var(--gray);font-family:Barlow Condensed,sans-serif;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:3rem 0">WIRD GELADEN...</div>';
+  setTimeout(function(){ var c = po.querySelector('button'); if(c) c.focus(); }, 100);
   const isOwn = currentUser && currentUser.id === userId;
   const { data: profile } = await sb.from('profiles').select('*').eq('id', userId).single();
   const alias = (profile && profile.alias) ? profile.alias : 'UNKNOWN';
@@ -739,7 +761,7 @@ async function openProfile(userId) {
   var beatsHtml = (entries||[]).map(function(e) {
     var scPlayer = '';
     if (e.sc_url) {
-      scPlayer = '<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>';
+      scPlayer = '<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>';
     }
     var bt = (e.battles && e.battles.title) ? e.battles.title : '';
     var mt = e.meta ? ' · ' + e.meta : '';
@@ -806,7 +828,13 @@ function checkAdmin() {
   document.getElementById('mobileAdminLink').style.display = show ? 'block' : 'none';
 }
 
-function openAdmin() { document.getElementById('adminOverlay').classList.add('open'); document.body.style.overflow='hidden'; loadAdminEntries(); }
+function openAdmin() {
+  var ao = document.getElementById('adminOverlay');
+  ao.classList.add('open');
+  document.body.style.overflow='hidden';
+  loadAdminEntries();
+  setTimeout(function(){ var c = ao.querySelector('button'); if(c) c.focus(); }, 100);
+}
 function closeAdmin() { document.getElementById('adminOverlay').classList.remove('open'); document.body.style.overflow=''; }
 
 async function loadAdminEntries() {
@@ -863,12 +891,14 @@ async function adminBanUser() {
 
 // ── BURGER ──
 document.getElementById('burgerBtn').addEventListener('click', function(){
+  var open = document.getElementById('mobileMenu').classList.toggle('open');
   this.classList.toggle('open');
-  document.getElementById('mobileMenu').classList.toggle('open');
-  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+  this.setAttribute('aria-expanded', open ? 'true' : 'false');
+  document.body.style.overflow = open ? 'hidden' : '';
 });
 function closeMobile(){
   document.getElementById('burgerBtn').classList.remove('open');
+  document.getElementById('burgerBtn').setAttribute('aria-expanded','false');
   document.getElementById('mobileMenu').classList.remove('open');
   document.body.style.overflow='';
 }
@@ -909,6 +939,17 @@ const LANG = {
     'countdown.end':'BATTLE BEENDET','countdown.in':'ENDET IN',
     'vote.vote':'↑ VOTEN','vote.voted':'✓ GEVOTED','vote.votes':'VOTES',
     'err.fields':'Alle Felder ausfüllen','err.pw':'Passwort min. 6 Zeichen','err.email':'E-Mail eingeben',
+    'hero.h1.1':'EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.',
+    'demo.title':'SOMMER 26',
+    'demo.theme':'Thema dieser Woche',
+    'demo.desc':'Sommer 26. Hitze, Freiheit, lange Nächte — welcher deiner Beats fängt das ein? Egal ob lo-fi am See, Afrobeats im Park oder ein Soul-Sample das nach Urlaub klingt. Zeig was du hast. Die Community entscheidet.',
+    'ph.beatTitle':'z.B. MIDNIGHT RAIN',
+    'ph.scLink':'https://soundcloud.com/…',
+    'ph.beatDesc':'z.B. lo-fi am See, dusty samples',
+    'ph.alias':'dein_alias',
+    'ph.email':'deine@mail.com',
+    'ph.msg':'Deine Nachricht…',
+    'ph.regAlias':'dein_alias',
   },
   en: {
     'nav.battle':'Battle','nav.rules':'Rules','nav.login':'Sign in',
@@ -944,6 +985,17 @@ const LANG = {
     'countdown.end':'BATTLE ENDED','countdown.in':'ENDS IN',
     'vote.vote':'↑ VOTE','vote.voted':'✓ VOTED','vote.votes':'VOTES',
     'err.fields':'Please fill in all fields','err.pw':'Password min. 6 characters','err.email':'Please enter your email',
+    'hero.h1.1':'ONE THEME.<br><span class="dim">ONE</span><br>BEAT.<br>ONE WINNER.',
+    'demo.title':'SUMMER 26',
+    'demo.theme':'This week\'s theme',
+    'demo.desc':'Summer 26. Heat, freedom, long nights — which of your beats captures that feeling? Whether lo-fi by the lake, Afrobeats in the park or a soul sample that sounds like vacation. Show what you got. The community decides.',
+    'ph.beatTitle':'e.g. MIDNIGHT RAIN',
+    'ph.scLink':'https://soundcloud.com/…',
+    'ph.beatDesc':'e.g. lo-fi vibes, dusty samples',
+    'ph.alias':'your_alias',
+    'ph.email':'your@mail.com',
+    'ph.msg':'Your message…',
+    'ph.regAlias':'your_alias',
   },
   fr: {
     'nav.battle':'Battle','nav.rules':'Règles','nav.login':'Connexion',
@@ -979,6 +1031,17 @@ const LANG = {
     'countdown.end':'BATTLE TERMINÉ','countdown.in':'SE TERMINE DANS',
     'vote.vote':'↑ VOTER','vote.voted':'✓ VOTÉ','vote.votes':'VOTES',
     'err.fields':'Veuillez remplir tous les champs','err.pw':'Mot de passe min. 6 caractères','err.email':'Veuillez entrer votre email',
+    'hero.h1.1':'UN THÈME.<br><span class="dim">UN</span><br>BEAT.<br>UN GAGNANT.',
+    'demo.title':'ÉTÉ 26',
+    'demo.theme':'Thème de cette semaine',
+    'demo.desc':'Été 26. Chaleur, liberté, longues nuits — quel beat capture cette ambiance? Lo-fi au bord du lac, Afrobeats dans le parc ou un sample soul qui sent les vacances. Montrez ce que vous avez. La communauté décide.',
+    'ph.beatTitle':'ex. MIDNIGHT RAIN',
+    'ph.scLink':'https://soundcloud.com/…',
+    'ph.beatDesc':'ex. lo-fi, samples poussiéreux',
+    'ph.alias':'votre_alias',
+    'ph.email':'votre@mail.com',
+    'ph.msg':'Votre message…',
+    'ph.regAlias':'votre_alias',
   }
 };
 
@@ -1005,6 +1068,28 @@ function applyLang() {
   document.getElementById('tabRegister').textContent = t('modal.tab.register');
   document.getElementById('tabReset').textContent = t('modal.tab.reset');
   document.getElementById('resetDesc').textContent = t('modal.reset.sub');
+  // Placeholders
+  var ph = {
+    'inTitle': t('ph.beatTitle'),
+    'inSC': t('ph.scLink'),
+    'inMeta': t('ph.beatDesc'),
+    'ctAlias': t('ph.alias'),
+    'ctEmail': t('ph.email'),
+    'ctMsg': t('ph.msg'),
+    'loginEmail': t('ph.email'),
+    'regAlias': t('ph.regAlias'),
+    'regEmail': t('ph.email'),
+    'resetEmail': t('ph.email')
+  };
+  Object.keys(ph).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.placeholder = ph[id];
+  });
+  // Battle texts (demo fallback only)
+  var themeTag = document.getElementById('themeTag');
+  var battleDesc = document.getElementById('battleDesc');
+  if (themeTag && themeTag.dataset.demo === 'true') themeTag.textContent = t('demo.theme');
+  if (battleDesc && battleDesc.dataset.demo === 'true') battleDesc.textContent = t('demo.desc');
   if (window._lastEntries) renderEntries(window._lastEntries);
 }
 
@@ -1019,6 +1104,59 @@ function syncMobileLang(lang) {
   ['langDE2','langEN2','langFR2'].forEach(id => document.getElementById(id).classList.remove('active'));
   document.getElementById('lang'+lang.toUpperCase()+'2').classList.add('active');
 }
+
+
+
+// ── REALTIME ──
+function subscribeRealtime() {
+  if (!currentBattle || currentBattle.id === 'demo') return;
+  sb.channel('battle-' + currentBattle.id)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'entries', filter: 'battle_id=eq.' + currentBattle.id }, function() {
+      loadEntries();
+    })
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'votes', filter: 'battle_id=eq.' + currentBattle.id }, function() {
+      loadEntries();
+    })
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'entries', filter: 'battle_id=eq.' + currentBattle.id }, function() {
+      loadEntries();
+    })
+    .subscribe();
+}
+
+// ── KEYBOARD / FOCUS TRAP ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('overlay').classList.contains('open')) closeModal();
+    if (document.getElementById('profileOverlay').classList.contains('open')) closeProfile();
+    if (document.getElementById('adminOverlay').classList.contains('open')) closeAdmin();
+    if (document.getElementById('mobileMenu').classList.contains('open')) closeMobile();
+  }
+  // Focus trap in open modals
+  if (e.key === 'Tab') {
+    var activeModal = null;
+    ['overlay','profileOverlay','adminOverlay'].forEach(function(id) {
+      if (document.getElementById(id).classList.contains('open')) activeModal = document.getElementById(id);
+    });
+    if (activeModal) {
+      var focusable = activeModal.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea:not([disabled]),a[href]');
+      if (!focusable.length) return;
+      var first = focusable[0], last = focusable[focusable.length-1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+});
+
+// Close overlays on backdrop click
+document.getElementById('overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('profileOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeProfile();
+});
+document.getElementById('adminOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdmin();
+});
 
 init().then(() => applyLang());
 </script>
