@@ -566,7 +566,7 @@ async function loadEntries() {
 }
 
 function showEntriesSkeleton() {
-  document.getElementById('entriesWrap').innerHTML = `<div class="entries">${[1,2,3,4].map(() => `<div class="sk-entry"><div class="skeleton sk-line short"></div><div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div><div class="skeleton sk-line short" style="width:30%"></div><div class="skeleton sk-player"></div><div class="skeleton sk-line" style="width:45%"></div></div>`).join('')}</div>`;
+  document.getElementById('entriesWrap').innerHTML = '<div>Loading...</div>'iv class="sk-entry"><div class="skeleton sk-line short"></div><div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div><div class="skeleton sk-line short" style="width:30%"></div><div class="skeleton sk-player"></div><div class="skeleton sk-line" style="width:45%"></div></div>`).join('')}</div>`;
 }
 
 function renderEntries(entries) {
@@ -583,13 +583,15 @@ function renderEntries(entries) {
     var disabled = (isOwn || voted) ? 'disabled style="opacity:.4;cursor:default"' : '';
     var votedClass = voted ? 'voted' : '';
     var voteLabel = voted ? t('vote.voted') : t('vote.vote');
+    var uid = e.user_id;
+    var eid = e.id;
     return '<div class="entry">' +
-      '<div class="entry-prod" onclick="openProfile('' + e.user_id + '')">' + alias + '</div>' +
+      '<div class="entry-prod" onclick="openProfile(&quot;' + uid + '&quot;)">' + alias + '</div>' +
       '<div class="entry-title">' + e.title + '</div>' +
       '<div class="entry-meta">' + (e.meta || '') + '</div>' +
       sc +
       '<div class="vote-row">' +
-        '<button class="vote-btn ' + votedClass + '" onclick="vote('' + e.id + '','' + e.user_id + '')" ' + disabled + '>' + voteLabel + '</button>' +
+        '<button class="vote-btn ' + votedClass + '" onclick="vote(&quot;' + eid + '&quot;,&quot;' + uid + '&quot;)" ' + disabled + '>' + voteLabel + '</button>' +
         '<span class="vote-c">' + (e.votes||0) + ' ' + t('vote.votes') + '</span>' +
       '</div></div>';
   });
@@ -803,7 +805,10 @@ async function loadAdminEntries() {
   const { data } = await sb.from('entries').select('*,profiles(alias)').eq('battle_id', currentBattle.id).order('votes', { ascending: false });
   const wrap = document.getElementById('adminEntries');
   if (!data||!data.length) { wrap.innerHTML='<div style="color:var(--gray);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase">Keine Entries</div>'; return; }
-  wrap.innerHTML = `<div class="admin-list">${data.map(e=>`<div class="admin-item"><div><div class="admin-item-name">${e.profiles?.alias||'—'} — ${e.title}</div><div class="admin-item-meta">${e.votes||0} Votes</div></div><button class="btn-danger" onclick="adminDeleteEntry('${e.id}')">Löschen</button></div>`).join('')}</div>`;
+  wrap.innerHTML = '<div class="admin-list">' + data.map(function(e){
+    var a = (e.profiles && e.profiles.alias) ? e.profiles.alias : '—';
+    return '<div class="admin-item"><div><div class="admin-item-name">' + a + ' — ' + e.title + '</div><div class="admin-item-meta">' + (e.votes||0) + ' Votes</div></div><button class="btn-danger" onclick="adminDeleteEntry(&quot;' + e.id + '&quot;)">Löschen</button></div>';
+  }).join('') + '</div>';
 }
 
 async function adminDeleteEntry(id) {
