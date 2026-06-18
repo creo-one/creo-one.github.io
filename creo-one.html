@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CREO//ONE</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --black:#0a0a0a;
+  --dark:#141414;
+  --mid:#2a2a2a;
+  --gray:#888;
+  --light:#ccc;
+  --white:#f5f5f5;
+  --rule:rgba(255,255,255,0.07);
+}
+
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Barlow',sans-serif;
+  font-weight:300;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* condensed utility */
+.cond{font-family:'Barlow Condensed',sans-serif}
+
+/* ── NAV ── */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1.25rem 3rem;
+  border-bottom:1px solid var(--rule);
+  position:sticky;top:0;
+  background:var(--black);
+  z-index:100;
+}
+
+.logo{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:1.5rem;
+  letter-spacing:0.06em;
+  color:var(--white);
+  text-decoration:none;
+  text-transform:uppercase;
+}
+
+.nav-r{display:flex;gap:2rem;align-items:center}
+
+.nav-r a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:500;
+  font-size:0.8rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gray);
+  text-decoration:none;
+  transition:color .15s;
+}
+.nav-r a:hover{color:var(--white)}
+
+#navAuthBtn{
+  border:1px solid var(--rule);
+  padding:.35rem .9rem;
+  color:var(--light)!important;
+  cursor:pointer;
+  transition:border-color .15s,color .15s!important;
+}
+#navAuthBtn:hover{border-color:var(--gray);color:var(--white)!important}
+
+/* ── HERO ── */
+.hero{
+  padding:7rem 3rem 5rem;
+  border-bottom:1px solid var(--rule);
+}
+
+.hero-eye{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:500;
+  font-size:0.72rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-bottom:1.5rem;
+}
+
+.hero h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(5rem,12vw,11rem);
+  line-height:.92;
+  letter-spacing:-0.01em;
+  text-transform:uppercase;
+  color:var(--white);
+  margin-bottom:2rem;
+}
+
+.hero h1 .dim{color:var(--mid);-webkit-text-stroke:1px var(--gray)}
+
+.hero-sub{
+  color:var(--gray);
+  font-size:.9rem;
+  max-width:380px;
+  font-weight:300;
+  line-height:1.7;
+}
+
+.stats-row{
+  display:flex;
+  gap:4rem;
+  margin-top:4rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--rule);
+}
+
+.stat-n{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:3rem;
+  line-height:1;
+  color:var(--white);
+}
+
+.stat-l{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:400;
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-top:.2rem;
+}
+
+/* ── SECTION BASE ── */
+.sec{
+  padding:5rem 3rem;
+  border-bottom:1px solid var(--rule);
+}
+
+.sec-eye{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:.68rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-bottom:2.5rem;
+}
+
+/* ── BATTLE ── */
+.battle-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-bottom:2.5rem;
+  flex-wrap:wrap;
+  gap:1rem;
+}
+
+.battle-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(2.5rem,6vw,5rem);
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  line-height:.95;
+}
+
+.battle-theme-tag{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:500;
+  font-size:.68rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gray);
+  border:1px solid var(--rule);
+  padding:.3rem .8rem;
+  white-space:nowrap;
+}
+
+#countdown{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:500;
+  font-size:.75rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--gray);
+}
+
+/* ── ENTRIES ── */
+.entries{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+  margin-bottom:2.5rem;
+}
+
+.entry{
+  background:var(--black);
+  padding:1.75rem;
+  transition:background .15s;
+}
+.entry:hover{background:var(--dark)}
+
+.entry-prod{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:.65rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-bottom:.4rem;
+}
+
+.entry-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:1.6rem;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  margin-bottom:.2rem;
+  line-height:1.1;
+}
+
+.entry-meta{
+  font-size:.78rem;
+  color:var(--gray);
+  margin-bottom:1rem;
+  font-family:'Barlow Condensed',sans-serif;
+  letter-spacing:.06em;
+}
+
+.sc-box{
+  width:100%;
+  height:80px;
+  border:none;
+  margin-bottom:1rem;
+  background:var(--dark);
+}
+
+.sc-placeholder{
+  width:100%;
+  height:80px;
+  background:var(--dark);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--mid);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.7rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-bottom:1rem;
+}
+
+.vote-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.vote-btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+  font-size:.78rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  padding:.4rem 1rem;
+  border:1px solid var(--rule);
+  background:none;
+  color:var(--gray);
+  cursor:pointer;
+  transition:all .15s;
+}
+.vote-btn:hover,.vote-btn.voted{
+  background:var(--white);
+  color:var(--black);
+  border-color:var(--white);
+}
+
+.vote-c{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:500;
+  font-size:.78rem;
+  letter-spacing:.1em;
+  color:var(--gray);
+}
+
+/* empty state */
+.empty{
+  padding:4rem 2rem;
+  text-align:center;
+  color:var(--gray);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.78rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  background:var(--dark);
+  border:1px solid var(--rule);
+}
+
+/* ── SUBMIT ── */
+.submit-box{
+  border:1px solid var(--rule);
+  padding:2.5rem;
+  max-width:520px;
+  background:var(--dark);
+}
+
+.submit-box h3{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:1.6rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  margin-bottom:.4rem;
+}
+
+.submit-box p{
+  color:var(--gray);
+  font-size:.85rem;
+  margin-bottom:1.5rem;
+}
+
+.field{margin-bottom:1rem}
+
+.field label{
+  display:block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  font-size:.65rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-bottom:.4rem;
+}
+
+.field input{
+  width:100%;
+  padding:.65rem .85rem;
+  background:var(--black);
+  border:1px solid var(--rule);
+  color:var(--white);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.95rem;
+  letter-spacing:.04em;
+  outline:none;
+  transition:border-color .15s;
+}
+.field input:focus{border-color:var(--gray)}
+.field input::placeholder{color:var(--mid)}
+
+.btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:.82rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  padding:.6rem 1.5rem;
+  background:var(--white);
+  color:var(--black);
+  border:none;
+  cursor:pointer;
+  transition:opacity .15s;
+  margin-top:.5rem;
+}
+.btn:hover{opacity:.85}
+.btn-ghost{
+  background:none;
+  color:var(--gray);
+  border:1px solid var(--rule);
+}
+.btn-ghost:hover{border-color:var(--gray);color:var(--white);opacity:1}
+
+/* ── HOF ── */
+.hof-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1px;
+  background:var(--rule);
+  border:1px solid var(--rule);
+}
+
+.hof-card{
+  background:var(--black);
+  padding:1.5rem 1.75rem;
+}
+
+.hof-rank{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:300;
+  font-size:.65rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--gray);
+  margin-bottom:.4rem;
+}
+
+.hof-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:1.5rem;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  margin-bottom:.2rem;
+}
+
+.hof-wins{
+  font-size:.78rem;
+  color:var(--gray);
+}
+
+.champ-tag{
+  display:inline-block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+  font-size:.6rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  border:1px solid var(--light);
+  color:var(--light);
+  padding:.15rem .55rem;
+  margin-top:.5rem;
+}
+
+/* ── HOW ── */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:0;
+  border:1px solid var(--rule);
+}
+
+.step{
+  padding:2rem;
+  border-right:1px solid var(--rule);
+}
+.step:last-child{border-right:none}
+
+.step-n{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:300;
+  font-size:3rem;
+  color:var(--mid);
+  line-height:1;
+  margin-bottom:.75rem;
+}
+
+.step-t{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;
+  font-size:1rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:.5rem;
+}
+
+.step-d{
+  font-size:.82rem;
+  color:var(--gray);
+  line-height:1.6;
+}
+
+/* ── MODAL ── */
+.overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(10,10,10,.93);
+  z-index:200;
+  align-items:center;
+  justify-content:center;
+}
+.overlay.open{display:flex}
+
+.modal{
+  background:var(--dark);
+  border:1px solid var(--rule);
+  padding:2.5rem;
+  width:100%;max-width:380px;
+}
+
+.modal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:1.5rem;
+}
+
+.modal h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:2rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+.modal-x{
+  background:none;border:none;
+  color:var(--gray);font-size:1.1rem;
+  cursor:pointer;padding:0;
+}
+
+.tabs{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:1.5rem;
+}
+
+.tab-btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  padding:.5rem 1rem;
+  background:none;border:none;
+  color:var(--gray);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:color .15s;
+}
+.tab-btn.active{color:var(--white);border-bottom-color:var(--white)}
+
+.msg{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.78rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:.6rem;
+  margin-bottom:1rem;
+  text-align:center;
+}
+.msg.err{background:#2a0000;color:#ff6b6b;border:1px solid #500}
+.msg.ok{background:#002a00;color:#6bff6b;border:1px solid #050}
+.msg.hidden{display:none}
+
+/* ── FOOTER ── */
+footer{
+  padding:2rem 3rem;
+  border-top:1px solid var(--rule);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+
+footer p{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:400;
+  font-size:.7rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--gray);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  nav,.hero,.sec,footer{padding-left:1.25rem;padding-right:1.25rem}
+  .hero{padding-top:3.5rem;padding-bottom:3rem}
+  .stats-row{gap:2rem;flex-wrap:wrap}
+  .step{border-right:none;border-bottom:1px solid var(--rule)}
+  .step:last-child{border-bottom:none}
+  .nav-r a:not(#navAuthBtn){display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-top">
+      <h2 id="modalH">Anmelden</h2>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('login',this)">Login</button>
+      <button class="tab-btn" onclick="switchTab('register',this)">Registrieren</button>
+    </div>
+    <div id="authMsg" class="msg hidden"></div>
+
+    <!-- LOGIN -->
+    <div id="loginForm">
+      <div class="field"><label>E-Mail</label><input type="email" id="loginEmail" placeholder="deine@mail.com"/></div>
+      <div class="field"><label>Passwort</label><input type="password" id="loginPw" placeholder="••••••••"/></div>
+      <button class="btn" onclick="doLogin()">Anmelden</button>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerForm" style="display:none">
+      <div class="field"><label>Producer-Alias</label><input type="text" id="regAlias" placeholder="z.B. VALE oder CREO_NOIR"/></div>
+      <div class="field"><label>E-Mail</label><input type="email" id="regEmail" placeholder="deine@protonmail.com"/></div>
+      <div class="field"><label>Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
+      <button class="btn" onclick="doRegister()">Account erstellen</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">CREO//ONE</a>
+  <div class="nav-r">
+    <a href="#battle">Battle</a>
+    <a href="#hof">Hall of Fame</a>
+    <a href="#how">Regeln</a>
+    <a href="#" id="navAuthBtn" onclick="handleNavAuth(event)">Anmelden</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eye">Beat Battle Platform</div>
+  <h1>WER HAT<br><span class="dim">DEN</span><br>BESTEN<br>BEAT?</h1>
+  <p class="hero-sub">Jede Woche ein neues Thema. Ein Beat. Die Community entscheidet.</p>
+  <div class="stats-row">
+    <div><div class="stat-n" id="sP">—</div><div class="stat-l">Producer</div></div>
+    <div><div class="stat-n" id="sB">—</div><div class="stat-l">Battles</div></div>
+    <div><div class="stat-n" id="sV">—</div><div class="stat-l">Votes</div></div>
+  </div>
+</div>
+
+<!-- BATTLE -->
+<div class="sec" id="battle">
+  <div class="sec-eye">Aktuelles Battle</div>
+  <div class="battle-top">
+    <div>
+      <div class="battle-theme-tag" id="themeTag">Thema wird geladen…</div>
+      <div class="battle-h" id="battleTitle">—</div>
+    </div>
+    <div>
+      <div id="countdown" style="margin-bottom:.4rem">—</div>
+    </div>
+  </div>
+  <div id="entriesWrap"></div>
+
+  <div class="submit-box" id="submitBox">
+    <h3>Beat einreichen</h3>
+    <p>SoundCloud-Link einfügen. Ein Beat pro Battle.</p>
+    <div class="field"><label>Beat-Titel</label><input type="text" id="inTitle" placeholder="z.B. MIDNIGHT RAIN"/></div>
+    <div class="field"><label>SoundCloud-Link</label><input type="url" id="inSC" placeholder="https://soundcloud.com/…"/></div>
+    <div class="field"><label>BPM · Tonart (optional)</label><input type="text" id="inMeta" placeholder="90 BPM · Dm"/></div>
+    <button class="btn" onclick="submitBeat()">Beat einreichen</button>
+    <div id="submitMsg" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
+  </div>
+</div>
+
+<!-- HALL OF FAME -->
+<div class="sec" id="hof">
+  <div class="sec-eye">Hall of Fame</div>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,4rem);text-transform:uppercase;letter-spacing:-.01em;margin-bottom:2.5rem;line-height:.95">
+    DIE BESTEN<br>ALLER ZEITEN.
+  </div>
+  <div class="hof-list" id="hofList">
+    <div class="empty">Noch keine Gewinner</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="sec" id="how">
+  <div class="sec-eye">Regeln</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-t">Registrieren</div>
+      <p class="step-d">Account mit Producer-Alias anlegen. Kein Realname nötig.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-t">Beat einreichen</div>
+      <p class="step-d">Wöchentliches Thema. Ein Beat per SoundCloud-Link. Deadline: Freitag 23:59.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-t">Voten</div>
+      <p class="step-d">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div>
+      <div class="step-t">Champion</div>
+      <p class="step-d">Meiste Votes gewinnt. Badge auf dem Profil, Eintrag in der Hall of Fame.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© CREO//ONE — Beat Battle Platform</p>
+  <p>Schwarzwald · Deutschland</p>
+</footer>
+
+<script>
+// ── SUPABASE CONFIG ──
+// Ersetze diese beiden Werte mit deinen eigenen aus dem Supabase-Dashboard:
+// supabase.com → Projekt → Settings → API
+const SUPABASE_URL = 'DEINE_SUPABASE_URL';
+const SUPABASE_KEY = 'DEIN_SUPABASE_ANON_KEY';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ── STATE ──
+let currentUser = null;
+let currentBattle = null;
+let myVotes = new Set();
+let myEntry = null;
+
+// ── INIT ──
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) setUser(session.user);
+
+  sb.auth.onAuthStateChange((_e, session) => {
+    if (session) setUser(session.user);
+    else { currentUser = null; updateNavBtn(); }
+  });
+
+  await loadBattle();
+  await loadHof();
+  await loadStats();
+  startCountdown();
+}
+
+// ── USER ──
+function setUser(user) {
+  currentUser = user;
+  updateNavBtn();
+}
+
+function updateNavBtn() {
+  const btn = document.getElementById('navAuthBtn');
+  if (currentUser) {
+    const alias = currentUser.user_metadata?.alias || currentUser.email?.split('@')[0] || 'Producer';
+    btn.textContent = alias.toUpperCase();
+  } else {
+    btn.textContent = 'Anmelden';
+  }
+}
+
+function handleNavAuth(e) {
+  e.preventDefault();
+  if (currentUser) doLogout();
+  else openModal();
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  currentUser = null;
+  myVotes = new Set();
+  myEntry = null;
+  updateNavBtn();
+  renderEntries([]);
+}
+
+// ── MODAL ──
+function openModal() { document.getElementById('overlay').classList.add('open'); }
+function closeModal() { document.getElementById('overlay').classList.remove('open'); hideMsg('authMsg'); }
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+  hideMsg('authMsg');
+}
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = `msg ${type}`;
+}
+function hideMsg(id) {
+  document.getElementById(id).className = 'msg hidden';
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPw').value;
+  if (!email || !pw) { showMsg('authMsg','Alle Felder ausfüllen','err'); return; }
+  const { error } = await sb.auth.signInWithPassword({ email, password: pw });
+  if (error) { showMsg('authMsg', error.message, 'err'); return; }
+  showMsg('authMsg','Willkommen zurück!','ok');
+  setTimeout(closeModal, 800);
+  await loadEntries();
+}
+
+async function doRegister() {
+  const alias = document.getElementById('regAlias').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pw = document.getElementById('regPw').value;
+  if (!alias || !email || !pw) { showMsg('authMsg','Alle Felder ausfüllen','err'); return; }
+  if (pw.length < 6) { showMsg('authMsg','Passwort min. 6 Zeichen','err'); return; }
+  const { error } = await sb.auth.signUp({
+    email, password: pw,
+    options: { data: { alias } }
+  });
+  if (error) { showMsg('authMsg', error.message, 'err'); return; }
+  showMsg('authMsg','Account erstellt — bitte E-Mail bestätigen','ok');
+}
+
+// ── BATTLE ──
+async function loadBattle() {
+  // Holt das aktuell aktive Battle
+  const { data, error } = await sb
+    .from('battles')
+    .select('*')
+    .eq('active', true)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error || !data) {
+    // Demo-Fallback wenn noch keine Battles in DB
+    currentBattle = { id: 'demo', title: 'RAINY NIGHT IN THE CITY', theme: 'Thema dieser Woche', ends_at: getFriday() };
+    document.getElementById('themeTag').textContent = currentBattle.theme;
+    document.getElementById('battleTitle').textContent = currentBattle.title;
+    await loadEntries();
+    return;
+  }
+
+  currentBattle = data;
+  document.getElementById('themeTag').textContent = data.theme || 'Thema dieser Woche';
+  document.getElementById('battleTitle').textContent = data.title;
+  await loadEntries();
+}
+
+async function loadEntries() {
+  if (!currentBattle) return;
+
+  const { data: entries } = await sb
+    .from('entries')
+    .select('*, profiles(alias)')
+    .eq('battle_id', currentBattle.id)
+    .order('votes', { ascending: false });
+
+  if (currentUser) {
+    const { data: votes } = await sb
+      .from('votes')
+      .select('entry_id')
+      .eq('user_id', currentUser.id)
+      .eq('battle_id', currentBattle.id);
+    myVotes = new Set((votes || []).map(v => v.entry_id));
+
+    const { data: mine } = await sb
+      .from('entries')
+      .select('id')
+      .eq('battle_id', currentBattle.id)
+      .eq('user_id', currentUser.id)
+      .limit(1);
+    myEntry = mine?.[0]?.id || null;
+  }
+
+  renderEntries(entries || []);
+}
+
+function renderEntries(entries) {
+  const wrap = document.getElementById('entriesWrap');
+  if (!entries.length) {
+    wrap.innerHTML = '<div class="empty">Noch keine Beats eingereicht — sei der Erste.</div>';
+    return;
+  }
+
+  wrap.innerHTML = `<div class="entries">${entries.map(e => {
+    const alias = e.profiles?.alias || 'UNKNOWN';
+    const voted = myVotes.has(e.id);
+    const isOwn = currentUser && e.user_id === currentUser.id;
+    const scEmbed = e.sc_url
+      ? `<iframe class="sc-box" scrolling="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+         </iframe>`
+      : `<div class="sc-placeholder">▶ Beat anhören</div>`;
+
+    return `<div class="entry">
+      <div class="entry-prod">${alias}</div>
+      <div class="entry-title">${e.title}</div>
+      <div class="entry-meta">${e.meta || ''}</div>
+      ${scEmbed}
+      <div class="vote-row">
+        <button class="vote-btn ${voted ? 'voted' : ''}"
+          onclick="vote('${e.id}','${e.user_id}')"
+          ${isOwn || voted ? 'disabled style="opacity:.4;cursor:default"' : ''}>
+          ${voted ? '✓ GEVOTED' : '↑ VOTEN'}
+        </button>
+        <span class="vote-c">${e.votes || 0} VOTES</span>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+async function vote(entryId, ownerId) {
+  if (!currentUser) { openModal(); return; }
+  if (currentUser.id === ownerId) return;
+  if (myVotes.has(entryId)) return;
+
+  const { error } = await sb.from('votes').insert({
+    entry_id: entryId,
+    user_id: currentUser.id,
+    battle_id: currentBattle.id
+  });
+  if (error) return;
+
+  // Votes-Zähler hochsetzen
+  await sb.rpc('increment_votes', { entry_id: entryId });
+
+  myVotes.add(entryId);
+  await loadEntries();
+}
+
+async function submitBeat() {
+  if (!currentUser) { openModal(); return; }
+  if (myEntry) { showMsg('submitMsg','Du hast bereits einen Beat eingereicht.','err'); return; }
+
+  const title = document.getElementById('inTitle').value.trim().toUpperCase();
+  const sc_url = document.getElementById('inSC').value.trim();
+  const meta = document.getElementById('inMeta').value.trim();
+
+  if (!title || !sc_url) { showMsg('submitMsg','Titel und SoundCloud-Link pflicht.','err'); return; }
+
+  const { error } = await sb.from('entries').insert({
+    battle_id: currentBattle.id,
+    user_id: currentUser.id,
+    title, sc_url, meta, votes: 0
+  });
+
+  if (error) { showMsg('submitMsg', error.message, 'err'); return; }
+
+  document.getElementById('inTitle').value = '';
+  document.getElementById('inSC').value = '';
+  document.getElementById('inMeta').value = '';
+  showMsg('submitMsg','Beat eingereicht!','ok');
+  await loadEntries();
+}
+
+// ── HALL OF FAME ──
+async function loadHof() {
+  const { data } = await sb
+    .from('winners')
+    .select('*, profiles(alias)')
+    .order('wins', { ascending: false })
+    .limit(8);
+
+  if (!data || !data.length) return;
+
+  document.getElementById('hofList').innerHTML = data.map((w, i) => `
+    <div class="hof-card">
+      <div class="hof-rank">${String(i+1).padStart(2,'0')}</div>
+      <div class="hof-name">${w.profiles?.alias || 'UNKNOWN'}</div>
+      <div class="hof-wins">${w.wins} Battle${w.wins !== 1 ? 's' : ''} gewonnen</div>
+      ${i === 0 ? '<div class="champ-tag">Champion</div>' : ''}
+    </div>`).join('');
+}
+
+// ── STATS ──
+async function loadStats() {
+  const [{ count: p }, { count: b }, { count: v }] = await Promise.all([
+    sb.from('profiles').select('*', { count: 'exact', head: true }),
+    sb.from('battles').select('*', { count: 'exact', head: true }),
+    sb.from('votes').select('*', { count: 'exact', head: true }),
+  ]);
+  animCount('sP', p || 0);
+  animCount('sB', b || 0);
+  animCount('sV', v || 0);
+}
+
+function animCount(id, target) {
+  const el = document.getElementById(id);
+  let n = 0; const step = Math.max(1, Math.ceil(target / 40));
+  const t = setInterval(() => {
+    n = Math.min(n + step, target);
+    el.textContent = n;
+    if (n >= target) clearInterval(t);
+  }, 30);
+}
+
+// ── COUNTDOWN ──
+function getFriday() {
+  const d = new Date();
+  const day = d.getDay();
+  const diff = (5 - day + 7) % 7 || 7;
+  d.setDate(d.getDate() + diff);
+  d.setHours(23, 59, 0, 0);
+  return d.toISOString();
+}
+
+function startCountdown() {
+  function update() {
+    const end = currentBattle?.ends_at ? new Date(currentBattle.ends_at) : new Date(getFriday());
+    const diff = end - new Date();
+    if (diff <= 0) { document.getElementById('countdown').textContent = 'BATTLE BEENDET'; return; }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    document.getElementById('countdown').textContent = `ENDET IN ${d}T ${h}H ${m}M`;
+  }
+  update();
+  setInterval(update, 60000);
+}
+
+init();
+</script>
+</body>
+</html>
