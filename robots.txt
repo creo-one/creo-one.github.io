@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://creo-one.github.io/sitemap.xml
