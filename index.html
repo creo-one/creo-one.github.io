@@ -590,6 +590,7 @@ footer p{
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('login',this)">Login</button>
       <button class="tab-btn" onclick="switchTab('register',this)">Registrieren</button>
+      <button class="tab-btn" onclick="switchTab('reset',this)">Passwort vergessen</button>
     </div>
     <div id="authMsg" class="msg hidden"></div>
 
@@ -606,6 +607,13 @@ footer p{
       <div class="field"><label>E-Mail</label><input type="email" id="regEmail" placeholder="deine@mail.com"/></div>
       <div class="field"><label>Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
       <button class="btn" onclick="doRegister()">Account erstellen</button>
+    </div>
+
+    <!-- RESET -->
+    <div id="resetForm" style="display:none">
+      <p style="color:var(--gray);font-size:.82rem;margin-bottom:1rem;line-height:1.6;">Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.</p>
+      <div class="field"><label>E-Mail</label><input type="email" id="resetEmail" placeholder="deine@mail.com"/></div>
+      <button class="btn" onclick="doReset()">Link senden</button>
     </div>
   </div>
 </div>
@@ -625,8 +633,8 @@ footer p{
 <div class="hero">
   <div class="hero-eye">Beat Battle Platform</div>
   <h1>EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
-  <p class="hero-sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet — kein Label, kein Bullshit.</p>
-  <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem;">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge. Kein Label. Kein Gate-Keeping. Nur Beats.</p>
+  <p class="hero-sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.</p>
+  <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem;">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge. </p>
   <div class="stats-row">
     <div><div class="stat-n" id="sP">—</div><div class="stat-l">Producer</div></div>
     <div><div class="stat-n" id="sB">—</div><div class="stat-l">Battles</div></div>
@@ -678,22 +686,69 @@ footer p{
     <div class="step">
       <div class="step-n">01</div>
       <div class="step-t">Registrieren</div>
-      <p class="step-d">Account mit Producer-Alias anlegen. Kein Realname nötig.</p>
+      <p class="step-d">Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.</p>
     </div>
     <div class="step">
       <div class="step-n">02</div>
       <div class="step-t">Beat einreichen</div>
-      <p class="step-d">Wöchentliches Thema. Ein Beat per SoundCloud-Link. Deadline: Freitag 23:59.</p>
+      <p class="step-d">Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen. Deadline: Ende des Battles.</p>
     </div>
     <div class="step">
       <div class="step-n">03</div>
       <div class="step-t">Voten</div>
-      <p class="step-d">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat.</p>
+      <p class="step-d">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.</p>
     </div>
     <div class="step">
       <div class="step-n">04</div>
       <div class="step-t">Champion</div>
-      <p class="step-d">Meiste Votes gewinnt. Badge auf dem Profil, Eintrag in der Hall of Fame.</p>
+      <p class="step-d">Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.</p>
+    </div>
+  </div>
+
+  <!-- Verhaltensregeln -->
+  <div style="margin-top:3rem;border-top:1px solid var(--rule);padding-top:2.5rem;">
+    <div class="sec-eye" style="margin-bottom:1.5rem;">Verhaltensregeln</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;">
+      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Fairplay</div>
+        <p class="step-d">Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.</p>
+      </div>
+      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Respekt</div>
+        <p class="step-d">Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.</p>
+      </div>
+      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Originalität</div>
+        <p class="step-d">Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.</p>
+      </div>
+      <div style="border-left:1px solid var(--rule);padding-left:1rem;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Entscheidung</div>
+        <p class="step-d">Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KONTAKT -->
+<div class="sec" id="kontakt">
+  <div class="sec-eye">Kontakt</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);text-transform:uppercase;letter-spacing:-.01em;line-height:.95;margin-bottom:1.5rem;">
+        FRAGEN?<br>MELD DICH.
+      </div>
+      <p style="color:var(--gray);font-size:.88rem;line-height:1.8;max-width:340px;">
+        Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.
+      </p>
+    </div>
+    <div>
+      <div class="submit-box" style="background:var(--dark);">
+        <div class="field"><label>Dein Alias (optional)</label><input type="text" id="ctAlias" placeholder="dein_alias"/></div>
+        <div class="field"><label>E-Mail</label><input type="email" id="ctEmail" placeholder="deine@mail.com"/></div>
+        <div class="field"><label>Nachricht</label><input type="text" id="ctMsg" placeholder="Deine Nachricht…"/></div>
+        <button class="btn" onclick="sendContact()">Nachricht senden</button>
+        <div id="ctResult" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -775,7 +830,31 @@ function switchTab(tab, el) {
   el.classList.add('active');
   document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('resetForm').style.display = tab === 'reset' ? 'block' : 'none';
   hideMsg('authMsg');
+}
+
+async function doReset() {
+  const email = document.getElementById('resetEmail').value.trim();
+  if (!email) { showMsg('authMsg','E-Mail eingeben','err'); return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin
+  });
+  if (error) { showMsg('authMsg', error.message, 'err'); return; }
+  showMsg('authMsg','Link gesendet — check deine E-Mails','ok');
+}
+
+async function sendContact() {
+  const alias = document.getElementById('ctAlias').value.trim();
+  const email = document.getElementById('ctEmail').value.trim();
+  const msg = document.getElementById('ctMsg').value.trim();
+  if (!email || !msg) { showMsg('ctResult','E-Mail und Nachricht pflicht.','err'); return; }
+  const { error } = await sb.from('contact_messages').insert({ alias, email, message: msg });
+  if (error) { showMsg('ctResult', error.message, 'err'); return; }
+  document.getElementById('ctAlias').value = '';
+  document.getElementById('ctEmail').value = '';
+  document.getElementById('ctMsg').value = '';
+  showMsg('ctResult','Nachricht gesendet — wir melden uns.','ok');
 }
 
 function showMsg(id, text, type) {
