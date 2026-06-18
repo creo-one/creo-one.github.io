@@ -610,24 +610,24 @@ footer p{
 
     <!-- LOGIN -->
     <div id="loginForm">
-      <div class="field"><label>E-Mail</label><input type="email" id="loginEmail" placeholder="deine@mail.com"/></div>
-      <div class="field"><label>Passwort</label><input type="password" id="loginPw" placeholder="••••••••"/></div>
-      <button class="btn" onclick="doLogin()">Anmelden</button>
+      <div class="field"><label data-i18n="modal.label.email">E-Mail</label><input type="email" id="loginEmail" placeholder="deine@mail.com"/></div>
+      <div class="field"><label data-i18n="modal.label.pw">Passwort</label><input type="password" id="loginPw" placeholder="••••••••"/></div>
+      <button class="btn" onclick="doLogin()" data-i18n="modal.login.btn">Anmelden</button>
     </div>
 
     <!-- REGISTER -->
     <div id="registerForm" style="display:none">
-      <div class="field"><label>Producer-Alias</label><input type="text" id="regAlias" placeholder="dein_alias"/></div>
-      <div class="field"><label>E-Mail</label><input type="email" id="regEmail" placeholder="deine@mail.com"/></div>
-      <div class="field"><label>Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
-      <button class="btn" onclick="doRegister()">Account erstellen</button>
+      <div class="field"><label data-i18n="modal.label.alias">Producer-Alias</label><input type="text" id="regAlias" placeholder="dein_alias"/></div>
+      <div class="field"><label data-i18n="modal.label.email">E-Mail</label><input type="email" id="regEmail" placeholder="deine@mail.com"/></div>
+      <div class="field"><label data-i18n="modal.label.pw">Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
+      <button class="btn" onclick="doRegister()" data-i18n="modal.register.btn">Account erstellen</button>
     </div>
 
     <!-- RESET -->
     <div id="resetForm" style="display:none">
       <p style="color:var(--gray);font-size:.82rem;margin-bottom:1rem;line-height:1.6;">Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.</p>
-      <div class="field"><label>E-Mail</label><input type="email" id="resetEmail" placeholder="deine@mail.com"/></div>
-      <button class="btn" onclick="doReset()">Link senden</button>
+      <div class="field"><label data-i18n="modal.label.email">E-Mail</label><input type="email" id="resetEmail" placeholder="deine@mail.com"/></div>
+      <button class="btn" onclick="doReset()" data-i18n="modal.reset.btn">Link senden</button>
     </div>
   </div>
 </div>
@@ -653,7 +653,7 @@ footer p{
   <div class="hero-eye" data-i18n="hero.eye">Beat Battle Platform</div>
   <h1>EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
   <p class="hero-sub" data-i18n="hero.sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.</p>
-  <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem;">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge. </p>
+  <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem;"><span data-i18n="hero.desc">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.</span></p>
   <div class="stats-row">
     <div><div class="stat-n" id="sP">—</div><div class="stat-l" data-i18n="stats.producers">Producer</div></div>
     <div><div class="stat-n" id="sB">—</div><div class="stat-l">Battles</div></div>
@@ -679,9 +679,9 @@ footer p{
   <div class="submit-box" id="submitBox">
     <h3 data-i18n="submit.title">Beat einreichen</h3>
     <p data-i18n="submit.sub">SoundCloud-Link einfügen. Ein Beat pro Battle.</p>
-    <div class="field"><label>Beat-Titel</label><input type="text" id="inTitle" placeholder="z.B. MIDNIGHT RAIN"/></div>
-    <div class="field"><label>SoundCloud-Link</label><input type="url" id="inSC" placeholder="https://soundcloud.com/…"/></div>
-    <div class="field"><label>Kurze Beschreibung (optional)</label><input type="text" id="inMeta" placeholder="z.B. lo-fi am See, dusty samples, Sommernacht"/></div>
+    <div class="field"><label data-i18n="submit.label.title">Beat-Titel</label><input type="text" id="inTitle" placeholder="z.B. MIDNIGHT RAIN"/></div>
+    <div class="field"><label data-i18n="submit.label.sc">SoundCloud-Link</label><input type="url" id="inSC" placeholder="https://soundcloud.com/…"/></div>
+    <div class="field"><label data-i18n="submit.label.desc">Kurze Beschreibung (optional)</label><input type="text" id="inMeta" placeholder="z.B. lo-fi am See, dusty samples, Sommernacht"/></div>
     <button class="btn" onclick="submitBeat()" data-i18n="submit.btn">Beat einreichen</button>
     <div id="submitMsg" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
   </div>
@@ -704,23 +704,23 @@ footer p{
   <div class="steps">
     <div class="step">
       <div class="step-n">01</div>
-      <div class="step-t">Registrieren</div>
-      <p class="step-d">Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.</p>
+      <div class="step-t" data-i18n="step1.title">Registrieren</div>
+      <p class="step-d" data-i18n="step1.desc">Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.</p>
     </div>
     <div class="step">
       <div class="step-n">02</div>
-      <div class="step-t">Beat einreichen</div>
-      <p class="step-d">Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen. Deadline: Ende des Battles.</p>
+      <div class="step-t" data-i18n="step2.title">Beat einreichen</div>
+      <p class="step-d" data-i18n="step2.desc">Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen. Deadline: Ende des Battles.</p>
     </div>
     <div class="step">
       <div class="step-n">03</div>
-      <div class="step-t">Voten</div>
-      <p class="step-d">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.</p>
+      <div class="step-t" data-i18n="step3.title">Voten</div>
+      <p class="step-d" data-i18n="step3.desc">Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.</p>
     </div>
     <div class="step">
       <div class="step-n">04</div>
-      <div class="step-t">Champion</div>
-      <p class="step-d">Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.</p>
+      <div class="step-t" data-i18n="step4.title">Champion</div>
+      <p class="step-d" data-i18n="step4.desc">Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.</p>
     </div>
   </div>
 
@@ -729,20 +729,20 @@ footer p{
     <div class="sec-eye" style="margin-bottom:1.5rem;" data-i18n="rules.conduct">Verhaltensregeln</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;">
       <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Fairplay</div>
-        <p class="step-d">Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.</p>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct1.title">Fairplay</div>
+        <p class="step-d" data-i18n="conduct1.desc">Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.</p>
       </div>
       <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Respekt</div>
-        <p class="step-d">Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.</p>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct2.title">Respekt</div>
+        <p class="step-d" data-i18n="conduct2.desc">Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.</p>
       </div>
       <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Originalität</div>
-        <p class="step-d">Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.</p>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct3.title">Originalität</div>
+        <p class="step-d" data-i18n="conduct3.desc">Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.</p>
       </div>
       <div style="border-left:1px solid var(--rule);padding-left:1rem;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Entscheidung</div>
-        <p class="step-d">Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.</p>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;" data-i18n="conduct4.title">Entscheidung</div>
+        <p class="step-d" data-i18n="conduct4.desc">Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.</p>
       </div>
     </div>
   </div>
@@ -762,9 +762,9 @@ footer p{
     </div>
     <div>
       <div class="submit-box" style="background:var(--dark);">
-        <div class="field"><label>Dein Alias (optional)</label><input type="text" id="ctAlias" placeholder="dein_alias"/></div>
-        <div class="field"><label>E-Mail</label><input type="email" id="ctEmail" placeholder="deine@mail.com"/></div>
-        <div class="field"><label>Nachricht</label><input type="text" id="ctMsg" placeholder="Deine Nachricht…"/></div>
+        <div class="field"><label data-i18n="contact.label.alias">Dein Alias (optional)</label><input type="text" id="ctAlias" placeholder="dein_alias"/></div>
+        <div class="field"><label data-i18n="contact.label.email">E-Mail</label><input type="email" id="ctEmail" placeholder="deine@mail.com"/></div>
+        <div class="field"><label data-i18n="contact.label.msg">Nachricht</label><input type="text" id="ctMsg" placeholder="Deine Nachricht…"/></div>
         <button class="btn" onclick="sendContact()" data-i18n="contact.btn">Nachricht senden</button>
         <div id="ctResult" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
       </div>
@@ -1192,6 +1192,17 @@ const LANG = {
     'err.fields': 'Alle Felder ausfüllen',
     'err.pw': 'Passwort min. 6 Zeichen',
     'err.email': 'E-Mail eingeben',
+    'step1.title': 'Registrieren', 'step1.desc': 'Account mit Producer-Alias anlegen. Kein Realname nötig. Ein Account pro Person.',
+    'step2.title': 'Beat einreichen', 'step2.desc': 'Pro Battle ein Beat — per SoundCloud-Link. Der Beat muss zum Thema passen. Deadline: Ende des Battles.',
+    'step3.title': 'Voten', 'step3.desc': 'Nur registrierte Producer dürfen voten. Nicht für den eigenen Beat. Ein Vote pro Person pro Battle.',
+    'step4.title': 'Champion', 'step4.desc': 'Meiste Votes gewinnt. Eintrag in der Hall of Fame. Champion-Badge auf dem Profil.',
+    'conduct1.title': 'Fairplay', 'conduct1.desc': 'Mehrfach-Accounts, koordiniertes Voten und Manipulation führen zum sofortigen Ausschluss.',
+    'conduct2.title': 'Respekt', 'conduct2.desc': 'Beleidigungen, Rassismus oder Diskriminierung werden nicht toleriert. Accounts werden gesperrt.',
+    'conduct3.title': 'Originalität', 'conduct3.desc': 'Nur eigene Produktionen. Fremde Beats einzureichen gilt als Betrug und führt zum Ausschluss.',
+    'conduct4.title': 'Entscheidung', 'conduct4.desc': 'Entscheidungen der Administration sind endgültig. Bei Fragen oder Meldungen: Kontakt nutzen.',
+    'submit.label.title': 'Beat-Titel', 'submit.label.sc': 'SoundCloud-Link', 'submit.label.desc': 'Kurze Beschreibung (optional)',
+    'contact.label.alias': 'Dein Alias (optional)', 'contact.label.email': 'E-Mail', 'contact.label.msg': 'Nachricht',
+    'modal.label.email': 'E-Mail', 'modal.label.pw': 'Passwort', 'modal.label.alias': 'Producer-Alias',
   },
   en: {
     'nav.battle': 'Battle',
@@ -1240,6 +1251,17 @@ const LANG = {
     'err.fields': 'Please fill in all fields',
     'err.pw': 'Password min. 6 characters',
     'err.email': 'Please enter your email',
+    'step1.title': 'Register', 'step1.desc': 'Create an account with your producer alias. No real name needed. One account per person.',
+    'step2.title': 'Submit a beat', 'step2.desc': 'One beat per battle — via SoundCloud link. The beat must fit the theme. Deadline: end of battle.',
+    'step3.title': 'Vote', 'step3.desc': 'Only registered producers can vote. Not for your own beat. One vote per person per battle.',
+    'step4.title': 'Champion', 'step4.desc': 'Most votes wins. Hall of Fame entry. Champion badge on your profile.',
+    'conduct1.title': 'Fair play', 'conduct1.desc': 'Multiple accounts, coordinated voting and manipulation lead to immediate exclusion.',
+    'conduct2.title': 'Respect', 'conduct2.desc': 'Insults, racism or discrimination are not tolerated. Accounts will be banned.',
+    'conduct3.title': 'Originality', 'conduct3.desc': 'Only your own productions. Submitting someone else's beat is fraud and leads to exclusion.',
+    'conduct4.title': 'Decisions', 'conduct4.desc': 'Admin decisions are final. For questions or reports: use the contact form.',
+    'submit.label.title': 'Beat title', 'submit.label.sc': 'SoundCloud link', 'submit.label.desc': 'Short description (optional)',
+    'contact.label.alias': 'Your alias (optional)', 'contact.label.email': 'Email', 'contact.label.msg': 'Message',
+    'modal.label.email': 'Email', 'modal.label.pw': 'Password', 'modal.label.alias': 'Producer alias',
   },
   fr: {
     'nav.battle': 'Battle',
@@ -1288,6 +1310,17 @@ const LANG = {
     'err.fields': 'Veuillez remplir tous les champs',
     'err.pw': 'Mot de passe min. 6 caractères',
     'err.email': 'Veuillez entrer votre email',
+    'step1.title': 'S'inscrire', 'step1.desc': 'Créez un compte avec votre alias de producteur. Pas de vrai nom requis. Un compte par personne.',
+    'step2.title': 'Soumettre un beat', 'step2.desc': 'Un beat par battle — via lien SoundCloud. Le beat doit correspondre au thème. Deadline : fin de la battle.',
+    'step3.title': 'Voter', 'step3.desc': 'Seuls les producteurs inscrits peuvent voter. Pas pour son propre beat. Un vote par personne par battle.',
+    'step4.title': 'Champion', 'step4.desc': 'Le plus de votes gagne. Entrée au Hall of Fame. Badge Champion sur le profil.',
+    'conduct1.title': 'Fair-play', 'conduct1.desc': 'Les comptes multiples, le vote coordonné et la manipulation entraînent une exclusion immédiate.',
+    'conduct2.title': 'Respect', 'conduct2.desc': 'Les insultes, le racisme ou la discrimination ne sont pas tolérés. Les comptes seront bannis.',
+    'conduct3.title': 'Originalité', 'conduct3.desc': 'Uniquement vos propres productions. Soumettre le beat de quelqu'un d'autre est une fraude.',
+    'conduct4.title': 'Décisions', 'conduct4.desc': 'Les décisions de l'administration sont définitives. Pour questions ou signalements : utilisez le formulaire.',
+    'submit.label.title': 'Titre du beat', 'submit.label.sc': 'Lien SoundCloud', 'submit.label.desc': 'Courte description (optionnel)',
+    'contact.label.alias': 'Votre alias (optionnel)', 'contact.label.email': 'Email', 'contact.label.msg': 'Message',
+    'modal.label.email': 'Email', 'modal.label.pw': 'Mot de passe', 'modal.label.alias': 'Alias producteur',
   }
 };
 
