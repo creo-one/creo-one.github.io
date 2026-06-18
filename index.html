@@ -462,9 +462,16 @@ let myEntry = null;
 async function init() {
   const { data: { session } } = await sb.auth.getSession();
   if (session) setUser(session.user);
-  sb.auth.onAuthStateChange((_e, session) => {
-    if (session) setUser(session.user);
-    else { currentUser = null; updateNavBtn(); updateMobileAuthBtn(); }
+  sb.auth.onAuthStateChange(function(event, session) {
+    if (session) {
+      setUser(session.user);
+    } else if (event !== 'INITIAL_SESSION') {
+      currentUser = null;
+      updateNavBtn();
+      updateMobileAuthBtn();
+      document.getElementById('adminLink').style.display = 'none';
+      document.getElementById('mobileAdminLink').style.display = 'none';
+    }
   });
   await loadBattle();
   await loadHof();
@@ -1280,7 +1287,7 @@ try {
   }
 } catch(e) {}
 
-init().then(() => applyLang());
+init().then(function() { applyLang(); checkAdmin(); });
 </script>
 </body>
 </html>
