@@ -641,9 +641,9 @@ footer p{
     <a href="#how" data-i18n="nav.rules">Regeln</a>
     <a href="#" id="navAuthBtn" onclick="handleNavAuth(event)" data-i18n="nav.login">Anmelden</a>
     <div class="lang-sw">
-      <button class="lang-btn active" onclick="setLang('de',this)">DE</button>
-      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
-      <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+      <button class="lang-btn active" id="langDE">DE</button>
+      <button class="lang-btn" id="langEN">EN</button>
+      <button class="lang-btn" id="langFR">FR</button>
     </div>
   </div>
 </nav>
@@ -1143,6 +1143,7 @@ function startCountdown() {
 }
 
 
+
 // ── I18N ──
 const LANG = {
   de: {
@@ -1358,8 +1359,10 @@ function applyLang() {
   if (currentBattle) renderEntries(window._lastEntries || []);
 }
 
-init().then(() => applyLang());
 
-</script>
-</body>
-</html>
+// ── I18N INIT ──
+document.getElementById('langDE').addEventListener('click', function(){ setLang('de', this); });
+document.getElementById('langEN').addEventListener('click', function(){ setLang('en', this); });
+document.getElementById('langFR').addEventListener('click', function(){ setLang('fr', this); });
+
+init().then(() => applyLang());
