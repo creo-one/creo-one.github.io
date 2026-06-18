@@ -602,8 +602,8 @@ footer p{
 
     <!-- REGISTER -->
     <div id="registerForm" style="display:none">
-      <div class="field"><label>Producer-Alias</label><input type="text" id="regAlias" placeholder="z.B. VALE oder CREO_NOIR"/></div>
-      <div class="field"><label>E-Mail</label><input type="email" id="regEmail" placeholder="deine@protonmail.com"/></div>
+      <div class="field"><label>Producer-Alias</label><input type="text" id="regAlias" placeholder="dein_alias"/></div>
+      <div class="field"><label>E-Mail</label><input type="email" id="regEmail" placeholder="deine@mail.com"/></div>
       <div class="field"><label>Passwort</label><input type="password" id="regPw" placeholder="••••••••"/></div>
       <button class="btn" onclick="doRegister()">Account erstellen</button>
     </div>
@@ -797,12 +797,37 @@ async function doLogin() {
   await loadEntries();
 }
 
+// ── ALIAS FILTER ──
+const BLOCKED = [
+  'arsch','arschloch','scheiße','scheisse','fick','ficken','wichser','wichsen',
+  'hurensohn','hure','nutte','fotze','schwanz','penis','vagina','titten',
+  'nazi','hitler','nigger','neger','kanake','spast','idiot','vollidiot',
+  'bastard','basterd','kacke','kackstein','dumm','dummkopf','depp',
+  'bescheuert','verpissdich','verpiss','dreckig','dreck','schlampe',
+  'asshole','bitch','fuck','shit','cunt','dick','cock','pussy','whore',
+  'retard','faggot','nigga','racist'
+];
+
+const RESERVED = ['admin','administrator','creoone','creo','moderator','mod','support','system','owner'];
+
+function aliasOk(alias) {
+  const low = alias.toLowerCase().replace(/[^a-z0-9_]/g,'');
+  if (RESERVED.some(r => low === r)) return 'Dieser Name ist reserviert.';
+  if (BLOCKED.some(b => low.includes(b))) return 'Dieser Name ist nicht erlaubt.';
+  if (alias.length < 2) return 'Alias zu kurz — mindestens 2 Zeichen.';
+  if (alias.length > 24) return 'Alias zu lang — maximal 24 Zeichen.';
+  if (!/^[a-zA-Z0-9_\-\.]+$/.test(alias)) return 'Nur Buchstaben, Zahlen, _ - . erlaubt.';
+  return null;
+}
+
 async function doRegister() {
   const alias = document.getElementById('regAlias').value.trim();
   const email = document.getElementById('regEmail').value.trim();
   const pw = document.getElementById('regPw').value;
   if (!alias || !email || !pw) { showMsg('authMsg','Alle Felder ausfüllen','err'); return; }
   if (pw.length < 6) { showMsg('authMsg','Passwort min. 6 Zeichen','err'); return; }
+  const aliasErr = aliasOk(alias);
+  if (aliasErr) { showMsg('authMsg', aliasErr, 'err'); return; }
   const { error } = await sb.auth.signUp({
     email, password: pw,
     options: { data: { alias } }
