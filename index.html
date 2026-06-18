@@ -576,6 +576,20 @@ footer p{
   .nav-r a:not(#navAuthBtn){display:none}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ── LANG SWITCHER ── */
+.lang-sw{display:flex;gap:0;margin-left:1rem}
+.lang-btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:.3rem .55rem;
+  background:none;border:1px solid var(--rule);
+  color:var(--gray);cursor:pointer;
+  margin-left:-1px;transition:all .15s;
+}
+.lang-btn:hover{color:var(--white);border-color:var(--gray)}
+.lang-btn.active{background:var(--white);color:var(--black);border-color:var(--white)}
 </style>
 </head>
 <body>
@@ -622,29 +636,34 @@ footer p{
 <nav>
   <a class="logo" href="#">CREO//ONE</a>
   <div class="nav-r">
-    <a href="#battle">Battle</a>
+    <a href="#battle" data-i18n="nav.battle">Battle</a>
     <a href="#hof">Hall of Fame</a>
-    <a href="#how">Regeln</a>
-    <a href="#" id="navAuthBtn" onclick="handleNavAuth(event)">Anmelden</a>
+    <a href="#how" data-i18n="nav.rules">Regeln</a>
+    <a href="#" id="navAuthBtn" onclick="handleNavAuth(event)" data-i18n="nav.login">Anmelden</a>
+    <div class="lang-sw">
+      <button class="lang-btn active" onclick="setLang('de',this)">DE</button>
+      <button class="lang-btn" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eye">Beat Battle Platform</div>
+  <div class="hero-eye" data-i18n="hero.eye">Beat Battle Platform</div>
   <h1>EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
-  <p class="hero-sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.</p>
+  <p class="hero-sub" data-i18n="hero.sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.</p>
   <p style="color:var(--gray);font-size:.82rem;max-width:420px;margin-top:1rem;line-height:1.8;border-left:1px solid var(--rule);padding-left:1rem;">Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge. </p>
   <div class="stats-row">
-    <div><div class="stat-n" id="sP">—</div><div class="stat-l">Producer</div></div>
+    <div><div class="stat-n" id="sP">—</div><div class="stat-l" data-i18n="stats.producers">Producer</div></div>
     <div><div class="stat-n" id="sB">—</div><div class="stat-l">Battles</div></div>
-    <div><div class="stat-n" id="sV">—</div><div class="stat-l">Votes</div></div>
+    <div><div class="stat-n" id="sV">—</div><div class="stat-l" data-i18n="stats.votes">Votes</div></div>
   </div>
 </div>
 
 <!-- BATTLE -->
 <div class="sec" id="battle">
-  <div class="sec-eye">Aktuelles Battle</div>
+  <div class="sec-eye" data-i18n="battle.eye">Aktuelles Battle</div>
   <div class="battle-top">
     <div>
       <div class="battle-theme-tag" id="themeTag">Thema wird geladen…</div>
@@ -658,12 +677,12 @@ footer p{
   <div id="entriesWrap"></div>
 
   <div class="submit-box" id="submitBox">
-    <h3>Beat einreichen</h3>
-    <p>SoundCloud-Link einfügen. Ein Beat pro Battle.</p>
+    <h3 data-i18n="submit.title">Beat einreichen</h3>
+    <p data-i18n="submit.sub">SoundCloud-Link einfügen. Ein Beat pro Battle.</p>
     <div class="field"><label>Beat-Titel</label><input type="text" id="inTitle" placeholder="z.B. MIDNIGHT RAIN"/></div>
     <div class="field"><label>SoundCloud-Link</label><input type="url" id="inSC" placeholder="https://soundcloud.com/…"/></div>
     <div class="field"><label>Kurze Beschreibung (optional)</label><input type="text" id="inMeta" placeholder="z.B. lo-fi am See, dusty samples, Sommernacht"/></div>
-    <button class="btn" onclick="submitBeat()">Beat einreichen</button>
+    <button class="btn" onclick="submitBeat()" data-i18n="submit.btn">Beat einreichen</button>
     <div id="submitMsg" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
   </div>
 </div>
@@ -672,16 +691,16 @@ footer p{
 <div class="sec" id="hof">
   <div class="sec-eye">Hall of Fame</div>
   <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,4rem);text-transform:uppercase;letter-spacing:-.01em;margin-bottom:2.5rem;line-height:.95">
-    DIE BESTEN<br>ALLER ZEITEN.
+    <span data-i18n="hof.title">DIE BESTEN<br>ALLER ZEITEN.</span>
   </div>
   <div class="hof-list" id="hofList">
-    <div class="empty">Noch keine Gewinner</div>
+    <div class="empty" data-i18n="hof.empty">Noch keine Gewinner</div>
   </div>
 </div>
 
 <!-- HOW IT WORKS -->
 <div class="sec" id="how">
-  <div class="sec-eye">Regeln</div>
+  <div class="sec-eye" data-i18n="rules.eye">Regeln</div>
   <div class="steps">
     <div class="step">
       <div class="step-n">01</div>
@@ -707,7 +726,7 @@ footer p{
 
   <!-- Verhaltensregeln -->
   <div style="margin-top:3rem;border-top:1px solid var(--rule);padding-top:2.5rem;">
-    <div class="sec-eye" style="margin-bottom:1.5rem;">Verhaltensregeln</div>
+    <div class="sec-eye" style="margin-bottom:1.5rem;" data-i18n="rules.conduct">Verhaltensregeln</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;">
       <div style="border-left:1px solid var(--rule);padding-left:1rem;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;">Fairplay</div>
@@ -731,14 +750,14 @@ footer p{
 
 <!-- KONTAKT -->
 <div class="sec" id="kontakt">
-  <div class="sec-eye">Kontakt</div>
+  <div class="sec-eye" data-i18n="contact.eye">Kontakt</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;">
     <div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,4vw,3.5rem);text-transform:uppercase;letter-spacing:-.01em;line-height:.95;margin-bottom:1.5rem;">
-        FRAGEN?<br>MELD DICH.
+        <span data-i18n="contact.title">FRAGEN?<br>MELD DICH.</span>
       </div>
       <p style="color:var(--gray);font-size:.88rem;line-height:1.8;max-width:340px;">
-        Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.
+        <span data-i18n="contact.sub">Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.</span>
       </p>
     </div>
     <div>
@@ -746,7 +765,7 @@ footer p{
         <div class="field"><label>Dein Alias (optional)</label><input type="text" id="ctAlias" placeholder="dein_alias"/></div>
         <div class="field"><label>E-Mail</label><input type="email" id="ctEmail" placeholder="deine@mail.com"/></div>
         <div class="field"><label>Nachricht</label><input type="text" id="ctMsg" placeholder="Deine Nachricht…"/></div>
-        <button class="btn" onclick="sendContact()">Nachricht senden</button>
+        <button class="btn" onclick="sendContact()" data-i18n="contact.btn">Nachricht senden</button>
         <div id="ctResult" class="msg hidden" style="margin-top:.75rem;margin-bottom:0"></div>
       </div>
     </div>
@@ -836,25 +855,25 @@ function switchTab(tab, el) {
 
 async function doReset() {
   const email = document.getElementById('resetEmail').value.trim();
-  if (!email) { showMsg('authMsg','E-Mail eingeben','err'); return; }
+  if (!email) { showMsg('authMsg', t('err.email'), 'err'); return; }
   const { error } = await sb.auth.resetPasswordForEmail(email, {
     redirectTo: window.location.origin
   });
   if (error) { showMsg('authMsg', error.message, 'err'); return; }
-  showMsg('authMsg','Link gesendet — check deine E-Mails','ok');
+  showMsg('authMsg', t('modal.reset.ok'), 'ok');
 }
 
 async function sendContact() {
   const alias = document.getElementById('ctAlias').value.trim();
   const email = document.getElementById('ctEmail').value.trim();
   const msg = document.getElementById('ctMsg').value.trim();
-  if (!email || !msg) { showMsg('ctResult','E-Mail und Nachricht pflicht.','err'); return; }
+  if (!email || !msg) { showMsg('ctResult', t('contact.required'), 'err'); return; }
   const { error } = await sb.from('contact_messages').insert({ alias, email, message: msg });
   if (error) { showMsg('ctResult', error.message, 'err'); return; }
   document.getElementById('ctAlias').value = '';
   document.getElementById('ctEmail').value = '';
   document.getElementById('ctMsg').value = '';
-  showMsg('ctResult','Nachricht gesendet — wir melden uns.','ok');
+  showMsg('ctResult', t('contact.ok'), 'ok');
 }
 
 function showMsg(id, text, type) {
@@ -869,7 +888,7 @@ function hideMsg(id) {
 async function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pw = document.getElementById('loginPw').value;
-  if (!email || !pw) { showMsg('authMsg','Alle Felder ausfüllen','err'); return; }
+  if (!email || !pw) { showMsg('authMsg', t('err.fields'), 'err'); return; }
   const { error } = await sb.auth.signInWithPassword({ email, password: pw });
   if (error) { showMsg('authMsg', error.message, 'err'); return; }
   showMsg('authMsg','Willkommen zurück!','ok');
@@ -904,8 +923,8 @@ async function doRegister() {
   const alias = document.getElementById('regAlias').value.trim();
   const email = document.getElementById('regEmail').value.trim();
   const pw = document.getElementById('regPw').value;
-  if (!alias || !email || !pw) { showMsg('authMsg','Alle Felder ausfüllen','err'); return; }
-  if (pw.length < 6) { showMsg('authMsg','Passwort min. 6 Zeichen','err'); return; }
+  if (!alias || !email || !pw) { showMsg('authMsg', t('err.fields'), 'err'); return; }
+  if (pw.length < 6) { showMsg('authMsg', t('err.pw'), 'err'); return; }
   const aliasErr = aliasOk(alias);
   if (aliasErr) { showMsg('authMsg', aliasErr, 'err'); return; }
   const { error } = await sb.auth.signUp({
@@ -913,7 +932,7 @@ async function doRegister() {
     options: { data: { alias } }
   });
   if (error) { showMsg('authMsg', error.message, 'err'); return; }
-  showMsg('authMsg','Account erstellt — bitte E-Mail bestätigen','ok');
+  showMsg('authMsg', t('modal.register.ok'), 'ok');
 }
 
 // ── BATTLE ──
@@ -980,9 +999,10 @@ async function loadEntries() {
 }
 
 function renderEntries(entries) {
+  window._lastEntries = entries;
   const wrap = document.getElementById('entriesWrap');
   if (!entries.length) {
-    wrap.innerHTML = '<div class="empty">Noch keine Beats eingereicht — sei der Erste.</div>';
+    wrap.innerHTML = `<div class="empty">${t('hof.empty')}</div>`;
     return;
   }
 
@@ -1005,9 +1025,9 @@ function renderEntries(entries) {
         <button class="vote-btn ${voted ? 'voted' : ''}"
           onclick="vote('${e.id}','${e.user_id}')"
           ${isOwn || voted ? 'disabled style="opacity:.4;cursor:default"' : ''}>
-          ${voted ? '✓ GEVOTED' : '↑ VOTEN'}
+          ${voted ? t('vote.voted') : t('vote.vote')}
         </button>
-        <span class="vote-c">${e.votes || 0} VOTES</span>
+        <span class="vote-c">${e.votes || 0} ${t('vote.votes')}</span>
       </div>
     </div>`;
   }).join('')}</div>`;
@@ -1034,13 +1054,13 @@ async function vote(entryId, ownerId) {
 
 async function submitBeat() {
   if (!currentUser) { openModal(); return; }
-  if (myEntry) { showMsg('submitMsg','Du hast bereits einen Beat eingereicht.','err'); return; }
+  if (myEntry) { showMsg('submitMsg', t('submit.already'), 'err'); return; }
 
   const title = document.getElementById('inTitle').value.trim().toUpperCase();
   const sc_url = document.getElementById('inSC').value.trim();
   const meta = document.getElementById('inMeta').value.trim();
 
-  if (!title || !sc_url) { showMsg('submitMsg','Titel und SoundCloud-Link pflicht.','err'); return; }
+  if (!title || !sc_url) { showMsg('submitMsg', t('submit.required'), 'err'); return; }
 
   const { error } = await sb.from('entries').insert({
     battle_id: currentBattle.id,
@@ -1053,7 +1073,7 @@ async function submitBeat() {
   document.getElementById('inTitle').value = '';
   document.getElementById('inSC').value = '';
   document.getElementById('inMeta').value = '';
-  showMsg('submitMsg','Beat eingereicht!','ok');
+  showMsg('submitMsg', t('submit.ok'), 'ok');
   await loadEntries();
 }
 
@@ -1112,17 +1132,201 @@ function startCountdown() {
   function update() {
     const end = currentBattle?.ends_at ? new Date(currentBattle.ends_at) : new Date(getFriday());
     const diff = end - new Date();
-    if (diff <= 0) { document.getElementById('countdown').textContent = 'BATTLE BEENDET'; return; }
+    if (diff <= 0) { document.getElementById('countdown').textContent = t('countdown.end'); return; }
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
-    document.getElementById('countdown').textContent = `ENDET IN ${d}T ${h}H ${m}M`;
+    document.getElementById('countdown').textContent = `${t('countdown.in')} ${d}T ${h}H ${m}M`;
   }
   update();
   setInterval(update, 60000);
 }
 
+
+// ── I18N ──
+const LANG = {
+  de: {
+    'nav.battle': 'Battle',
+    'nav.rules': 'Regeln',
+    'nav.login': 'Anmelden',
+    'hero.eye': 'Beat Battle Platform',
+    'hero.sub': 'Ein Thema, ein Beat, ein Sieger. Die Community entscheidet.',
+    'hero.desc': 'Jede Woche ein neues Thema. Registrierte Producer reichen einen Beat ein — per SoundCloud-Link. Die Community votet. Wer die meisten Stimmen hat, gewinnt — landet in der Hall of Fame und bekommt den Champion-Badge.',
+    'stats.producers': 'Producer',
+    'stats.votes': 'Votes',
+    'battle.eye': 'Aktuelles Battle',
+    'battle.loading': 'Thema wird geladen…',
+    'submit.title': 'Beat einreichen',
+    'submit.sub': 'SoundCloud-Link einfügen. Ein Beat pro Battle.',
+    'submit.btn': 'Beat einreichen',
+    'submit.already': 'Du hast bereits einen Beat eingereicht.',
+    'submit.required': 'Titel und SoundCloud-Link pflicht.',
+    'submit.ok': 'Beat eingereicht!',
+    'hof.title': 'DIE BESTEN<br>ALLER ZEITEN.',
+    'hof.empty': 'Noch keine Gewinner',
+    'hof.wins': 'Battle',
+    'hof.wins_p': 'Battles',
+    'rules.eye': 'Regeln',
+    'rules.conduct': 'Verhaltensregeln',
+    'contact.eye': 'Kontakt',
+    'contact.title': 'FRAGEN?<br>MELD DICH.',
+    'contact.sub': 'Für Fragen, Meldungen oder Feedback — schreib uns. Wir antworten so schnell wie möglich.',
+    'contact.btn': 'Nachricht senden',
+    'contact.ok': 'Nachricht gesendet — wir melden uns.',
+    'contact.required': 'E-Mail und Nachricht pflicht.',
+    'modal.login': 'Anmelden',
+    'modal.tab.login': 'Login',
+    'modal.tab.register': 'Registrieren',
+    'modal.tab.reset': 'Passwort vergessen',
+    'modal.reset.sub': 'Gib deine E-Mail ein — du bekommst einen Link zum Zurücksetzen des Passworts.',
+    'modal.reset.btn': 'Link senden',
+    'modal.reset.ok': 'Link gesendet — check deine E-Mails',
+    'modal.register.btn': 'Account erstellen',
+    'modal.register.ok': 'Account erstellt — bitte E-Mail bestätigen',
+    'modal.login.btn': 'Anmelden',
+    'countdown.end': 'BATTLE BEENDET',
+    'countdown.in': 'ENDET IN',
+    'vote.vote': '↑ VOTEN',
+    'vote.voted': '✓ GEVOTED',
+    'vote.votes': 'VOTES',
+    'err.fields': 'Alle Felder ausfüllen',
+    'err.pw': 'Passwort min. 6 Zeichen',
+    'err.email': 'E-Mail eingeben',
+  },
+  en: {
+    'nav.battle': 'Battle',
+    'nav.rules': 'Rules',
+    'nav.login': 'Sign in',
+    'hero.eye': 'Beat Battle Platform',
+    'hero.sub': 'One theme, one beat, one winner. The community decides.',
+    'hero.desc': 'Every two weeks a new theme. Registered producers submit one beat via SoundCloud link. The community votes. Most votes wins — Hall of Fame entry and Champion badge.',
+    'stats.producers': 'Producers',
+    'stats.votes': 'Votes',
+    'battle.eye': 'Current Battle',
+    'battle.loading': 'Loading theme…',
+    'submit.title': 'Submit a beat',
+    'submit.sub': 'Paste your SoundCloud link. One beat per battle.',
+    'submit.btn': 'Submit beat',
+    'submit.already': 'You already submitted a beat for this battle.',
+    'submit.required': 'Title and SoundCloud link required.',
+    'submit.ok': 'Beat submitted!',
+    'hof.title': 'THE BEST<br>OF ALL TIME.',
+    'hof.empty': 'No winners yet',
+    'hof.wins': 'Battle won',
+    'hof.wins_p': 'Battles won',
+    'rules.eye': 'Rules',
+    'rules.conduct': 'Code of conduct',
+    'contact.eye': 'Contact',
+    'contact.title': 'QUESTIONS?<br>HIT US UP.',
+    'contact.sub': 'For questions, reports or feedback — write to us. We reply as fast as we can.',
+    'contact.btn': 'Send message',
+    'contact.ok': 'Message sent — we will get back to you.',
+    'contact.required': 'Email and message required.',
+    'modal.login': 'Sign in',
+    'modal.tab.login': 'Login',
+    'modal.tab.register': 'Register',
+    'modal.tab.reset': 'Forgot password',
+    'modal.reset.sub': 'Enter your email — you will receive a link to reset your password.',
+    'modal.reset.btn': 'Send link',
+    'modal.reset.ok': 'Link sent — check your emails',
+    'modal.register.btn': 'Create account',
+    'modal.register.ok': 'Account created — please confirm your email',
+    'modal.login.btn': 'Sign in',
+    'countdown.end': 'BATTLE ENDED',
+    'countdown.in': 'ENDS IN',
+    'vote.vote': '↑ VOTE',
+    'vote.voted': '✓ VOTED',
+    'vote.votes': 'VOTES',
+    'err.fields': 'Please fill in all fields',
+    'err.pw': 'Password min. 6 characters',
+    'err.email': 'Please enter your email',
+  },
+  fr: {
+    'nav.battle': 'Battle',
+    'nav.rules': 'Règles',
+    'nav.login': 'Connexion',
+    'hero.eye': 'Plateforme de Battle de Beats',
+    'hero.sub': 'Un thème, un beat, un gagnant. La communauté décide.',
+    'hero.desc': 'Toutes les deux semaines un nouveau thème. Les producteurs inscrits soumettent un beat via SoundCloud. La communauté vote. Celui qui a le plus de votes gagne — Hall of Fame et badge Champion.',
+    'stats.producers': 'Producteurs',
+    'stats.votes': 'Votes',
+    'battle.eye': 'Battle en cours',
+    'battle.loading': 'Chargement du thème…',
+    'submit.title': 'Soumettre un beat',
+    'submit.sub': 'Collez votre lien SoundCloud. Un beat par battle.',
+    'submit.btn': 'Soumettre',
+    'submit.already': 'Vous avez déjà soumis un beat pour cette battle.',
+    'submit.required': 'Titre et lien SoundCloud requis.',
+    'submit.ok': 'Beat soumis !',
+    'hof.title': 'LES MEILLEURS<br>DE TOUS LES TEMPS.',
+    'hof.empty': 'Pas encore de gagnants',
+    'hof.wins': 'Battle gagné',
+    'hof.wins_p': 'Battles gagnés',
+    'rules.eye': 'Règles',
+    'rules.conduct': 'Code de conduite',
+    'contact.eye': 'Contact',
+    'contact.title': 'DES QUESTIONS?<br>ÉCRIVEZ-NOUS.',
+    'contact.sub': 'Pour questions, signalements ou retours — écrivez-nous. Nous répondons dès que possible.',
+    'contact.btn': 'Envoyer le message',
+    'contact.ok': 'Message envoyé — nous vous répondrons.',
+    'contact.required': 'Email et message requis.',
+    'modal.login': 'Connexion',
+    'modal.tab.login': 'Connexion',
+    'modal.tab.register': 'Inscription',
+    'modal.tab.reset': 'Mot de passe oublié',
+    'modal.reset.sub': 'Entrez votre email — vous recevrez un lien pour réinitialiser votre mot de passe.',
+    'modal.reset.btn': 'Envoyer le lien',
+    'modal.reset.ok': 'Lien envoyé — vérifiez vos emails',
+    'modal.register.btn': 'Créer un compte',
+    'modal.register.ok': 'Compte créé — veuillez confirmer votre email',
+    'modal.login.btn': 'Se connecter',
+    'countdown.end': 'BATTLE TERMINÉ',
+    'countdown.in': 'SE TERMINE DANS',
+    'vote.vote': '↑ VOTER',
+    'vote.voted': '✓ VOTÉ',
+    'vote.votes': 'VOTES',
+    'err.fields': 'Veuillez remplir tous les champs',
+    'err.pw': 'Mot de passe min. 6 caractères',
+    'err.email': 'Veuillez entrer votre email',
+  }
+};
+
+let currentLang = 'de';
+
+function t(key) {
+  return LANG[currentLang][key] || LANG['de'][key] || key;
+}
+
+function setLang(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyLang();
+}
+
+function applyLang() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.innerHTML = t(key);
+  });
+  // update nav auth btn text
+  const navBtn = document.getElementById('navAuthBtn');
+  if (!currentUser) navBtn.textContent = t('nav.login');
+  // update modal tabs
+  const tabs = document.querySelectorAll('.tab-btn');
+  if (tabs[0]) tabs[0].textContent = t('modal.tab.login');
+  if (tabs[1]) tabs[1].textContent = t('modal.tab.register');
+  if (tabs[2]) tabs[2].textContent = t('modal.tab.reset');
+  // update modal reset text
+  const resetP = document.querySelector('#resetForm p');
+  if (resetP) resetP.textContent = t('modal.reset.sub');
+  document.querySelector('#resetForm .btn') && (document.querySelector('#resetForm .btn').textContent = t('modal.reset.btn'));
+  // re-render entries if loaded
+  if (currentBattle) renderEntries(window._lastEntries || []);
+}
+
 init();
+
 </script>
 </body>
 </html>
