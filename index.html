@@ -566,7 +566,16 @@ async function loadEntries() {
 }
 
 function showEntriesSkeleton() {
-  document.getElementById('entriesWrap').innerHTML = '<div>Loading...</div>'iv class="sk-entry"><div class="skeleton sk-line short"></div><div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div><div class="skeleton sk-line short" style="width:30%"></div><div class="skeleton sk-player"></div><div class="skeleton sk-line" style="width:45%"></div></div>`).join('')}</div>`;
+  document.getElementById('entriesWrap').innerHTML = '<div class="entries">' +
+    [1,2,3,4].map(function(){
+      return '<div class="sk-entry">' +
+        '<div class="skeleton sk-line short"></div>' +
+        '<div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div>' +
+        '<div class="skeleton sk-line short" style="width:30%"></div>' +
+        '<div class="skeleton sk-player"></div>' +
+        '<div class="skeleton sk-line" style="width:45%"></div>' +
+      '</div>';
+    }).join('') + '</div>';
 }
 
 function renderEntries(entries) {
@@ -722,7 +731,7 @@ async function openProfile(userId) {
   const initials = alias.slice(0,2).toUpperCase();
 
   const avatarHtml = avatarUrl ? '<img src="' + avatarUrl + '" alt="' + alias + '"/>' : initials;
-  const uploadBtn = isOwn ? '<button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">✎</button><input type="file" id="avatarInput" accept="image/*" onchange="uploadAvatar(event)"/>' : '';
+  var uploadBtn = isOwn ? '<button class="avatar-upload" onclick="document.getElementById(&quot;avatarInput&quot;).click()">✎</button><input type="file" id="avatarInput" accept="image/*" onchange="uploadAvatar(event)"/>' : '';
   const bioHtml = isOwn
     ? '<textarea class="profile-bio-edit" id="bioEdit" placeholder="Kurze Bio...">' + bio + '</textarea><p class="profile-bio" id="bioText">' + (bio || '<span style="color:var(--mid)">Noch keine Bio.</span>') + '</p><button class="profile-edit-btn" id="editToggleBtn" onclick="toggleBioEdit()">Bio bearbeiten</button>'
     : '<p class="profile-bio">' + bio + '</p>';
