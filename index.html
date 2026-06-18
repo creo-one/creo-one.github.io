@@ -3,7 +3,37 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CREO//ONE</title>
+
+<!-- Primary Meta -->
+<title>CREO//ONE — Beat Battle Platform</title>
+<meta name="description" content="Ein Thema, ein Beat, ein Sieger. Produzenten battlen wöchentlich gegeneinander — die Community entscheidet."/>
+<meta name="keywords" content="beat battle, hip hop, producer, beats, soundcloud, musik, community"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://creo-one.github.io/"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://creo-one.github.io/"/>
+<meta property="og:title" content="CREO//ONE — Beat Battle Platform"/>
+<meta property="og:description" content="Ein Thema, ein Beat, ein Sieger. Produzenten battlen wöchentlich — die Community entscheidet."/>
+<meta property="og:site_name" content="CREO//ONE"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CREO//ONE — Beat Battle Platform"/>
+<meta name="twitter:description" content="Ein Thema, ein Beat, ein Sieger. Die Community entscheidet."/>
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CREO//ONE",
+  "url": "https://creo-one.github.io/",
+  "description": "Beat Battle Platform — Ein Thema, ein Beat, ein Sieger.",
+  "inLanguage": ["de", "en", "fr"]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -566,16 +596,45 @@ footer p{
   color:var(--gray);
 }
 
-/* ── RESPONSIVE ── */
-@media(max-width:640px){
-  nav,.hero,.sec,footer{padding-left:1.25rem;padding-right:1.25rem}
-  .hero{padding-top:3.5rem;padding-bottom:3rem}
-  .stats-row{gap:2rem;flex-wrap:wrap}
-  .step{border-right:none;border-bottom:1px solid var(--rule)}
-  .step:last-child{border-bottom:none}
-  .nav-r a:not(#navAuthBtn){display:none}
+/* ── BURGER ── */
+.burger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  background:none;border:none;
+  cursor:pointer;padding:.4rem;
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.burger span{
+  display:block;width:22px;height:1.5px;
+  background:var(--white);
+  transition:all .2s;
+}
+.burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+.mobile-menu{
+  display:none;
+  position:fixed;inset:0;top:58px;
+  background:var(--black);
+  z-index:99;
+  padding:2rem 1.5rem;
+  border-top:1px solid var(--rule);
+  flex-direction:column;
+  gap:0;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:2rem;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--gray);text-decoration:none;
+  padding:1rem 0;
+  border-bottom:1px solid var(--rule);
+  transition:color .15s;
+}
+.mobile-menu a:hover{color:var(--white)}
+.mobile-menu .lang-sw{margin-top:1.5rem;margin-left:0}
 
 /* ── LANG SWITCHER ── */
 .lang-sw{display:flex;gap:0;margin-left:1rem}
@@ -590,6 +649,60 @@ footer p{
 }
 .lang-btn:hover{color:var(--white);border-color:var(--gray)}
 .lang-btn.active{background:var(--white);color:var(--black);border-color:var(--white)}
+
+/* ── SKELETON ── */
+.skeleton{
+  background:linear-gradient(90deg,var(--dark) 25%,var(--mid) 50%,var(--dark) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:2px;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.sk-entry{background:var(--dark);padding:1.75rem;border:1px solid var(--rule)}
+.sk-line{height:12px;margin-bottom:10px}
+.sk-line.short{width:40%}
+.sk-line.med{width:65%}
+.sk-line.full{width:100%}
+.sk-player{height:80px;margin-bottom:1rem}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:2rem;right:2rem;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:.82rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:.75rem 1.25rem;
+  z-index:300;
+  transform:translateY(120%);
+  transition:transform .3s;
+  pointer-events:none;
+}
+#toast.show{transform:translateY(0)}
+#toast.ok{background:var(--white);color:var(--black)}
+#toast.err{background:#ff6b6b;color:#0a0a0a}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:1rem 1.25rem}
+  .nav-r>a,.nav-r>.lang-sw{display:none}
+  .burger{display:flex}
+  .hero{padding:3.5rem 1.25rem 2.5rem}
+  .hero h1{font-size:clamp(3.5rem,16vw,7rem)}
+  .sec{padding:3rem 1.25rem}
+  footer{padding:1.5rem 1.25rem;flex-direction:column;align-items:flex-start}
+  .stats-row{gap:2rem;flex-wrap:wrap}
+  .step{border-right:none;border-bottom:1px solid var(--rule)}
+  .step:last-child{border-bottom:none}
+  .submit-box{padding:1.5rem}
+  .modal{padding:1.75rem}
+  .entries{grid-template-columns:1fr}
+  .hof-list{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .hof-list{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(3rem,18vw,5rem)}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -641,12 +754,28 @@ footer p{
     <a href="#how" data-i18n="nav.rules">Regeln</a>
     <a href="#" id="navAuthBtn" onclick="handleNavAuth(event)" data-i18n="nav.login">Anmelden</a>
     <div class="lang-sw">
-      <button class="lang-btn active" id="langDE">DE</button>
-      <button class="lang-btn" id="langEN">EN</button>
-      <button class="lang-btn" id="langFR">FR</button>
+      <button class="lang-btn active" id="langDE" aria-label="Deutsch">DE</button>
+      <button class="lang-btn" id="langEN" aria-label="English">EN</button>
+      <button class="lang-btn" id="langFR" aria-label="Français">FR</button>
     </div>
   </div>
+  <button class="burger" id="burgerBtn" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#battle" onclick="closeMobile()" data-i18n="nav.battle">Battle</a>
+  <a href="#hof" onclick="closeMobile()">Hall of Fame</a>
+  <a href="#how" onclick="closeMobile()" data-i18n="nav.rules">Regeln</a>
+  <a href="#" id="mobileAuthBtn" onclick="handleMobileAuth(event)">Anmelden</a>
+  <div class="lang-sw" style="margin-top:1.5rem">
+    <button class="lang-btn active" id="langDE2" aria-label="Deutsch">DE</button>
+    <button class="lang-btn" id="langEN2" aria-label="English">EN</button>
+    <button class="lang-btn" id="langFR2" aria-label="Français">FR</button>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -813,6 +942,7 @@ async function init() {
 function setUser(user) {
   currentUser = user;
   updateNavBtn();
+  updateMobileAuthBtn();
 }
 
 function updateNavBtn() {
@@ -878,11 +1008,23 @@ async function sendContact() {
 
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
+  if (!el) { showToast(text, type); return; }
   el.textContent = text;
   el.className = `msg ${type}`;
 }
 function hideMsg(id) {
-  document.getElementById(id).className = 'msg hidden';
+  const el = document.getElementById(id);
+  if (el) el.className = 'msg hidden';
+}
+
+let toastTimer;
+function showToast(text, type) {
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.className = `show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = ''; }, 3000);
+}
 }
 
 async function doLogin() {
@@ -890,7 +1032,16 @@ async function doLogin() {
   const pw = document.getElementById('loginPw').value;
   if (!email || !pw) { showMsg('authMsg', t('err.fields'), 'err'); return; }
   const { error } = await sb.auth.signInWithPassword({ email, password: pw });
-  if (error) { showMsg('authMsg', error.message, 'err'); return; }
+  if (error) {
+    if (error.message.toLowerCase().includes('email not confirmed')) {
+      showMsg('authMsg', 'E-Mail noch nicht bestätigt — check dein Postfach.', 'err');
+    } else if (error.message.toLowerCase().includes('invalid login')) {
+      showMsg('authMsg', 'E-Mail oder Passwort falsch.', 'err');
+    } else {
+      showMsg('authMsg', error.message, 'err');
+    }
+    return;
+  }
   showMsg('authMsg','Willkommen zurück!','ok');
   setTimeout(closeModal, 800);
   await loadEntries();
@@ -937,7 +1088,7 @@ async function doRegister() {
 
 // ── BATTLE ──
 async function loadBattle() {
-  // Holt das aktuell aktive Battle
+  showEntriesSkeleton();
   const { data, error } = await sb
     .from('battles')
     .select('*')
@@ -996,6 +1147,18 @@ async function loadEntries() {
   }
 
   renderEntries(entries || []);
+}
+
+function showEntriesSkeleton() {
+  const wrap = document.getElementById('entriesWrap');
+  wrap.innerHTML = `<div class="entries">${[1,2,3,4].map(() => `
+    <div class="sk-entry">
+      <div class="skeleton sk-line short"></div>
+      <div class="skeleton sk-line med" style="height:18px;margin-bottom:14px"></div>
+      <div class="skeleton sk-line short" style="width:30%"></div>
+      <div class="skeleton sk-player"></div>
+      <div class="skeleton sk-line" style="width:45%"></div>
+    </div>`).join('')}</div>`;
 }
 
 function renderEntries(entries) {
@@ -1339,6 +1502,7 @@ function setLang(lang, btn) {
 }
 
 function applyLang() {
+  document.documentElement.lang = currentLang;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     if (el.id === 'navAuthBtn') return; // handled separately
     const key = el.getAttribute('data-i18n');
@@ -1361,6 +1525,51 @@ function applyLang() {
 
 
 // ── I18N INIT ──
+// ── BURGER ──
+const burgerBtn = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+burgerBtn.addEventListener('click', function(){
+  this.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+function closeMobile(){
+  burgerBtn.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleMobileAuth(e){
+  e.preventDefault();
+  closeMobile();
+  if (currentUser) doLogout();
+  else openModal();
+}
+// Sync mobile auth btn text
+function updateMobileAuthBtn(){
+  const mb = document.getElementById('mobileAuthBtn');
+  if (!mb) return;
+  mb.textContent = currentUser ? (currentUser.user_metadata?.alias || 'Logout').toUpperCase() : (LANG[currentLang]['nav.login'] || 'Anmelden');
+}
+
+// Mobile lang buttons
+document.getElementById('langDE2').addEventListener('click', function(){
+  setLang('de', document.getElementById('langDE'));
+  syncMobileLang('de');
+});
+document.getElementById('langEN2').addEventListener('click', function(){
+  setLang('en', document.getElementById('langEN'));
+  syncMobileLang('en');
+});
+document.getElementById('langFR2').addEventListener('click', function(){
+  setLang('fr', document.getElementById('langFR'));
+  syncMobileLang('fr');
+});
+function syncMobileLang(lang){
+  ['langDE2','langEN2','langFR2'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById('lang'+lang.toUpperCase()+'2').classList.add('active');
+  updateMobileAuthBtn();
+}
+
 document.getElementById('langDE').addEventListener('click', function(){ setLang('de', this); });
 document.getElementById('langEN').addEventListener('click', function(){ setLang('en', this); });
 document.getElementById('langFR').addEventListener('click', function(){ setLang('fr', this); });
