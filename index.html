@@ -203,6 +203,15 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 }
 @media(max-width:480px){.hof-list{grid-template-columns:1fr}.hero h1{font-size:clamp(3rem,18vw,5rem)}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* ── IMPRESSUM ── */
+.legal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.97);z-index:300;overflow-y:auto}
+.legal-overlay.open{display:block}
+.legal-inner{max-width:600px;margin:0 auto;padding:3rem 2rem;color:var(--gray);font-size:.88rem;line-height:1.8}
+.legal-inner h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.8rem;text-transform:uppercase;color:var(--white);margin-bottom:1.5rem;letter-spacing:.04em}
+.legal-inner h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:.1em;color:var(--white);margin:1.5rem 0 .5rem}
+.legal-inner p{margin-bottom:.75rem}
+
 .skip-link{position:absolute;top:-100%;left:1rem;background:var(--white);color:var(--black);padding:.5rem 1rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;z-index:999;text-decoration:none}
 .skip-link:focus{top:1rem}
 </style>
@@ -406,8 +415,32 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 
 <footer>
   <p>© CREO//ONE — Beat Battle Platform</p>
-  <p>Schwarzwald · Deutschland</p>
+  <p>Schwarzwald · Deutschland · <a href="#" onclick="openLegal();return false;" style="color:var(--gray);text-decoration:none;border-bottom:1px solid var(--rule)">Impressum & Datenschutz</a></p>
 </footer>
+
+
+<!-- IMPRESSUM / DATENSCHUTZ -->
+<div class="legal-overlay" id="impressumOverlay" role="dialog" aria-modal="true" aria-label="Impressum">
+  <div class="legal-inner">
+    <button class="profile-close" onclick="closeLegal()" style="float:right">✕ Schließen</button>
+    <h2>Impressum</h2>
+    <p>Angaben gemäß § 5 TMG:</p>
+    <p><strong>CREO//ONE</strong><br/>
+    Beat Battle Platform<br/>
+    Schwarzwald, Deutschland</p>
+    <p>Kontakt: <a href="#kontakt" onclick="closeLegal()" style="color:var(--white)">Kontaktformular</a></p>
+    <h3>Haftungsausschluss</h3>
+    <p>Die Inhalte dieser Seite wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.</p>
+    <h3>Datenschutz (DSGVO)</h3>
+    <p>Diese Website verwendet Supabase für Authentifizierung und Datenspeicherung. Gespeichert werden: E-Mail-Adresse, Producer-Alias, eingereichte Beats und abgegebene Votes. Eine Weitergabe an Dritte findet nicht statt.</p>
+    <p>Hosting: GitHub Pages (GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA). Es gelten die Datenschutzbestimmungen von GitHub.</p>
+    <p>Audio-Embeds: SoundCloud (SoundCloud Global Limited & Co. KG). Es gelten die Datenschutzbestimmungen von SoundCloud.</p>
+    <h3>Ihre Rechte</h3>
+    <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Für Anfragen nutzen Sie bitte das Kontaktformular.</p>
+    <h3>Urheberrecht</h3>
+    <p>Die eingereichten Beats bleiben Eigentum der jeweiligen Producer. CREO//ONE beansprucht keine Rechte an eingereichten Inhalten.</p>
+  </div>
+</div>
 
 <div id="toast"></div>
 
@@ -630,9 +663,24 @@ function renderEntries(entries) {
 async function vote(entryId, ownerId) {
   if (!currentUser) { openModal(); return; }
   if (currentUser.id === ownerId || myVotes.has(entryId)) return;
-  const { error } = await sb.from('votes').insert({ entry_id: entryId, user_id: currentUser.id, battle_id: currentBattle.id });
-  if (error) { showToast(error.message, 'err'); return; }
+  // Optimistic UI update
   myVotes.add(entryId);
+  window._lastEntries = (window._lastEntries||[]).map(function(e) {
+    return e.id === entryId ? Object.assign({}, e, { votes: (e.votes||0)+1 }) : e;
+  });
+  renderEntries(window._lastEntries);
+  // Server write
+  const { error } = await sb.from('votes').insert({ entry_id: entryId, user_id: currentUser.id, battle_id: currentBattle.id });
+  if (error) {
+    // Rollback
+    myVotes.delete(entryId);
+    window._lastEntries = (window._lastEntries||[]).map(function(e) {
+      return e.id === entryId ? Object.assign({}, e, { votes: Math.max(0,(e.votes||1)-1) }) : e;
+    });
+    renderEntries(window._lastEntries);
+    showToast(error.message, 'err');
+    return;
+  }
   await loadEntries();
 }
 
@@ -643,7 +691,7 @@ async function submitBeat() {
   const sc_url = document.getElementById('inSC').value.trim();
   const meta = document.getElementById('inMeta').value.trim();
   if (!title || !sc_url) { showMsg('submitMsg', t('submit.required'), 'err'); return; }
-  const scPattern = /^https?:\/\/(www\.)?soundcloud\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/;
+  const scPattern = /^https?:\/\/(www\.)?soundcloud\.com\/[a-zA-Z0-9_\-\.]+\/[a-zA-Z0-9_\-\.]+/;
   if (!scPattern.test(sc_url)) { showMsg('submitMsg','Nur SoundCloud-Links erlaubt.','err'); return; }
   const { error } = await sb.from('entries').insert({ battle_id: currentBattle.id, user_id: currentUser.id, title, sc_url, meta, votes: 0 });
   if (error) { showMsg('submitMsg', error.message, 'err'); return; }
@@ -697,13 +745,30 @@ function getFriday() {
 
 function startCountdown() {
   function update() {
-    const end = currentBattle?.ends_at ? new Date(currentBattle.ends_at) : new Date(getFriday());
-    const diff = end - new Date();
-    if (diff <= 0) { document.getElementById('countdown').textContent = t('countdown.end'); return; }
-    const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000);
-    document.getElementById('countdown').textContent = `${t('countdown.in')} ${d}T ${h}H ${m}M`;
+    var endDate;
+    if (currentBattle && currentBattle.ends_at) {
+      endDate = new Date(currentBattle.ends_at);
+    } else {
+      endDate = new Date(getFriday());
+    }
+    var now = new Date();
+    var diff = endDate - now;
+    var el = document.getElementById('countdown');
+    if (!el) return;
+    if (diff <= 0) {
+      el.textContent = t('countdown.end');
+      // Hide submit form if battle ended
+      var submitBox = document.querySelector('.submit-box');
+      if (submitBox) submitBox.style.display = 'none';
+      return;
+    }
+    // Show submit form if battle active
+    var submitBox = document.querySelector('.submit-box');
+    if (submitBox) submitBox.style.display = 'block';
+    var d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000);
+    el.textContent = t('countdown.in') + ' ' + d + 'T ' + h + 'H ' + m + 'M';
   }
-  update(); setInterval(update, 60000);
+  update(); setInterval(update, 30000);
 }
 
 // ── CONTACT ──
@@ -809,15 +874,25 @@ async function uploadAvatar(event) {
   if (!currentUser) return;
   const file = event.target.files[0]; if (!file) return;
   if (file.size > 2*1024*1024) { showToast('Max. 2MB','err'); return; }
+  // Loading state
+  var av = document.querySelector('.avatar');
+  var uploadBtn = document.querySelector('.avatar-upload');
+  if (av) { av.dataset.prev = av.innerHTML; av.innerHTML = '<span style="font-size:.6rem;letter-spacing:.08em">...</span>'; }
+  if (uploadBtn) uploadBtn.disabled = true;
   const ext = file.name.split('.').pop();
-  const path = `avatars/${currentUser.id}.${ext}`;
+  const path = 'avatars/' + currentUser.id + '.' + ext;
   const { error } = await sb.storage.from('avatars').upload(path, file, { upsert: true });
-  if (error) { showToast('Upload fehlgeschlagen','err'); return; }
+  if (error) {
+    showToast('Upload fehlgeschlagen','err');
+    if (av && av.dataset.prev) av.innerHTML = av.dataset.prev;
+    if (uploadBtn) uploadBtn.disabled = false;
+    return;
+  }
   const { data } = sb.storage.from('avatars').getPublicUrl(path);
   await sb.from('profiles').update({ avatar_url: data.publicUrl }).eq('id', currentUser.id);
   showToast('Avatar gespeichert','ok');
-  const av = document.querySelector('.avatar');
-  if (av) av.innerHTML = `<img src="${data.publicUrl}" alt="Avatar"/>`;
+  if (av) av.innerHTML = '<img src="' + data.publicUrl + '" alt="Avatar"/>';
+  if (uploadBtn) uploadBtn.disabled = false;
 }
 
 // ── ADMIN ──
@@ -1051,6 +1126,7 @@ function t(key) { return LANG[currentLang][key] || LANG['de'][key] || key; }
 function setLang(lang, btn) {
   currentLang = lang;
   document.documentElement.lang = lang;
+  try { localStorage.setItem('creoone_lang', lang); } catch(e) {}
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   applyLang();
@@ -1129,6 +1205,7 @@ document.addEventListener('keydown', function(e) {
     if (document.getElementById('overlay').classList.contains('open')) closeModal();
     if (document.getElementById('profileOverlay').classList.contains('open')) closeProfile();
     if (document.getElementById('adminOverlay').classList.contains('open')) closeAdmin();
+    if (document.getElementById('impressumOverlay').classList.contains('open')) closeLegal();
     if (document.getElementById('mobileMenu').classList.contains('open')) closeMobile();
   }
   // Focus trap in open modals
@@ -1147,6 +1224,20 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
+
+// ── LEGAL ──
+function openLegal() {
+  document.getElementById('impressumOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLegal() {
+  document.getElementById('impressumOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('impressumOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeLegal();
+});
+
 // Close overlays on backdrop click
 document.getElementById('overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
@@ -1157,6 +1248,20 @@ document.getElementById('profileOverlay').addEventListener('click', function(e) 
 document.getElementById('adminOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeAdmin();
 });
+
+// Restore saved language
+try {
+  var savedLang = localStorage.getItem('creoone_lang');
+  if (savedLang && ['de','en','fr'].includes(savedLang)) {
+    currentLang = savedLang;
+    var activeLangBtn = document.getElementById('lang' + savedLang.toUpperCase());
+    if (activeLangBtn) {
+      document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+      activeLangBtn.classList.add('active');
+      syncMobileLang(savedLang);
+    }
+  }
+} catch(e) {}
 
 init().then(() => applyLang());
 </script>
