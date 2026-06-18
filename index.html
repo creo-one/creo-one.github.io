@@ -409,7 +409,7 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 <script>
 // ── CONFIG — ersetze mit deinen Supabase-Werten ──
 const SUPABASE_URL = 'https://jnryiqgxaetvjfqvodue.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_n7BA0YwI38odzlwRAyvq1Q_ae4P_qh;
+const SUPABASE_KEY = 'sb_publishable_n7BA0YwI38odzlwRAyvq1Q_ae4P_qhc';
 const ADMIN_EMAILS = ['CREO_ONE@proton.me']; // deine E-Mail hier
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -572,14 +572,28 @@ function showEntriesSkeleton() {
 function renderEntries(entries) {
   window._lastEntries = entries;
   const wrap = document.getElementById('entriesWrap');
-  if (!entries.length) { wrap.innerHTML = `<div class="empty">${t('hof.empty')}</div>`; return; }
-  wrap.innerHTML = `<div class="entries">${entries.map(e => {
-    const alias = e.profiles?.alias || 'UNKNOWN';
-    const voted = myVotes.has(e.id);
-    const isOwn = currentUser && e.user_id === currentUser.id;
-    const sc = e.sc_url ? `<iframe class="sc-box" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>` : `<div class="sc-placeholder">▶ BEAT ANHÖREN</div>`;
-    return `<div class="entry"><div class="entry-prod" onclick="openProfile('${e.user_id}')">${alias}</div><div class="entry-title">${e.title}</div><div class="entry-meta">${e.meta || ''}</div>${sc}<div class="vote-row"><button class="vote-btn ${voted?'voted':''}" onclick="vote('${e.id}','${e.user_id}')" ${isOwn||voted?'disabled style="opacity:.4;cursor:default"':''}>${voted?t('vote.voted'):t('vote.vote')}</button><span class="vote-c">${e.votes||0} ${t('vote.votes')}</span></div></div>`;
-  }).join('')}</div>`;
+  if (!entries.length) { wrap.innerHTML = '<div class="empty">' + t('hof.empty') + '</div>'; return; }
+  var cards = entries.map(function(e) {
+    var alias = (e.profiles && e.profiles.alias) ? e.profiles.alias : 'UNKNOWN';
+    var voted = myVotes.has(e.id);
+    var isOwn = currentUser && e.user_id === currentUser.id;
+    var sc = e.sc_url
+      ? '<iframe class="sc-box" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>'
+      : '<div class="sc-placeholder">▶ BEAT ANHÖREN</div>';
+    var disabled = (isOwn || voted) ? 'disabled style="opacity:.4;cursor:default"' : '';
+    var votedClass = voted ? 'voted' : '';
+    var voteLabel = voted ? t('vote.voted') : t('vote.vote');
+    return '<div class="entry">' +
+      '<div class="entry-prod" onclick="openProfile('' + e.user_id + '')">' + alias + '</div>' +
+      '<div class="entry-title">' + e.title + '</div>' +
+      '<div class="entry-meta">' + (e.meta || '') + '</div>' +
+      sc +
+      '<div class="vote-row">' +
+        '<button class="vote-btn ' + votedClass + '" onclick="vote('' + e.id + '','' + e.user_id + '')" ' + disabled + '>' + voteLabel + '</button>' +
+        '<span class="vote-c">' + (e.votes||0) + ' ' + t('vote.votes') + '</span>' +
+      '</div></div>';
+  });
+  wrap.innerHTML = '<div class="entries">' + cards.join('') + '</div>';
 }
 
 async function vote(entryId, ownerId) {
@@ -693,35 +707,53 @@ function showToast(text, type) {
 async function openProfile(userId) {
   document.getElementById('profileOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  document.getElementById('profileContent').innerHTML = '<div style="color:var(--gray);font-family:\'Barlow Condensed\',sans-serif;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:3rem 0">WIRD GELADEN…</div>';
+  document.getElementById('profileContent').innerHTML = '<div style="color:var(--gray);font-family:Barlow Condensed,sans-serif;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:3rem 0">WIRD GELADEN...</div>';
   const isOwn = currentUser && currentUser.id === userId;
   const { data: profile } = await sb.from('profiles').select('*').eq('id', userId).single();
-  const alias = profile?.alias || 'UNKNOWN';
-  const bio = profile?.bio || '';
-  const avatarUrl = profile?.avatar_url || '';
+  const alias = (profile && profile.alias) ? profile.alias : 'UNKNOWN';
+  const bio = (profile && profile.bio) ? profile.bio : '';
+  const avatarUrl = (profile && profile.avatar_url) ? profile.avatar_url : '';
   const { data: entries } = await sb.from('entries').select('*,battles(title)').eq('user_id', userId).order('created_at', { ascending: false });
-  const totalVotes = (entries||[]).reduce((s,e) => s+(e.votes||0), 0);
+  const totalVotes = (entries||[]).reduce(function(s,e){ return s+(e.votes||0); }, 0);
   const { data: winData } = await sb.from('winners').select('wins').eq('user_id', userId).single();
-  const wins = winData?.wins || 0;
+  const wins = (winData && winData.wins) ? winData.wins : 0;
   const initials = alias.slice(0,2).toUpperCase();
-  document.getElementById('profileContent').innerHTML = `
-    <div class="profile-header">
-      <div class="avatar-wrap">
-        <div class="avatar">${avatarUrl?`<img src="${avatarUrl}" alt="${alias}"/>`:initials}</div>
-        ${isOwn?`<button class="avatar-upload" onclick="document.getElementById('avatarInput').click()" title="Avatar ändern">✎</button><input type="file" id="avatarInput" accept="image/*" onchange="uploadAvatar(event)"/>`:``}
-      </div>
-      <div class="profile-info">
-        <div class="profile-alias">${alias}</div>
-        ${isOwn?`<textarea class="profile-bio-edit" id="bioEdit" placeholder="Kurze Bio…">${bio}</textarea><p class="profile-bio" id="bioText">${bio||'<span style="color:var(--mid)">Noch keine Bio.</span>'}</p><button class="profile-edit-btn" id="editToggleBtn" onclick="toggleBioEdit()">Bio bearbeiten</button>`:`<p class="profile-bio">${bio||''}</p>`}
-        <div class="profile-stats" style="margin-top:1rem">
-          <div><div class="ps-num">${(entries||[]).length}</div><div class="ps-lbl">Beats</div></div>
-          <div><div class="ps-num">${totalVotes}</div><div class="ps-lbl">Votes</div></div>
-          <div><div class="ps-num">${wins}</div><div class="ps-lbl">Wins</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="profile-beats-eye">Alle Beats</div>
-    ${!(entries||[]).length?'<div class="empty">Noch keine Beats eingereicht.</div>':`<div class="profile-beats">${(entries||[]).map(e=>`<div class="pb-card"><div class="pb-title">${e.title}</div><div class="pb-meta">${e.battles?.title||''} ${e.meta?'· '+e.meta:''}</div>${e.sc_url?`<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(e.sc_url)}&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>`:''}<div class="pb-votes">${e.votes||0} VOTES</div></div>`).join('')}</div>`}`;
+
+  const avatarHtml = avatarUrl ? '<img src="' + avatarUrl + '" alt="' + alias + '"/>' : initials;
+  const uploadBtn = isOwn ? '<button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">✎</button><input type="file" id="avatarInput" accept="image/*" onchange="uploadAvatar(event)"/>' : '';
+  const bioHtml = isOwn
+    ? '<textarea class="profile-bio-edit" id="bioEdit" placeholder="Kurze Bio...">' + bio + '</textarea><p class="profile-bio" id="bioText">' + (bio || '<span style="color:var(--mid)">Noch keine Bio.</span>') + '</p><button class="profile-edit-btn" id="editToggleBtn" onclick="toggleBioEdit()">Bio bearbeiten</button>'
+    : '<p class="profile-bio">' + bio + '</p>';
+
+  var beatsHtml = (entries||[]).map(function(e) {
+    var scPlayer = '';
+    if (e.sc_url) {
+      scPlayer = '<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>';
+    }
+    var bt = (e.battles && e.battles.title) ? e.battles.title : '';
+    var mt = e.meta ? ' · ' + e.meta : '';
+    return '<div class="pb-card"><div class="pb-title">' + e.title + '</div><div class="pb-meta">' + bt + mt + '</div>' + scPlayer + '<div class="pb-votes">' + (e.votes||0) + ' VOTES</div></div>';
+  }).join('');
+
+  var beatsSection = (entries||[]).length
+    ? '<div class="profile-beats">' + beatsHtml + '</div>'
+    : '<div class="empty">Noch keine Beats eingereicht.</div>';
+
+  document.getElementById('profileContent').innerHTML =
+    '<div class="profile-header">' +
+      '<div class="avatar-wrap">' +
+        '<div class="avatar">' + avatarHtml + '</div>' + uploadBtn +
+      '</div>' +
+      '<div class="profile-info">' +
+        '<div class="profile-alias">' + alias + '</div>' + bioHtml +
+        '<div class="profile-stats" style="margin-top:1rem">' +
+          '<div><div class="ps-num">' + (entries||[]).length + '</div><div class="ps-lbl">Beats</div></div>' +
+          '<div><div class="ps-num">' + totalVotes + '</div><div class="ps-lbl">Votes</div></div>' +
+          '<div><div class="ps-num">' + wins + '</div><div class="ps-lbl">Wins</div></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="profile-beats-eye">Alle Beats</div>' + beatsSection;
 }
 
 function closeProfile() { document.getElementById('profileOverlay').classList.remove('open'); document.body.style.overflow=''; }
