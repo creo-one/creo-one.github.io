@@ -448,7 +448,7 @@ footer p{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:.7r
 // ── CONFIG — ersetze mit deinen Supabase-Werten ──
 const SUPABASE_URL = 'https://jnryiqgxaetvjfqvodue.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_n7BA0YwI38odzlwRAyvq1Q_ae4P_qhc';
-const ADMIN_EMAILS = ['CREO_ONE@proton.me']; // deine E-Mail hier
+const ADMIN_EMAILS = ['creo_one@proton.me']; // deine E-Mail hier
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -648,7 +648,7 @@ function renderEntries(entries) {
     var uid = e.user_id;
     var eid = e.id;
     return '<div class="entry">' +
-      '<div class="entry-prod" onclick="openProfile(&quot;' + uid + '&quot;)">' + alias + '</div>' +
+      '<div class="entry-prod" data-userid="' + uid + '" style="cursor:pointer">' + alias + '</div>' +
       '<div class="entry-title">' + e.title + '</div>' +
       '<div class="entry-meta">' + (e.meta || '') + '</div>' +
       sc +
@@ -1198,6 +1198,23 @@ function subscribeRealtime() {
     })
     .subscribe();
 }
+
+
+// ── EVENT DELEGATION ──
+document.addEventListener('click', function(e) {
+  // Profile open
+  var profileEl = e.target.closest('[data-userid]');
+  if (profileEl) {
+    var uid = profileEl.getAttribute('data-userid');
+    if (uid) { e.preventDefault(); e.stopPropagation(); openProfile(uid); return; }
+  }
+  // Admin delete entry
+  var deleteEl = e.target.closest('[data-entryid]');
+  if (deleteEl) {
+    var eid = deleteEl.getAttribute('data-entryid');
+    if (eid) { e.preventDefault(); adminDeleteEntry(eid); return; }
+  }
+});
 
 // ── KEYBOARD / FOCUS TRAP ──
 document.addEventListener('keydown', function(e) {
