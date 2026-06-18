@@ -624,8 +624,8 @@ footer p{
 <!-- HERO -->
 <div class="hero">
   <div class="hero-eye">Beat Battle Platform</div>
-  <h1>WER HAT<br><span class="dim">DEN</span><br>BESTEN<br>BEAT?</h1>
-  <p class="hero-sub">Jede Woche ein neues Thema. Ein Beat. Die Community entscheidet.</p>
+  <h1>EIN THEMA.<br><span class="dim">EIN</span><br>BEAT.<br>EIN SIEGER.</h1>
+  <p class="hero-sub">Ein Thema, ein Beat, ein Sieger. Die Community entscheidet — kein Label, kein Bullshit.</p>
   <div class="stats-row">
     <div><div class="stat-n" id="sP">—</div><div class="stat-l">Producer</div></div>
     <div><div class="stat-n" id="sB">—</div><div class="stat-l">Battles</div></div>
@@ -640,6 +640,7 @@ footer p{
     <div>
       <div class="battle-theme-tag" id="themeTag">Thema wird geladen…</div>
       <div class="battle-h" id="battleTitle">—</div>
+      <p id="battleDesc" style="color:var(--gray);font-size:.88rem;max-width:480px;margin-top:1rem;line-height:1.7;display:none"></p>
     </div>
     <div>
       <div id="countdown" style="margin-bottom:.4rem">—</div>
@@ -823,9 +824,12 @@ async function loadBattle() {
 
   if (error || !data) {
     // Demo-Fallback wenn noch keine Battles in DB
-    currentBattle = { id: 'demo', title: 'RAINY NIGHT IN THE CITY', theme: 'Thema dieser Woche', ends_at: getFriday() };
+    currentBattle = { id: 'demo', title: 'SOMMER 26', theme: 'Thema dieser Woche', description: 'Sommer 26. Hitze, Freiheit, lange Nächte — welcher deiner Beats fängt das ein? Egal ob lo-fi am See, Afrobeats im Park oder ein Soul-Sample das nach Urlaub klingt. Zeig was du hast. Die Community entscheidet.', ends_at: getFriday() };
     document.getElementById('themeTag').textContent = currentBattle.theme;
     document.getElementById('battleTitle').textContent = currentBattle.title;
+    const descEl = document.getElementById('battleDesc');
+    descEl.textContent = currentBattle.description;
+    descEl.style.display = 'block';
     await loadEntries();
     return;
   }
@@ -833,6 +837,11 @@ async function loadBattle() {
   currentBattle = data;
   document.getElementById('themeTag').textContent = data.theme || 'Thema dieser Woche';
   document.getElementById('battleTitle').textContent = data.title;
+  if (data.description) {
+    const descEl = document.getElementById('battleDesc');
+    descEl.textContent = data.description;
+    descEl.style.display = 'block';
+  }
   await loadEntries();
 }
 
