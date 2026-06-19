@@ -72,8 +72,8 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.25re
 .entry-prod:hover{color:var(--white)}
 .entry-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.6rem;text-transform:uppercase;letter-spacing:.02em;margin-bottom:.2rem;line-height:1.1}
 .entry-meta{font-size:.78rem;color:var(--gray);margin-bottom:1rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em}
-.sc-box{width:100%;height:80px;border:none;margin-bottom:1rem;background:var(--dark)}
-.sc-placeholder{width:100%;height:80px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--mid);font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1rem}
+.sc-box{width:100%;height:300px;border:none;margin-bottom:1rem;background:var(--dark)}
+.sc-placeholder{width:100%;height:300px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--mid);font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1rem}
 .vote-row{display:flex;align-items:center;justify-content:space-between}
 .vote-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;padding:.4rem 1rem;border:1px solid var(--rule);background:none;color:var(--gray);cursor:pointer;transition:all .15s}
 .vote-btn:hover,.vote-btn.voted{background:var(--white);color:var(--black);border-color:var(--white)}
@@ -137,7 +137,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1.25re
 .sk-line{height:12px;margin-bottom:10px}
 .sk-line.short{width:40%}
 .sk-line.med{width:65%}
-.sk-player{height:80px;margin-bottom:1rem}
+.sk-player{height:300px;margin-bottom:1rem}
 .profile-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.96);z-index:250;overflow-y:auto}
 .profile-overlay.open{display:block}
 .profile-inner{max-width:700px;margin:0 auto;padding:3rem 2rem}
@@ -647,7 +647,7 @@ function renderEntries(entries) {
     var voted = myVotes.has(e.id);
     var isOwn = currentUser && e.user_id === currentUser.id;
     var sc = e.sc_url
-      ? '<iframe class="sc-box" scrolling="no" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>'
+      ? '<iframe class="sc-box" scrolling="no" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>'
       : '<div class="sc-placeholder">▶ BEAT ANHÖREN</div>';
     var disabled = (isOwn || voted) ? 'disabled style="opacity:.4;cursor:default"' : '';
     var votedClass = voted ? 'voted' : '';
@@ -833,7 +833,7 @@ async function openProfile(userId) {
   var beatsHtml = (entries||[]).map(function(e) {
     var scPlayer = '';
     if (e.sc_url) {
-      scPlayer = '<iframe style="width:100%;height:80px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>';
+      scPlayer = '<iframe style="width:100%;height:300px;border:none;margin-bottom:.5rem" scrolling="no" allow="autoplay" loading="lazy" src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(e.sc_url) + '&color=%23f5f5f5&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>';
     }
     var bt = (e.battles && e.battles.title) ? e.battles.title : '';
     var mt = e.meta ? ' · ' + e.meta : '';
